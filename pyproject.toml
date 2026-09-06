@@ -1,0 +1,50 @@
+[project]
+name = "postulo-mcp"
+version = "0.1.0"
+description = "Let an AI agent read and, if you allow it, record your job search — through Postulo's own API, over the Model Context Protocol. No model inside Postulo, no API key in Postulo's settings."
+readme = "README.md"
+requires-python = ">=3.12"
+license = "AGPL-3.0-or-later"
+authors = [{ name = "Tiago Agueda" }]
+keywords = ["postulo", "mcp", "model context protocol", "agent"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+    "Programming Language :: Python :: 3",
+    "Topic :: Utilities",
+]
+# This runs beside the agent, not inside Postulo: the official MCP SDK, and httpx to
+# reach the instance's API. Postulo itself is not a dependency at all.
+dependencies = ["mcp>=2.0", "httpx>=0.28"]
+
+[project.scripts]
+postulo-mcp = "postulo_mcp.__main__:main"
+
+[project.urls]
+Homepage = "https://source.tiagoagueda.com/postulo/postulo-mcp"
+"Postulo" = "https://source.tiagoagueda.com/postulo/postulo"
+"The API" = "https://source.tiagoagueda.com/postulo/postulo/wiki/The-capture-API"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/postulo_mcp"]
+
+[dependency-groups]
+dev = ["pytest>=8.3", "pytest-asyncio>=0.24", "ruff>=0.16"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+filterwarnings = ["error"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S"]
+ignore = ["S101"]

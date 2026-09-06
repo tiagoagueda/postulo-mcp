@@ -1,0 +1,33 @@
+# This one needs no Postulo: the server talks to an instance over HTTP, and the tests
+# answer it in memory.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.14-slim-bookworm
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        run: |
+          apt-get update && apt-get install -y --no-install-recommends curl
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          rm -rf /var/lib/apt/lists/*
+
+      - name: Install
+        run: uv sync
+
+      - name: Lint
+        run: uv run ruff check .
+
+      - name: Test
+        run: uv run pytest
