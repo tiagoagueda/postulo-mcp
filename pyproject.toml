@@ -1,6 +1,6 @@
 [project]
 name = "postulo-mcp"
-version = "0.1.0"
+version = "0.3.0"
 description = "Let an AI agent read and, if you allow it, record your job search — through Postulo's own API, over the Model Context Protocol. No model inside Postulo, no API key in Postulo's settings."
 readme = "README.md"
 requires-python = ">=3.12"
