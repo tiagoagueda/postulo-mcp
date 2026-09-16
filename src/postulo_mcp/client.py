@@ -34,6 +34,19 @@ class Settings:
 
     @classmethod
     def from_environment(cls, *, read_only: bool | None = None) -> Settings:
+        """The environment's answer, with ``read_only`` given only when a flag decided it.
+
+        ``POSTULO_MCP_READ_ONLY`` is the answer when nothing on the command line said
+        otherwise, which is what ``read_only=None`` means here: ``--write`` passes
+        ``False`` and settles it, and its absence leaves the environment to speak. It used
+        to be passed either way, so the variable was read and then always overruled (#3).
+
+        ``POSTULO_MCP_INSECURE`` turns off TLS certificate verification for the connection
+        to the instance. It exists for one case — a self-signed certificate on a machine of
+        your own — and it means anything on the path between here and Postulo can read the
+        token and rewrite the answers. It is documented in the README with that warning,
+        and ``__main__`` says so on stderr every time it starts with it on.
+        """
         url = os.environ.get("POSTULO_URL", "").rstrip("/")
         token = os.environ.get("POSTULO_TOKEN", "")
         if not url:

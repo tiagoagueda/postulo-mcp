@@ -1,0 +1,5018 @@
+{
+  "components": {
+    "schemas": {
+      "ApplicationDetailOut": {
+        "properties": {
+          "applied_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applied At"
+          },
+          "channel": {
+            "default": "",
+            "title": "Channel",
+            "type": "string"
+          },
+          "closed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Closed At"
+          },
+          "contact_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contact Id"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "deadline": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deadline"
+          },
+          "events": {
+            "items": {
+              "$ref": "#/components/schemas/EventOut"
+            },
+            "title": "Events",
+            "type": "array"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "interviews": {
+            "items": {
+              "$ref": "#/components/schemas/InterviewOut"
+            },
+            "title": "Interviews",
+            "type": "array"
+          },
+          "listing": {
+            "$ref": "#/components/schemas/ListingRef"
+          },
+          "next_interview_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Interview At"
+          },
+          "priority": {
+            "title": "Priority",
+            "type": "integer"
+          },
+          "reminders": {
+            "items": {
+              "$ref": "#/components/schemas/ReminderOut"
+            },
+            "title": "Reminders",
+            "type": "array"
+          },
+          "sent_document_ids": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Sent Document Ids",
+            "type": "array"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Tags",
+            "type": "array"
+          },
+          "web_url": {
+            "title": "Web Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "listing",
+          "status",
+          "priority",
+          "tags",
+          "created_at",
+          "web_url",
+          "events",
+          "reminders",
+          "interviews",
+          "sent_document_ids"
+        ],
+        "title": "ApplicationDetailOut",
+        "type": "object"
+      },
+      "ApplicationDetailsIn": {
+        "description": "The person's side of an application.",
+        "properties": {
+          "applied_on": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "When it was actually sent. Omitted, it is today — which is wrong for a search already under way, and every figure measured from this date with it (#222).",
+            "title": "Applied On"
+          },
+          "channel": {
+            "default": "",
+            "title": "Channel",
+            "type": "string"
+          },
+          "deadline": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deadline"
+          },
+          "priority": {
+            "default": 2,
+            "title": "Priority",
+            "type": "integer"
+          },
+          "status": {
+            "default": "applied",
+            "title": "Status",
+            "type": "string"
+          },
+          "tags": {
+            "description": "Tag names; unknown ones are made.",
+            "items": {
+              "type": "string"
+            },
+            "title": "Tags",
+            "type": "array"
+          }
+        },
+        "title": "ApplicationDetailsIn",
+        "type": "object"
+      },
+      "ApplicationIn": {
+        "description": "Record an application in one step: the listing and the person's side together.",
+        "properties": {
+          "applied_on": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "When it was actually sent. Omitted, it is today — which is wrong for a search already under way, and every figure measured from this date with it (#222).",
+            "title": "Applied On"
+          },
+          "channel": {
+            "default": "",
+            "title": "Channel",
+            "type": "string"
+          },
+          "closes_at": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Closes At"
+          },
+          "company_name": {
+            "maxLength": 200,
+            "title": "Company Name",
+            "type": "string"
+          },
+          "company_wikidata": {
+            "default": "",
+            "description": "The employer's Wikidata id, when known: a stronger match than the name.",
+            "maxLength": 200,
+            "title": "Company Wikidata",
+            "type": "string"
+          },
+          "deadline": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deadline"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "employment_type": {
+            "default": "",
+            "maxLength": 20,
+            "title": "Employment Type",
+            "type": "string"
+          },
+          "location": {
+            "default": "",
+            "maxLength": 200,
+            "title": "Location",
+            "type": "string"
+          },
+          "priority": {
+            "default": 2,
+            "title": "Priority",
+            "type": "integer"
+          },
+          "remote_type": {
+            "default": "",
+            "maxLength": 20,
+            "title": "Remote Type",
+            "type": "string"
+          },
+          "salary_currency": {
+            "default": "EUR",
+            "maxLength": 3,
+            "title": "Salary Currency",
+            "type": "string"
+          },
+          "salary_max": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Salary Max"
+          },
+          "salary_min": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Salary Min"
+          },
+          "salary_period": {
+            "default": "year",
+            "maxLength": 10,
+            "title": "Salary Period",
+            "type": "string"
+          },
+          "source": {
+            "default": "",
+            "maxLength": 120,
+            "title": "Source",
+            "type": "string"
+          },
+          "status": {
+            "default": "applied",
+            "title": "Status",
+            "type": "string"
+          },
+          "tags": {
+            "description": "Tag names; unknown ones are made.",
+            "items": {
+              "type": "string"
+            },
+            "title": "Tags",
+            "type": "array"
+          },
+          "title": {
+            "maxLength": 250,
+            "title": "Title",
+            "type": "string"
+          },
+          "url": {
+            "default": "",
+            "maxLength": 500,
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "company_name",
+          "title"
+        ],
+        "title": "ApplicationIn",
+        "type": "object"
+      },
+      "ApplicationOut": {
+        "properties": {
+          "applied_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applied At"
+          },
+          "channel": {
+            "default": "",
+            "title": "Channel",
+            "type": "string"
+          },
+          "closed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Closed At"
+          },
+          "contact_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contact Id"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "deadline": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deadline"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "listing": {
+            "$ref": "#/components/schemas/ListingRef"
+          },
+          "next_interview_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Interview At"
+          },
+          "priority": {
+            "title": "Priority",
+            "type": "integer"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Tags",
+            "type": "array"
+          },
+          "web_url": {
+            "title": "Web Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "listing",
+          "status",
+          "priority",
+          "tags",
+          "created_at",
+          "web_url"
+        ],
+        "title": "ApplicationOut",
+        "type": "object"
+      },
+      "BatchIn": {
+        "description": "Where this capture stands among several sent together, from one page.\n\nA results page holds forty postings and a browser extension sends each as its own\ncapture -- the same page, a different ``url`` -- so that a failure loses one and not\nforty (#177). What the server needs to know is only that they belong together: the\nfirst of the batch is announced, with how many are coming, and the rest arrive quietly.\nForty notifications for one deliberate gesture would be worse than none.",
+        "properties": {
+          "position": {
+            "description": "This capture's place in it, from 1.",
+            "minimum": 1,
+            "title": "Position",
+            "type": "integer"
+          },
+          "size": {
+            "description": "How many captures the gesture sends.",
+            "maximum": 500,
+            "minimum": 2,
+            "title": "Size",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "size",
+          "position"
+        ],
+        "title": "BatchIn",
+        "type": "object"
+      },
+      "CVDetailOut": {
+        "properties": {
+          "headline": {
+            "default": "",
+            "title": "Headline",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "item_count": {
+            "title": "Item Count",
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/CVItemOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "language": {
+            "default": "",
+            "title": "Language",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "summary": {
+            "default": "",
+            "title": "Summary",
+            "type": "string"
+          },
+          "theme": {
+            "title": "Theme",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "theme",
+          "item_count",
+          "items"
+        ],
+        "title": "CVDetailOut",
+        "type": "object"
+      },
+      "CVItemOut": {
+        "properties": {
+          "included": {
+            "title": "Included",
+            "type": "boolean"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "label",
+          "included"
+        ],
+        "title": "CVItemOut",
+        "type": "object"
+      },
+      "CVOut": {
+        "properties": {
+          "headline": {
+            "default": "",
+            "title": "Headline",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "item_count": {
+            "title": "Item Count",
+            "type": "integer"
+          },
+          "language": {
+            "default": "",
+            "title": "Language",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "summary": {
+            "default": "",
+            "title": "Summary",
+            "type": "string"
+          },
+          "theme": {
+            "title": "Theme",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "theme",
+          "item_count"
+        ],
+        "title": "CVOut",
+        "type": "object"
+      },
+      "CaptureIn": {
+        "description": "A posting somebody wants Postulo to look at.",
+        "properties": {
+          "batch": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BatchIn"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Set when several captures are sent together from one page: the first is announced with the count, the rest are not announced at all."
+          },
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CorrectionsIn"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Corrections to what the page is read as, typically made after a preview. The page is still read; each field given replaces what was read, and the result is checked exactly as a source's own output is."
+          },
+          "html": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The page source, if the caller already has it. Supplying it means Postulo does not fetch the page itself, which is how a browser extension can capture a posting that is only visible to a signed-in reader.",
+            "title": "Html"
+          },
+          "url": {
+            "maxLength": 500,
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "title": "CaptureIn",
+        "type": "object"
+      },
+      "CaptureOut": {
+        "properties": {
+          "company_name": {
+            "title": "Company Name",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "location": {
+            "title": "Location",
+            "type": "string"
+          },
+          "review_url": {
+            "title": "Review Url",
+            "type": "string"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "url",
+          "title",
+          "company_name",
+          "location",
+          "source",
+          "status",
+          "created_at",
+          "review_url"
+        ],
+        "title": "CaptureOut",
+        "type": "object"
+      },
+      "CompanyDetailOut": {
+        "properties": {
+          "careers_url": {
+            "default": "",
+            "title": "Careers Url",
+            "type": "string"
+          },
+          "contacts": {
+            "items": {
+              "$ref": "#/components/schemas/ContactOut"
+            },
+            "title": "Contacts",
+            "type": "array"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "identifiers": {
+            "items": {
+              "$ref": "#/components/schemas/IdentifierOut"
+            },
+            "title": "Identifiers",
+            "type": "array"
+          },
+          "industries": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Industries",
+            "type": "array"
+          },
+          "kind": {
+            "default": "employer",
+            "title": "Kind",
+            "type": "string"
+          },
+          "listing_ids": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Listing Ids",
+            "type": "array"
+          },
+          "location": {
+            "default": "",
+            "title": "Location",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "notes": {
+            "default": "",
+            "title": "Notes",
+            "type": "string"
+          },
+          "website": {
+            "default": "",
+            "title": "Website",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "created_at",
+          "contacts",
+          "listing_ids"
+        ],
+        "title": "CompanyDetailOut",
+        "type": "object"
+      },
+      "CompanyIn": {
+        "properties": {
+          "careers_url": {
+            "default": "",
+            "maxLength": 200,
+            "title": "Careers Url",
+            "type": "string"
+          },
+          "identifiers": {
+            "description": "Added to the company; a Wikidata id also matches an existing company.",
+            "items": {
+              "$ref": "#/components/schemas/IdentifierIn"
+            },
+            "title": "Identifiers",
+            "type": "array"
+          },
+          "industries": {
+            "description": "Names; unknown ones join the owner's vocabulary.",
+            "items": {
+              "type": "string"
+            },
+            "title": "Industries",
+            "type": "array"
+          },
+          "kind": {
+            "default": "",
+            "description": "employer (the default) or employment_service; anything else is ignored.",
+            "title": "Kind",
+            "type": "string"
+          },
+          "location": {
+            "default": "",
+            "maxLength": 200,
+            "title": "Location",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 200,
+            "title": "Name",
+            "type": "string"
+          },
+          "notes": {
+            "default": "",
+            "title": "Notes",
+            "type": "string"
+          },
+          "website": {
+            "default": "",
+            "maxLength": 200,
+            "title": "Website",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "CompanyIn",
+        "type": "object"
+      },
+      "CompanyOut": {
+        "properties": {
+          "careers_url": {
+            "default": "",
+            "title": "Careers Url",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "identifiers": {
+            "items": {
+              "$ref": "#/components/schemas/IdentifierOut"
+            },
+            "title": "Identifiers",
+            "type": "array"
+          },
+          "industries": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Industries",
+            "type": "array"
+          },
+          "kind": {
+            "default": "employer",
+            "title": "Kind",
+            "type": "string"
+          },
+          "location": {
+            "default": "",
+            "title": "Location",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "notes": {
+            "default": "",
+            "title": "Notes",
+            "type": "string"
+          },
+          "website": {
+            "default": "",
+            "title": "Website",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "created_at"
+        ],
+        "title": "CompanyOut",
+        "type": "object"
+      },
+      "CompanyPatch": {
+        "properties": {
+          "careers_url": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Careers Url"
+          },
+          "identifiers": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/IdentifierIn"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Replaces the whole list",
+            "title": "Identifiers"
+          },
+          "industries": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Replaces the whole list",
+            "title": "Industries"
+          },
+          "location": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "website": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Website"
+          }
+        },
+        "title": "CompanyPatch",
+        "type": "object"
+      },
+      "CompanyRef": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ],
+        "title": "CompanyRef",
+        "type": "object"
+      },
+      "ContactIn": {
+        "properties": {
+          "email": {
+            "default": "",
+            "maxLength": 254,
+            "title": "Email",
+            "type": "string"
+          },
+          "linkedin_url": {
+            "default": "",
+            "maxLength": 500,
+            "title": "Linkedin Url",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 200,
+            "title": "Name",
+            "type": "string"
+          },
+          "notes": {
+            "default": "",
+            "title": "Notes",
+            "type": "string"
+          },
+          "phone": {
+            "default": "",
+            "maxLength": 40,
+            "title": "Phone",
+            "type": "string"
+          },
+          "role": {
+            "default": "",
+            "maxLength": 200,
+            "title": "Role",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "ContactIn",
+        "type": "object"
+      },
+      "ContactOut": {
+        "properties": {
+          "company_id": {
+            "title": "Company Id",
+            "type": "integer"
+          },
+          "email": {
+            "default": "",
+            "title": "Email",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "linkedin_url": {
+            "default": "",
+            "title": "Linkedin Url",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "notes": {
+            "default": "",
+            "title": "Notes",
+            "type": "string"
+          },
+          "phone": {
+            "default": "",
+            "title": "Phone",
+            "type": "string"
+          },
+          "phone_numbers": {
+            "items": {
+              "$ref": "#/components/schemas/PhoneNumberOut"
+            },
+            "title": "Phone Numbers",
+            "type": "array"
+          },
+          "role": {
+            "default": "",
+            "title": "Role",
+            "type": "string"
+          },
+          "web_links": {
+            "items": {
+              "$ref": "#/components/schemas/WebLinkOut"
+            },
+            "title": "Web Links",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "company_id",
+          "name"
+        ],
+        "title": "ContactOut",
+        "type": "object"
+      },
+      "CorrectionsIn": {
+        "additionalProperties": false,
+        "description": "The fields a person changed after seeing what was read. Every one is optional.",
+        "properties": {
+          "closes_at": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Closes At"
+          },
+          "company_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "employment_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Employment Type"
+          },
+          "location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location"
+          },
+          "posted_at": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Posted At"
+          },
+          "remote_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Remote Type"
+          },
+          "salary_currency": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Salary Currency"
+          },
+          "salary_max": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Salary Max"
+          },
+          "salary_min": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Salary Min"
+          },
+          "salary_period": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Salary Period"
+          },
+          "source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url"
+          }
+        },
+        "title": "CorrectionsIn",
+        "type": "object"
+      },
+      "DiscardIn": {
+        "properties": {
+          "reason": {
+            "default": "other",
+            "maxLength": 20,
+            "title": "Reason",
+            "type": "string"
+          }
+        },
+        "title": "DiscardIn",
+        "type": "object"
+      },
+      "DocumentOut": {
+        "properties": {
+          "application_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Application Id"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "download_url": {
+            "title": "Download Url",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "source": {
+            "description": "'upload' for a file you had; 'rendered' for a snapshot",
+            "title": "Source",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "source",
+          "kind",
+          "title",
+          "created_at",
+          "download_url"
+        ],
+        "title": "DocumentOut",
+        "type": "object"
+      },
+      "EventIn": {
+        "properties": {
+          "body": {
+            "default": "",
+            "title": "Body",
+            "type": "string"
+          },
+          "kind": {
+            "default": "note",
+            "title": "Kind",
+            "type": "string"
+          },
+          "occurred_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Occurred At"
+          },
+          "summary": {
+            "default": "",
+            "maxLength": 250,
+            "title": "Summary",
+            "type": "string"
+          }
+        },
+        "title": "EventIn",
+        "type": "object"
+      },
+      "EventOut": {
+        "properties": {
+          "actor": {
+            "default": "",
+            "title": "Actor",
+            "type": "string"
+          },
+          "body": {
+            "default": "",
+            "title": "Body",
+            "type": "string"
+          },
+          "from_status": {
+            "default": "",
+            "title": "From Status",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "occurred_at": {
+            "format": "date-time",
+            "title": "Occurred At",
+            "type": "string"
+          },
+          "summary": {
+            "default": "",
+            "title": "Summary",
+            "type": "string"
+          },
+          "to_status": {
+            "default": "",
+            "title": "To Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "occurred_at"
+        ],
+        "title": "EventOut",
+        "type": "object"
+      },
+      "IdentifierIn": {
+        "properties": {
+          "label": {
+            "default": "",
+            "maxLength": 60,
+            "title": "Label",
+            "type": "string"
+          },
+          "scheme": {
+            "maxLength": 20,
+            "title": "Scheme",
+            "type": "string"
+          },
+          "value": {
+            "description": "A pasted address is accepted; the id is kept",
+            "maxLength": 200,
+            "title": "Value",
+            "type": "string"
+          }
+        },
+        "required": [
+          "scheme",
+          "value"
+        ],
+        "title": "IdentifierIn",
+        "type": "object"
+      },
+      "IdentifierOut": {
+        "properties": {
+          "label": {
+            "default": "",
+            "description": "What the identifier is, for scheme 'other'",
+            "title": "Label",
+            "type": "string"
+          },
+          "scheme": {
+            "description": "wikidata, lei, register, linkedin, crunchbase, opencorporates, other",
+            "title": "Scheme",
+            "type": "string"
+          },
+          "url": {
+            "default": "",
+            "description": "Where the value links, when the scheme has a home",
+            "title": "Url",
+            "type": "string"
+          },
+          "value": {
+            "title": "Value",
+            "type": "string"
+          }
+        },
+        "required": [
+          "scheme",
+          "value"
+        ],
+        "title": "IdentifierOut",
+        "type": "object"
+      },
+      "Input": {
+        "properties": {
+          "limit": {
+            "default": 100,
+            "minimum": 1,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "offset": {
+            "default": 0,
+            "minimum": 0,
+            "title": "Offset",
+            "type": "integer"
+          }
+        },
+        "title": "Input",
+        "type": "object"
+      },
+      "InterviewIn": {
+        "properties": {
+          "application_id": {
+            "title": "Application Id",
+            "type": "integer"
+          },
+          "contact_ids": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Contact Ids",
+            "type": "array"
+          },
+          "ends_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "An hour after the start if unset",
+            "title": "Ends At"
+          },
+          "kind": {
+            "default": "video",
+            "title": "Kind",
+            "type": "string"
+          },
+          "location": {
+            "default": "",
+            "maxLength": 500,
+            "title": "Location",
+            "type": "string"
+          },
+          "notes": {
+            "default": "",
+            "title": "Notes",
+            "type": "string"
+          },
+          "remind": {
+            "default": true,
+            "description": "Make a reminder for the day before",
+            "title": "Remind",
+            "type": "boolean"
+          },
+          "starts_at": {
+            "format": "date-time",
+            "title": "Starts At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "application_id",
+          "starts_at"
+        ],
+        "title": "InterviewIn",
+        "type": "object"
+      },
+      "InterviewOut": {
+        "properties": {
+          "application_id": {
+            "title": "Application Id",
+            "type": "integer"
+          },
+          "calendar_url": {
+            "title": "Calendar Url",
+            "type": "string"
+          },
+          "contact_ids": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Contact Ids",
+            "type": "array"
+          },
+          "ends_at": {
+            "format": "date-time",
+            "title": "Ends At",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "location": {
+            "default": "",
+            "title": "Location",
+            "type": "string"
+          },
+          "notes": {
+            "default": "",
+            "title": "Notes",
+            "type": "string"
+          },
+          "outcome": {
+            "title": "Outcome",
+            "type": "string"
+          },
+          "reminder_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reminder Id"
+          },
+          "starts_at": {
+            "format": "date-time",
+            "title": "Starts At",
+            "type": "string"
+          },
+          "uid": {
+            "description": "Stable across edits; what a calendar keys the meeting by",
+            "title": "Uid",
+            "type": "string"
+          },
+          "web_url": {
+            "title": "Web Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "uid",
+          "application_id",
+          "kind",
+          "starts_at",
+          "ends_at",
+          "contact_ids",
+          "outcome",
+          "web_url",
+          "calendar_url"
+        ],
+        "title": "InterviewOut",
+        "type": "object"
+      },
+      "InterviewOutcomeIn": {
+        "properties": {
+          "note": {
+            "default": "",
+            "title": "Note",
+            "type": "string"
+          },
+          "outcome": {
+            "description": "done, cancelled or no_show",
+            "title": "Outcome",
+            "type": "string"
+          }
+        },
+        "required": [
+          "outcome"
+        ],
+        "title": "InterviewOutcomeIn",
+        "type": "object"
+      },
+      "InterviewPatch": {
+        "properties": {
+          "contact_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "integer"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contact Ids"
+          },
+          "ends_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ends At"
+          },
+          "kind": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Kind"
+          },
+          "location": {
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "starts_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Starts At"
+          }
+        },
+        "title": "InterviewPatch",
+        "type": "object"
+      },
+      "JobPostingData": {
+        "additionalProperties": false,
+        "description": "A posting as some source understood it.\n\nEvery field is optional except the title, because a source that could only find the\njob title has still saved somebody most of the typing. Fields it could not determine\nare left empty rather than guessed.",
+        "properties": {
+          "closes_at": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Closes At"
+          },
+          "company_name": {
+            "default": "",
+            "maxLength": 500,
+            "title": "Company Name",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "employment_type": {
+            "default": "",
+            "maxLength": 20,
+            "title": "Employment Type",
+            "type": "string"
+          },
+          "location": {
+            "default": "",
+            "maxLength": 500,
+            "title": "Location",
+            "type": "string"
+          },
+          "posted_at": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Posted At"
+          },
+          "remote_type": {
+            "default": "",
+            "maxLength": 20,
+            "title": "Remote Type",
+            "type": "string"
+          },
+          "salary_currency": {
+            "default": "",
+            "maxLength": 3,
+            "title": "Salary Currency",
+            "type": "string"
+          },
+          "salary_max": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Salary Max"
+          },
+          "salary_min": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Salary Min"
+          },
+          "salary_period": {
+            "default": "",
+            "maxLength": 10,
+            "title": "Salary Period",
+            "type": "string"
+          },
+          "source": {
+            "default": "",
+            "maxLength": 120,
+            "title": "Source",
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 500,
+            "title": "Title",
+            "type": "string"
+          },
+          "url": {
+            "default": "",
+            "maxLength": 500,
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title"
+        ],
+        "title": "JobPostingData",
+        "type": "object"
+      },
+      "KnownCaptureOut": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "review_url": {
+            "title": "Review Url",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "created_at",
+          "review_url"
+        ],
+        "title": "KnownCaptureOut",
+        "type": "object"
+      },
+      "KnownIn": {
+        "description": "Postings to ask about together -- one for a popup, forty for a results page.",
+        "properties": {
+          "postings": {
+            "items": {
+              "$ref": "#/components/schemas/KnownQueryIn"
+            },
+            "maxItems": 100,
+            "title": "Postings",
+            "type": "array"
+          }
+        },
+        "required": [
+          "postings"
+        ],
+        "title": "KnownIn",
+        "type": "object"
+      },
+      "KnownListingOut": {
+        "properties": {
+          "company_name": {
+            "title": "Company Name",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "listing_url": {
+            "title": "Listing Url",
+            "type": "string"
+          },
+          "state": {
+            "title": "State",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "company_name",
+          "url",
+          "state",
+          "created_at",
+          "listing_url"
+        ],
+        "title": "KnownListingOut",
+        "type": "object"
+      },
+      "KnownOut": {
+        "description": "What the owner already holds for one address: told, so they can decide (#178).",
+        "properties": {
+          "captures": {
+            "items": {
+              "$ref": "#/components/schemas/KnownCaptureOut"
+            },
+            "title": "Captures",
+            "type": "array"
+          },
+          "listings": {
+            "items": {
+              "$ref": "#/components/schemas/KnownListingOut"
+            },
+            "title": "Listings",
+            "type": "array"
+          },
+          "similar": {
+            "items": {
+              "$ref": "#/components/schemas/KnownListingOut"
+            },
+            "title": "Similar",
+            "type": "array"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "url",
+          "listings",
+          "captures",
+          "similar"
+        ],
+        "title": "KnownOut",
+        "type": "object"
+      },
+      "KnownQueryIn": {
+        "description": "One posting to ask about: its address, and its title at its company.",
+        "properties": {
+          "company": {
+            "default": "",
+            "maxLength": 250,
+            "title": "Company",
+            "type": "string"
+          },
+          "title": {
+            "default": "",
+            "maxLength": 250,
+            "title": "Title",
+            "type": "string"
+          },
+          "url": {
+            "maxLength": 500,
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "title": "KnownQueryIn",
+        "type": "object"
+      },
+      "LetterDetailOut": {
+        "properties": {
+          "body": {
+            "title": "Body",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "is_template": {
+            "title": "Is Template",
+            "type": "boolean"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "subject": {
+            "default": "",
+            "title": "Subject",
+            "type": "string"
+          },
+          "theme": {
+            "title": "Theme",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "is_template",
+          "theme",
+          "created_at",
+          "body"
+        ],
+        "title": "LetterDetailOut",
+        "type": "object"
+      },
+      "LetterIn": {
+        "properties": {
+          "body": {
+            "title": "Body",
+            "type": "string"
+          },
+          "is_template": {
+            "default": false,
+            "title": "Is Template",
+            "type": "boolean"
+          },
+          "name": {
+            "maxLength": 120,
+            "title": "Name",
+            "type": "string"
+          },
+          "subject": {
+            "default": "",
+            "maxLength": 250,
+            "title": "Subject",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "body"
+        ],
+        "title": "LetterIn",
+        "type": "object"
+      },
+      "LetterOut": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "is_template": {
+            "title": "Is Template",
+            "type": "boolean"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "subject": {
+            "default": "",
+            "title": "Subject",
+            "type": "string"
+          },
+          "theme": {
+            "title": "Theme",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "is_template",
+          "theme",
+          "created_at"
+        ],
+        "title": "LetterOut",
+        "type": "object"
+      },
+      "ListingDetailOut": {
+        "properties": {
+          "application_ids": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Application Ids",
+            "type": "array"
+          },
+          "closed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Closed At"
+          },
+          "closes_at": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Closes At"
+          },
+          "company": {
+            "$ref": "#/components/schemas/CompanyRef"
+          },
+          "decided_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Decided At"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "discard_reason": {
+            "default": "",
+            "title": "Discard Reason",
+            "type": "string"
+          },
+          "employment_type": {
+            "default": "",
+            "title": "Employment Type",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "location": {
+            "default": "",
+            "title": "Location",
+            "type": "string"
+          },
+          "noted_at": {
+            "format": "date-time",
+            "title": "Noted At",
+            "type": "string"
+          },
+          "posted_at": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Posted At"
+          },
+          "remote_type": {
+            "default": "",
+            "title": "Remote Type",
+            "type": "string"
+          },
+          "salary_currency": {
+            "default": "",
+            "title": "Salary Currency",
+            "type": "string"
+          },
+          "salary_max": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Salary Max"
+          },
+          "salary_min": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Salary Min"
+          },
+          "salary_period": {
+            "default": "",
+            "title": "Salary Period",
+            "type": "string"
+          },
+          "source": {
+            "default": "",
+            "title": "Source",
+            "type": "string"
+          },
+          "state": {
+            "title": "State",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "url": {
+            "default": "",
+            "title": "Url",
+            "type": "string"
+          },
+          "web_url": {
+            "title": "Web Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "company",
+          "title",
+          "state",
+          "noted_at",
+          "application_ids",
+          "web_url"
+        ],
+        "title": "ListingDetailOut",
+        "type": "object"
+      },
+      "ListingIn": {
+        "description": "The posting half of intake: company by name, and what the listing says.",
+        "properties": {
+          "closes_at": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Closes At"
+          },
+          "company_name": {
+            "maxLength": 200,
+            "title": "Company Name",
+            "type": "string"
+          },
+          "company_wikidata": {
+            "default": "",
+            "description": "The employer's Wikidata id, when known: a stronger match than the name.",
+            "maxLength": 200,
+            "title": "Company Wikidata",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "employment_type": {
+            "default": "",
+            "maxLength": 20,
+            "title": "Employment Type",
+            "type": "string"
+          },
+          "location": {
+            "default": "",
+            "maxLength": 200,
+            "title": "Location",
+            "type": "string"
+          },
+          "remote_type": {
+            "default": "",
+            "maxLength": 20,
+            "title": "Remote Type",
+            "type": "string"
+          },
+          "salary_currency": {
+            "default": "EUR",
+            "maxLength": 3,
+            "title": "Salary Currency",
+            "type": "string"
+          },
+          "salary_max": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Salary Max"
+          },
+          "salary_min": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Salary Min"
+          },
+          "salary_period": {
+            "default": "year",
+            "maxLength": 10,
+            "title": "Salary Period",
+            "type": "string"
+          },
+          "source": {
+            "default": "",
+            "maxLength": 120,
+            "title": "Source",
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 250,
+            "title": "Title",
+            "type": "string"
+          },
+          "url": {
+            "default": "",
+            "maxLength": 500,
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "company_name",
+          "title"
+        ],
+        "title": "ListingIn",
+        "type": "object"
+      },
+      "ListingOut": {
+        "properties": {
+          "application_ids": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Application Ids",
+            "type": "array"
+          },
+          "closed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Closed At"
+          },
+          "closes_at": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Closes At"
+          },
+          "company": {
+            "$ref": "#/components/schemas/CompanyRef"
+          },
+          "decided_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Decided At"
+          },
+          "discard_reason": {
+            "default": "",
+            "title": "Discard Reason",
+            "type": "string"
+          },
+          "employment_type": {
+            "default": "",
+            "title": "Employment Type",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "location": {
+            "default": "",
+            "title": "Location",
+            "type": "string"
+          },
+          "noted_at": {
+            "format": "date-time",
+            "title": "Noted At",
+            "type": "string"
+          },
+          "posted_at": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Posted At"
+          },
+          "remote_type": {
+            "default": "",
+            "title": "Remote Type",
+            "type": "string"
+          },
+          "salary_currency": {
+            "default": "",
+            "title": "Salary Currency",
+            "type": "string"
+          },
+          "salary_max": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Salary Max"
+          },
+          "salary_min": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Salary Min"
+          },
+          "salary_period": {
+            "default": "",
+            "title": "Salary Period",
+            "type": "string"
+          },
+          "source": {
+            "default": "",
+            "title": "Source",
+            "type": "string"
+          },
+          "state": {
+            "title": "State",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "url": {
+            "default": "",
+            "title": "Url",
+            "type": "string"
+          },
+          "web_url": {
+            "title": "Web Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "company",
+          "title",
+          "state",
+          "noted_at",
+          "application_ids",
+          "web_url"
+        ],
+        "title": "ListingOut",
+        "type": "object"
+      },
+      "ListingRef": {
+        "properties": {
+          "company": {
+            "$ref": "#/components/schemas/CompanyRef"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "company"
+        ],
+        "title": "ListingRef",
+        "type": "object"
+      },
+      "PageIn": {
+        "description": "A page somebody wants Postulo to read.",
+        "properties": {
+          "html": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The page source, if the caller already has it. Supplying it means Postulo does not fetch the page itself, which is how a browser extension can capture a posting that is only visible to a signed-in reader.",
+            "title": "Html"
+          },
+          "url": {
+            "maxLength": 500,
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "title": "PageIn",
+        "type": "object"
+      },
+      "PagedApplicationOut": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ApplicationOut"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items",
+          "count"
+        ],
+        "title": "PagedApplicationOut",
+        "type": "object"
+      },
+      "PagedCVOut": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/CVOut"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items",
+          "count"
+        ],
+        "title": "PagedCVOut",
+        "type": "object"
+      },
+      "PagedCompanyOut": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/CompanyOut"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items",
+          "count"
+        ],
+        "title": "PagedCompanyOut",
+        "type": "object"
+      },
+      "PagedDocumentOut": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/DocumentOut"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items",
+          "count"
+        ],
+        "title": "PagedDocumentOut",
+        "type": "object"
+      },
+      "PagedInterviewOut": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/InterviewOut"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items",
+          "count"
+        ],
+        "title": "PagedInterviewOut",
+        "type": "object"
+      },
+      "PagedLetterOut": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/LetterOut"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items",
+          "count"
+        ],
+        "title": "PagedLetterOut",
+        "type": "object"
+      },
+      "PagedListingOut": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ListingOut"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items",
+          "count"
+        ],
+        "title": "PagedListingOut",
+        "type": "object"
+      },
+      "PagedReminderOut": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ReminderOut"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items",
+          "count"
+        ],
+        "title": "PagedReminderOut",
+        "type": "object"
+      },
+      "PhoneNumberOut": {
+        "properties": {
+          "is_primary": {
+            "default": false,
+            "title": "Is Primary",
+            "type": "boolean"
+          },
+          "kind": {
+            "default": "",
+            "title": "Kind",
+            "type": "string"
+          },
+          "label": {
+            "default": "",
+            "title": "Label",
+            "type": "string"
+          },
+          "number": {
+            "title": "Number",
+            "type": "string"
+          }
+        },
+        "required": [
+          "number"
+        ],
+        "title": "PhoneNumberOut",
+        "type": "object"
+      },
+      "PreviewOut": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/JobPostingData"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "url",
+          "source",
+          "data"
+        ],
+        "title": "PreviewOut",
+        "type": "object"
+      },
+      "ReminderIn": {
+        "properties": {
+          "application_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Application Id"
+          },
+          "due_at": {
+            "format": "date-time",
+            "title": "Due At",
+            "type": "string"
+          },
+          "summary": {
+            "maxLength": 250,
+            "title": "Summary",
+            "type": "string"
+          }
+        },
+        "required": [
+          "summary",
+          "due_at"
+        ],
+        "title": "ReminderIn",
+        "type": "object"
+      },
+      "ReminderOut": {
+        "properties": {
+          "application_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Application Id"
+          },
+          "done_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Done At"
+          },
+          "due_at": {
+            "format": "date-time",
+            "title": "Due At",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "notified_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notified At"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "summary",
+          "due_at"
+        ],
+        "title": "ReminderOut",
+        "type": "object"
+      },
+      "SearchGroupOut": {
+        "properties": {
+          "hits": {
+            "items": {
+              "$ref": "#/components/schemas/SearchHitOut"
+            },
+            "title": "Hits",
+            "type": "array"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "kind",
+          "label",
+          "total",
+          "hits"
+        ],
+        "title": "SearchGroupOut",
+        "type": "object"
+      },
+      "SearchHitOut": {
+        "properties": {
+          "excerpt": {
+            "default": "",
+            "title": "Excerpt",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "subtitle": {
+            "default": "",
+            "title": "Subtitle",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "web_url": {
+            "title": "Web Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "web_url"
+        ],
+        "title": "SearchHitOut",
+        "type": "object"
+      },
+      "StatusIn": {
+        "properties": {
+          "note": {
+            "default": "",
+            "title": "Note",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "title": "StatusIn",
+        "type": "object"
+      },
+      "TokenOut": {
+        "properties": {
+          "expires_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expires At"
+          },
+          "last_used_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Used At"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "owner": {
+            "title": "Owner",
+            "type": "string"
+          },
+          "scopes": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Scopes",
+            "type": "array"
+          }
+        },
+        "required": [
+          "name",
+          "owner",
+          "scopes"
+        ],
+        "title": "TokenOut",
+        "type": "object"
+      },
+      "WebLinkOut": {
+        "properties": {
+          "is_primary": {
+            "default": false,
+            "title": "Is Primary",
+            "type": "boolean"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "label": {
+            "default": "",
+            "title": "Label",
+            "type": "string"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "url"
+        ],
+        "title": "WebLinkOut",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "ScopedAuth": {
+        "scheme": "bearer",
+        "type": "http"
+      },
+      "TokenAuth": {
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "description": "Scoped bearer tokens, made under Settings → API tokens. `captures` hands over a posting; `read` reads everything the owner has; `write` records and changes through the same services as the forms; `documents:read` downloads files.",
+    "title": "Postulo API",
+    "version": "1"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/v1/applications": {
+      "get": {
+        "operationId": "postulo_api_routers_applications_list_applications",
+        "parameters": [
+          {
+            "description": "One status, e.g. applied",
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "One status, e.g. applied",
+              "title": "Status"
+            }
+          },
+          {
+            "description": "A company id",
+            "in": "query",
+            "name": "company",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "A company id",
+              "title": "Company"
+            }
+          },
+          {
+            "description": "Applied on or after this date",
+            "in": "query",
+            "name": "since",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Applied on or after this date",
+              "title": "Since"
+            }
+          },
+          {
+            "description": "Only applications still undecided",
+            "in": "query",
+            "name": "open_only",
+            "required": false,
+            "schema": {
+              "default": false,
+              "description": "Only applications still undecided",
+              "title": "Open Only",
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Only applications that have gone quiet by the owner's threshold",
+            "in": "query",
+            "name": "quiet",
+            "required": false,
+            "schema": {
+              "default": false,
+              "description": "Only applications that have gone quiet by the owner's threshold",
+              "title": "Quiet",
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedApplicationOut"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "List applications",
+        "tags": [
+          "applications"
+        ]
+      },
+      "post": {
+        "description": "The one-step door: a listing and the application for it, as the web form does it.",
+        "operationId": "postulo_api_routers_applications_record_application",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationDetailOut"
+                }
+              }
+            },
+            "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Record an application",
+        "tags": [
+          "applications"
+        ]
+      }
+    },
+    "/api/v1/applications/{pk}": {
+      "get": {
+        "operationId": "postulo_api_routers_applications_get_application",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationDetailOut"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "One application, with its timeline",
+        "tags": [
+          "applications"
+        ]
+      }
+    },
+    "/api/v1/applications/{pk}/events": {
+      "post": {
+        "operationId": "postulo_api_routers_applications_add_event",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventOut"
+                }
+              }
+            },
+            "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Add an entry to the timeline",
+        "tags": [
+          "applications"
+        ]
+      }
+    },
+    "/api/v1/applications/{pk}/status": {
+      "post": {
+        "operationId": "postulo_api_routers_applications_set_status",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StatusIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationDetailOut"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Move an application to another status",
+        "tags": [
+          "applications"
+        ]
+      }
+    },
+    "/api/v1/captures": {
+      "get": {
+        "operationId": "postulo_api_api_list_captures",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/CaptureOut"
+                  },
+                  "title": "Response",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "List captures awaiting review",
+        "tags": [
+          "captures"
+        ]
+      },
+      "post": {
+        "description": "Read a posting and store it for review.\n\nNothing is created beyond the capture itself. The owner still has to look at it and\nsave it before a listing exists, because a parser reading somebody else's markup is\nnot a good enough reason to write to their records. Corrections sent with it change\nwhat the review screen opens with, not that it has to be reviewed.",
+        "operationId": "postulo_api_api_create_capture",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CaptureIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaptureOut"
+                }
+              }
+            },
+            "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Capture a posting",
+        "tags": [
+          "captures"
+        ]
+      }
+    },
+    "/api/v1/captures/known": {
+      "post": {
+        "description": "Say what the owner already holds for each posting, and store nothing.\n\nFor a client that would rather tell the person before sending than show them a\nduplicate afterwards: a listing at that address however it was spelled, a capture of it\nstill waiting for review, and -- more softly -- a listing with that title at that\ncompany, which is how a board that mints a fresh address per visit hides a duplicate.\nNothing is refused on the strength of it; the answer is theirs (#178).",
+        "operationId": "postulo_api_api_known_captures",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnownIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/KnownOut"
+                  },
+                  "title": "Response",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Ask whether postings have been captured before",
+        "tags": [
+          "captures"
+        ]
+      }
+    },
+    "/api/v1/captures/preview": {
+      "post": {
+        "description": "Say what a page would be captured as, and store nothing.\n\nFor a client that shows the person what was read before sending it, so they can\ncorrect it first: a browser extension's popup. Nothing is created and nobody is\nnotified; the same page sent to ``POST /captures`` afterwards is read again.",
+        "operationId": "postulo_api_api_preview_capture",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PageIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PreviewOut"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Read a posting without capturing it",
+        "tags": [
+          "captures"
+        ]
+      }
+    },
+    "/api/v1/companies": {
+      "get": {
+        "operationId": "postulo_api_routers_companies_list_companies",
+        "parameters": [
+          {
+            "description": "Name, location or industry",
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Name, location or industry",
+              "title": "Q"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedCompanyOut"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "List companies",
+        "tags": [
+          "companies"
+        ]
+      },
+      "post": {
+        "description": "Matched by name, case-insensitively, as the forms do: no second Acme.",
+        "operationId": "postulo_api_routers_companies_add_company",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompanyIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyDetailOut"
+                }
+              }
+            },
+            "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Add a company",
+        "tags": [
+          "companies"
+        ]
+      }
+    },
+    "/api/v1/companies/{pk}": {
+      "get": {
+        "operationId": "postulo_api_routers_companies_get_company",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyDetailOut"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "One company, with its contacts",
+        "tags": [
+          "companies"
+        ]
+      },
+      "patch": {
+        "operationId": "postulo_api_routers_companies_patch_company",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompanyPatch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyDetailOut"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Change a company",
+        "tags": [
+          "companies"
+        ]
+      }
+    },
+    "/api/v1/companies/{pk}/contacts": {
+      "post": {
+        "operationId": "postulo_api_routers_companies_add_contact",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactOut"
+                }
+              }
+            },
+            "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Add a contact at a company",
+        "tags": [
+          "companies"
+        ]
+      }
+    },
+    "/api/v1/cvs": {
+      "get": {
+        "operationId": "postulo_api_routers_documents_list_cvs",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedCVOut"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "List CVs",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/cvs/{pk}": {
+      "get": {
+        "operationId": "postulo_api_routers_documents_get_cv",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CVDetailOut"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "One CV, with what it includes",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents": {
+      "get": {
+        "operationId": "postulo_api_routers_documents_list_documents",
+        "parameters": [
+          {
+            "description": "upload or rendered; both by default",
+            "in": "query",
+            "name": "source",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "upload or rendered; both by default",
+              "title": "Source"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedDocumentOut"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "List files: uploads and snapshots",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/{source}/{pk}/download": {
+      "get": {
+        "operationId": "postulo_api_routers_documents_download_document",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "source",
+            "required": true,
+            "schema": {
+              "title": "Source",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Download a file",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/insights": {
+      "get": {
+        "operationId": "postulo_api_routers_insights_get_insights",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "The figures the Insights page shows",
+        "tags": [
+          "insights"
+        ]
+      }
+    },
+    "/api/v1/interviews": {
+      "get": {
+        "operationId": "postulo_api_routers_interviews_list_interviews",
+        "parameters": [
+          {
+            "description": "upcoming (default: scheduled and not over), scheduled, past or all",
+            "in": "query",
+            "name": "state",
+            "required": false,
+            "schema": {
+              "default": "upcoming",
+              "description": "upcoming (default: scheduled and not over), scheduled, past or all",
+              "title": "State",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Only this application's",
+            "in": "query",
+            "name": "application",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Only this application's",
+              "title": "Application"
+            }
+          },
+          {
+            "description": "Starting on or after this moment",
+            "in": "query",
+            "name": "since",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Starting on or after this moment",
+              "title": "Since"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedInterviewOut"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "List interviews",
+        "tags": [
+          "interviews"
+        ]
+      },
+      "post": {
+        "operationId": "postulo_api_routers_interviews_add_interview",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InterviewIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InterviewOut"
+                }
+              }
+            },
+            "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Schedule an interview",
+        "tags": [
+          "interviews"
+        ]
+      }
+    },
+    "/api/v1/interviews/calendar.ics": {
+      "get": {
+        "operationId": "postulo_api_routers_interviews_calendar_feed",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Everything still ahead, as an iCalendar file",
+        "tags": [
+          "interviews"
+        ]
+      }
+    },
+    "/api/v1/interviews/{pk}": {
+      "get": {
+        "operationId": "postulo_api_routers_interviews_get_interview",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InterviewOut"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "One interview",
+        "tags": [
+          "interviews"
+        ]
+      },
+      "patch": {
+        "operationId": "postulo_api_routers_interviews_change_interview",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InterviewPatch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InterviewOut"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Change an interview",
+        "tags": [
+          "interviews"
+        ]
+      }
+    },
+    "/api/v1/interviews/{pk}/calendar.ics": {
+      "get": {
+        "operationId": "postulo_api_routers_interviews_interview_calendar",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "One interview, as an iCalendar file",
+        "tags": [
+          "interviews"
+        ]
+      }
+    },
+    "/api/v1/interviews/{pk}/outcome": {
+      "post": {
+        "operationId": "postulo_api_routers_interviews_record_outcome",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InterviewOutcomeIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InterviewOut"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Record how it went: done, cancelled or no_show",
+        "tags": [
+          "interviews"
+        ]
+      }
+    },
+    "/api/v1/letters": {
+      "get": {
+        "operationId": "postulo_api_routers_documents_list_letters",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedLetterOut"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "List cover letters",
+        "tags": [
+          "documents"
+        ]
+      },
+      "post": {
+        "operationId": "postulo_api_routers_documents_draft_letter",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LetterIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LetterDetailOut"
+                }
+              }
+            },
+            "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Draft a cover letter",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/letters/{pk}": {
+      "get": {
+        "operationId": "postulo_api_routers_documents_get_letter",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LetterDetailOut"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "One letter, with its text",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/listings": {
+      "get": {
+        "operationId": "postulo_api_routers_listings_list_listings",
+        "parameters": [
+          {
+            "description": "undecided (default), new, shortlisted, discarded, applied, closed or all",
+            "in": "query",
+            "name": "state",
+            "required": false,
+            "schema": {
+              "default": "undecided",
+              "description": "undecided (default), new, shortlisted, discarded, applied, closed or all",
+              "title": "State",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "company",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Company"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedListingOut"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "List listings",
+        "tags": [
+          "listings"
+        ]
+      },
+      "post": {
+        "operationId": "postulo_api_routers_listings_add_listing",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ListingIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListingDetailOut"
+                }
+              }
+            },
+            "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Add a listing",
+        "tags": [
+          "listings"
+        ]
+      }
+    },
+    "/api/v1/listings/{pk}": {
+      "get": {
+        "operationId": "postulo_api_routers_listings_get_listing",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListingDetailOut"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "One listing",
+        "tags": [
+          "listings"
+        ]
+      }
+    },
+    "/api/v1/listings/{pk}/apply": {
+      "post": {
+        "operationId": "postulo_api_routers_listings_apply",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationDetailsIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationDetailOut"
+                }
+              }
+            },
+            "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Apply: turn a listing into an application",
+        "tags": [
+          "listings"
+        ]
+      }
+    },
+    "/api/v1/listings/{pk}/discard": {
+      "post": {
+        "operationId": "postulo_api_routers_listings_discard",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DiscardIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListingDetailOut"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Discard",
+        "tags": [
+          "listings"
+        ]
+      }
+    },
+    "/api/v1/listings/{pk}/restore": {
+      "post": {
+        "operationId": "postulo_api_routers_listings_restore",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListingDetailOut"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Restore",
+        "tags": [
+          "listings"
+        ]
+      }
+    },
+    "/api/v1/listings/{pk}/shortlist": {
+      "post": {
+        "operationId": "postulo_api_routers_listings_shortlist",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListingDetailOut"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Shortlist",
+        "tags": [
+          "listings"
+        ]
+      }
+    },
+    "/api/v1/me": {
+      "get": {
+        "description": "Confirm a token works, and say who it belongs to and what it may do.\n\nA client needs some way to tell a mistyped token from a network problem without\ncreating anything.",
+        "operationId": "postulo_api_api_whoami",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenOut"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "TokenAuth": []
+          }
+        ],
+        "summary": "Check a token"
+      }
+    },
+    "/api/v1/reminders": {
+      "get": {
+        "operationId": "postulo_api_routers_reminders_list_reminders",
+        "parameters": [
+          {
+            "description": "Only outstanding reminders whose time has come",
+            "in": "query",
+            "name": "due",
+            "required": false,
+            "schema": {
+              "default": false,
+              "description": "Only outstanding reminders whose time has come",
+              "title": "Due",
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Only reminders not yet done",
+            "in": "query",
+            "name": "outstanding",
+            "required": false,
+            "schema": {
+              "default": false,
+              "description": "Only reminders not yet done",
+              "title": "Outstanding",
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedReminderOut"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "List reminders",
+        "tags": [
+          "reminders"
+        ]
+      },
+      "post": {
+        "operationId": "postulo_api_routers_reminders_add_reminder",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReminderIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReminderOut"
+                }
+              }
+            },
+            "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Add a reminder",
+        "tags": [
+          "reminders"
+        ]
+      }
+    },
+    "/api/v1/reminders/{pk}/complete": {
+      "post": {
+        "operationId": "postulo_api_routers_reminders_complete_reminder",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReminderOut"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Mark a reminder done",
+        "tags": [
+          "reminders"
+        ]
+      }
+    },
+    "/api/v1/search": {
+      "get": {
+        "operationId": "postulo_api_routers_search_search_everything",
+        "parameters": [
+          {
+            "description": "At least two characters; matched case-insensitively",
+            "in": "query",
+            "name": "q",
+            "required": true,
+            "schema": {
+              "description": "At least two characters; matched case-insensitively",
+              "title": "Q",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Hits per group",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 5,
+              "description": "Hits per group",
+              "maximum": 50,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/SearchGroupOut"
+                  },
+                  "title": "Response",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Search everything the owner has",
+        "tags": [
+          "search"
+        ]
+      }
+    }
+  },
+  "servers": []
+}
