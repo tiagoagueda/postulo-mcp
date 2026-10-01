@@ -60,6 +60,18 @@
             ],
             "title": "Deadline"
           },
+          "end_note": {
+            "default": "",
+            "description": "What was written beside the ending.",
+            "title": "End Note",
+            "type": "string"
+          },
+          "end_reason": {
+            "default": "",
+            "description": "Why it ended, for an application that is rejected, withdrawn or ghosted: the latest reason on its timeline since it ended. Empty where none was given.",
+            "title": "End Reason",
+            "type": "string"
+          },
           "events": {
             "items": {
               "$ref": "#/components/schemas/EventOut"
@@ -78,6 +90,12 @@
             "title": "Interviews",
             "type": "array"
           },
+          "last_stage": {
+            "default": "",
+            "description": "The status it had reached when it ended, read from the timeline. Empty where the timeline does not say.",
+            "title": "Last Stage",
+            "type": "string"
+          },
           "listing": {
             "$ref": "#/components/schemas/ListingRef"
           },
@@ -93,9 +111,27 @@
             ],
             "title": "Next Interview At"
           },
+          "offers": {
+            "items": {
+              "$ref": "#/components/schemas/OfferOut"
+            },
+            "title": "Offers",
+            "type": "array"
+          },
           "priority": {
             "title": "Priority",
             "type": "integer"
+          },
+          "referred_by_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Referred By Id"
           },
           "reminders": {
             "items": {
@@ -122,6 +158,22 @@
             "title": "Tags",
             "type": "array"
           },
+          "through_agency_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Through Agency Id"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
           "web_url": {
             "title": "Web Url",
             "type": "string"
@@ -134,10 +186,12 @@
           "priority",
           "tags",
           "created_at",
+          "updated_at",
           "web_url",
           "events",
           "reminders",
           "interviews",
+          "offers",
           "sent_document_ids"
         ],
         "title": "ApplicationDetailOut",
@@ -156,7 +210,7 @@
                 "type": "null"
               }
             ],
-            "description": "When it was actually sent. Omitted, it is today — which is wrong for a search already under way, and every figure measured from this date with it (#222).",
+            "description": "When it was actually sent. Omitted, it is today \u2014 which is wrong for a search already under way, and every figure measured from this date with it (#222).",
             "title": "Applied On"
           },
           "channel": {
@@ -181,6 +235,18 @@
             "title": "Priority",
             "type": "integer"
           },
+          "referred_by_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The contact who referred you: one of your own, at any company or none.",
+            "title": "Referred By Id"
+          },
           "status": {
             "default": "applied",
             "title": "Status",
@@ -193,6 +259,18 @@
             },
             "title": "Tags",
             "type": "array"
+          },
+          "through_agency_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The recruitment agency it went through: one of your own companies. The listing's company stays the employer.",
+            "title": "Through Agency Id"
           }
         },
         "title": "ApplicationDetailsIn",
@@ -211,7 +289,7 @@
                 "type": "null"
               }
             ],
-            "description": "When it was actually sent. Omitted, it is today — which is wrong for a search already under way, and every figure measured from this date with it (#222).",
+            "description": "When it was actually sent. Omitted, it is today \u2014 which is wrong for a search already under way, and every figure measured from this date with it (#222).",
             "title": "Applied On"
           },
           "channel": {
@@ -276,6 +354,18 @@
             "default": 2,
             "title": "Priority",
             "type": "integer"
+          },
+          "referred_by_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The contact who referred you: one of your own, at any company or none.",
+            "title": "Referred By Id"
           },
           "remote_type": {
             "default": "",
@@ -343,6 +433,18 @@
             },
             "title": "Tags",
             "type": "array"
+          },
+          "through_agency_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The recruitment agency it went through: one of your own companies. The listing's company stays the employer.",
+            "title": "Through Agency Id"
           },
           "title": {
             "maxLength": 250,
@@ -422,9 +524,27 @@
             ],
             "title": "Deadline"
           },
+          "end_note": {
+            "default": "",
+            "description": "What was written beside the ending.",
+            "title": "End Note",
+            "type": "string"
+          },
+          "end_reason": {
+            "default": "",
+            "description": "Why it ended, for an application that is rejected, withdrawn or ghosted: the latest reason on its timeline since it ended. Empty where none was given.",
+            "title": "End Reason",
+            "type": "string"
+          },
           "id": {
             "title": "Id",
             "type": "integer"
+          },
+          "last_stage": {
+            "default": "",
+            "description": "The status it had reached when it ended, read from the timeline. Empty where the timeline does not say.",
+            "title": "Last Stage",
+            "type": "string"
           },
           "listing": {
             "$ref": "#/components/schemas/ListingRef"
@@ -445,6 +565,17 @@
             "title": "Priority",
             "type": "integer"
           },
+          "referred_by_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Referred By Id"
+          },
           "status": {
             "title": "Status",
             "type": "string"
@@ -455,6 +586,22 @@
             },
             "title": "Tags",
             "type": "array"
+          },
+          "through_agency_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Through Agency Id"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
           },
           "web_url": {
             "title": "Web Url",
@@ -468,6 +615,7 @@
           "priority",
           "tags",
           "created_at",
+          "updated_at",
           "web_url"
         ],
         "title": "ApplicationOut",
@@ -521,12 +669,21 @@
           },
           "language": {
             "default": "",
+            "description": "The language it is written in, as a BCP 47 tag in its canonical form (`pt-BR`); blank follows the profile",
             "title": "Language",
             "type": "string"
           },
           "name": {
             "title": "Name",
             "type": "string"
+          },
+          "prints": {
+            "$ref": "#/components/schemas/CVPrintsOut"
+          },
+          "show_contact_details": {
+            "description": "The master switch: false prints no name and none of `prints`",
+            "title": "Show Contact Details",
+            "type": "boolean"
           },
           "summary": {
             "default": "",
@@ -536,6 +693,11 @@
           "theme": {
             "title": "Theme",
             "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
           }
         },
         "required": [
@@ -543,7 +705,10 @@
           "name",
           "theme",
           "item_count",
-          "items"
+          "updated_at",
+          "items",
+          "show_contact_details",
+          "prints"
         ],
         "title": "CVDetailOut",
         "type": "object"
@@ -588,6 +753,7 @@
           },
           "language": {
             "default": "",
+            "description": "The language it is written in, as a BCP 47 tag in its canonical form (`pt-BR`); blank follows the profile",
             "title": "Language",
             "type": "string"
           },
@@ -603,15 +769,352 @@
           "theme": {
             "title": "Theme",
             "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
           }
         },
         "required": [
           "id",
           "name",
           "theme",
-          "item_count"
+          "item_count",
+          "updated_at"
         ],
         "title": "CVOut",
+        "type": "object"
+      },
+      "CVPatch": {
+        "description": "What may be changed about a CV through the API: what it prints of its owner's\ndetails. A field left out is left alone.",
+        "properties": {
+          "prints": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CVPrintsIn"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "show_contact_details": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Show Contact Details"
+          }
+        },
+        "title": "CVPatch",
+        "type": "object"
+      },
+      "CVPrintsIdentifiersIn": {
+        "properties": {
+          "choice": {
+            "description": "default, chosen or none",
+            "title": "Choice",
+            "type": "string"
+          },
+          "ids": {
+            "description": "With `chosen`: ids `offered` lists. Left out otherwise",
+            "items": {
+              "type": "integer"
+            },
+            "maxItems": 200,
+            "title": "Ids",
+            "type": "array"
+          }
+        },
+        "required": [
+          "choice"
+        ],
+        "title": "CVPrintsIdentifiersIn",
+        "type": "object"
+      },
+      "CVPrintsIdentifiersOut": {
+        "properties": {
+          "choice": {
+            "description": "`default` prints every identifier, including one added later; `chosen` prints exactly the rows in `ids`; `none` prints none",
+            "title": "Choice",
+            "type": "string"
+          },
+          "ids": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Ids",
+            "type": "array"
+          },
+          "offered": {
+            "description": "Your own identifiers, any of which may be pinned. Left out of the answer to a `PATCH` made with a token that does not hold `read`",
+            "items": {
+              "$ref": "#/components/schemas/CVRowOut"
+            },
+            "title": "Offered",
+            "type": "array"
+          },
+          "printed": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Printed",
+            "type": "array"
+          }
+        },
+        "required": [
+          "choice"
+        ],
+        "title": "CVPrintsIdentifiersOut",
+        "type": "object"
+      },
+      "CVPrintsIn": {
+        "description": "A kind left out is left alone.",
+        "properties": {
+          "email": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CVPrintsOneIn"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "form_of_address": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Form Of Address"
+          },
+          "identifiers": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CVPrintsIdentifiersIn"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "location": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location"
+          },
+          "phone": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CVPrintsOneIn"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "pronouns": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pronouns"
+          },
+          "repository": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CVPrintsOneIn"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "social": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CVPrintsOneIn"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "website": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CVPrintsOneIn"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "title": "CVPrintsIn",
+        "type": "object"
+      },
+      "CVPrintsOneIn": {
+        "properties": {
+          "choice": {
+            "description": "default, chosen or none",
+            "title": "Choice",
+            "type": "string"
+          },
+          "id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "With `chosen`: one of the ids `offered` lists, which `GET /cvs/{id}` gives. Left out otherwise",
+            "title": "Id"
+          }
+        },
+        "required": [
+          "choice"
+        ],
+        "title": "CVPrintsOneIn",
+        "type": "object"
+      },
+      "CVPrintsOneOut": {
+        "description": "A kind a CV prints at most one of: a number, an address, a link of one kind.",
+        "properties": {
+          "choice": {
+            "description": "`default` follows your details (the primary, or the account's address); `chosen` pins the row named by `id`; `none` prints none of this kind",
+            "title": "Choice",
+            "type": "string"
+          },
+          "id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The row pinned while `choice` is `chosen`. Null with `chosen` means the row has since been deleted from your details, or is kept back and not offered at present: the CV prints none of this kind",
+            "title": "Id"
+          },
+          "offered": {
+            "description": "Your own rows of this kind, any of which may be pinned. Left out of the answer to a `PATCH` made with a token that does not hold `read`",
+            "items": {
+              "$ref": "#/components/schemas/CVRowOut"
+            },
+            "title": "Offered",
+            "type": "array"
+          },
+          "printed": {
+            "default": "",
+            "description": "What the CV prints as things stand; empty: none",
+            "title": "Printed",
+            "type": "string"
+          }
+        },
+        "required": [
+          "choice"
+        ],
+        "title": "CVPrintsOneOut",
+        "type": "object"
+      },
+      "CVPrintsOut": {
+        "description": "Which of the owner's details a CV prints (#308). Read when the document is drawn, so\na version already sent is not changed by changing any of it.",
+        "properties": {
+          "email": {
+            "$ref": "#/components/schemas/CVPrintsOneOut"
+          },
+          "form_of_address": {
+            "description": "Whether it is printed before the name",
+            "title": "Form Of Address",
+            "type": "boolean"
+          },
+          "identifiers": {
+            "$ref": "#/components/schemas/CVPrintsIdentifiersOut"
+          },
+          "location": {
+            "description": "Whether the location is printed: the profile's `printed_location`",
+            "title": "Location",
+            "type": "boolean"
+          },
+          "phone": {
+            "$ref": "#/components/schemas/CVPrintsOneOut"
+          },
+          "pronouns": {
+            "description": "Whether they are printed after the name",
+            "title": "Pronouns",
+            "type": "boolean"
+          },
+          "repository": {
+            "$ref": "#/components/schemas/CVPrintsOneOut"
+          },
+          "social": {
+            "$ref": "#/components/schemas/CVPrintsOneOut"
+          },
+          "website": {
+            "$ref": "#/components/schemas/CVPrintsOneOut"
+          }
+        },
+        "required": [
+          "phone",
+          "email",
+          "social",
+          "repository",
+          "website",
+          "identifiers",
+          "location",
+          "form_of_address",
+          "pronouns"
+        ],
+        "title": "CVPrintsOut",
+        "type": "object"
+      },
+      "CVRowOut": {
+        "description": "One of the owner's own rows a CV may be told to print (#308).",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "label": {
+            "description": "As *Your details* names it: a number with its kind, an address with the name it was given, an identifier with its scheme",
+            "title": "Label",
+            "type": "string"
+          },
+          "value": {
+            "description": "What a document prints for it",
+            "title": "Value",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "label",
+          "value"
+        ],
+        "title": "CVRowOut",
         "type": "object"
       },
       "CaptureIn": {
@@ -651,6 +1154,17 @@
             "description": "The page source, if the caller already has it. Supplying it means Postulo does not fetch the page itself, which is how a browser extension can capture a posting that is only visible to a signed-in reader.",
             "title": "Html"
           },
+          "keep": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/KeepIn"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Whether this capture may keep the source of its page. Left out, the account's own choice applies. It can only narrow that choice: asking for what the instance or the account has switched off keeps nothing."
+          },
           "url": {
             "maxLength": 500,
             "title": "Url",
@@ -682,6 +1196,9 @@
             "title": "Location",
             "type": "string"
           },
+          "page": {
+            "$ref": "#/components/schemas/KeptOut"
+          },
           "review_url": {
             "title": "Review Url",
             "type": "string"
@@ -698,6 +1215,11 @@
             "title": "Title",
             "type": "string"
           },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
           "url": {
             "title": "Url",
             "type": "string"
@@ -712,7 +1234,9 @@
           "source",
           "status",
           "created_at",
-          "review_url"
+          "updated_at",
+          "review_url",
+          "page"
         ],
         "title": "CaptureOut",
         "type": "object"
@@ -780,6 +1304,11 @@
             "title": "Notes",
             "type": "string"
           },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
           "website": {
             "default": "",
             "title": "Website",
@@ -790,6 +1319,7 @@
           "id",
           "name",
           "created_at",
+          "updated_at",
           "contacts",
           "listing_ids"
         ],
@@ -904,6 +1434,11 @@
             "title": "Notes",
             "type": "string"
           },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
           "website": {
             "default": "",
             "title": "Website",
@@ -913,7 +1448,8 @@
         "required": [
           "id",
           "name",
-          "created_at"
+          "created_at",
+          "updated_at"
         ],
         "title": "CompanyOut",
         "type": "object"
@@ -1350,6 +1886,12 @@
             "title": "Kind",
             "type": "string"
           },
+          "language": {
+            "default": "",
+            "description": "The language it is in, as a BCP 47 tag in its canonical form (`pt-BR`); blank where nobody has said",
+            "title": "Language",
+            "type": "string"
+          },
           "source": {
             "description": "'upload' for a file you had; 'rendered' for a snapshot",
             "title": "Source",
@@ -1357,6 +1899,11 @@
           },
           "title": {
             "title": "Title",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
             "type": "string"
           }
         },
@@ -1366,6 +1913,7 @@
           "kind",
           "title",
           "created_at",
+          "updated_at",
           "download_url"
         ],
         "title": "DocumentOut",
@@ -1415,6 +1963,12 @@
           "body": {
             "default": "",
             "title": "Body",
+            "type": "string"
+          },
+          "end_reason": {
+            "default": "",
+            "description": "Why the application ended, on the entry that ended it: pay, location, not_a_match, filled_internally, my_choice or other. Empty on every other entry.",
+            "title": "End Reason",
             "type": "string"
           },
           "from_status": {
@@ -1656,6 +2210,11 @@
             "title": "Uid",
             "type": "string"
           },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
           "web_url": {
             "title": "Web Url",
             "type": "string"
@@ -1671,7 +2230,8 @@
           "contact_ids",
           "outcome",
           "web_url",
-          "calendar_url"
+          "calendar_url",
+          "updated_at"
         ],
         "title": "InterviewOut",
         "type": "object"
@@ -1890,6 +2450,80 @@
         "title": "JobPostingData",
         "type": "object"
       },
+      "KeepIn": {
+        "additionalProperties": false,
+        "description": "What this one capture may keep of its page. It can narrow, and never widen (#256).\n\nWhether pages are kept at all is decided on the instance and then by the person, and\nnothing a request says can add to that. What a request can do is keep *less*, for one\ncapture: a page that addressed somebody by name, captured by somebody who would rather\nit were not kept this time.\n\n**The source only.** The source arrives in this request, as `html`, because it is what\nis read; so this request is where not keeping it is said. A rendering arrives in a\nrequest of its own afterwards, and not keeping one is not sending it -- a field here\nsaying so would be a promise the server has nothing to keep with.",
+        "properties": {
+          "source": {
+            "default": true,
+            "description": "False: do not keep the source of this page, whatever the account keeps.",
+            "title": "Source",
+            "type": "boolean"
+          }
+        },
+        "title": "KeepIn",
+        "type": "object"
+      },
+      "KeptOut": {
+        "description": "What a capture kept of the page it was read from, and what it would still take.\n\nRead this before drawing a page: `accepts_rendering` says whether a rendering sent to\n`rendering_url` would be taken, so a client does not go to the trouble of making one\nthat would be refused.",
+        "properties": {
+          "accepts_rendering": {
+            "description": "Whether a rendering sent to `rendering_url` now would be taken.",
+            "title": "Accepts Rendering",
+            "type": "boolean"
+          },
+          "note": {
+            "default": "",
+            "description": "Why something the account asked to have kept was not, in words for a person. Empty when everything asked for was kept, or nothing was asked for.",
+            "title": "Note",
+            "type": "string"
+          },
+          "rendering": {
+            "description": "Whether a rendering of the page is kept.",
+            "title": "Rendering",
+            "type": "boolean"
+          },
+          "rendering_max_bytes": {
+            "description": "The most a rendering may weigh.",
+            "title": "Rendering Max Bytes",
+            "type": "integer"
+          },
+          "rendering_type": {
+            "description": "The media type of the kept rendering, or empty.",
+            "title": "Rendering Type",
+            "type": "string"
+          },
+          "rendering_types": {
+            "description": "The media types a rendering may be.",
+            "items": {
+              "type": "string"
+            },
+            "title": "Rendering Types",
+            "type": "array"
+          },
+          "rendering_url": {
+            "description": "Where a rendering is sent, with PUT.",
+            "title": "Rendering Url",
+            "type": "string"
+          },
+          "source": {
+            "description": "Whether the source, as it was parsed, is kept.",
+            "title": "Source",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "source",
+          "rendering",
+          "rendering_type",
+          "accepts_rendering",
+          "rendering_url",
+          "rendering_types",
+          "rendering_max_bytes"
+        ],
+        "title": "KeptOut",
+        "type": "object"
+      },
       "KnownCaptureOut": {
         "properties": {
           "created_at": {
@@ -2065,6 +2699,12 @@
             "title": "Is Template",
             "type": "boolean"
           },
+          "language": {
+            "default": "",
+            "description": "The language it is written in, as a BCP 47 tag in its canonical form (`pt-BR`); blank follows the profile",
+            "title": "Language",
+            "type": "string"
+          },
           "name": {
             "title": "Name",
             "type": "string"
@@ -2077,6 +2717,11 @@
           "theme": {
             "title": "Theme",
             "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
           }
         },
         "required": [
@@ -2085,6 +2730,7 @@
           "is_template",
           "theme",
           "created_at",
+          "updated_at",
           "body"
         ],
         "title": "LetterDetailOut",
@@ -2135,6 +2781,12 @@
             "title": "Is Template",
             "type": "boolean"
           },
+          "language": {
+            "default": "",
+            "description": "The language it is written in, as a BCP 47 tag in its canonical form (`pt-BR`); blank follows the profile",
+            "title": "Language",
+            "type": "string"
+          },
           "name": {
             "title": "Name",
             "type": "string"
@@ -2147,6 +2799,11 @@
           "theme": {
             "title": "Theme",
             "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
           }
         },
         "required": [
@@ -2154,9 +2811,56 @@
           "name",
           "is_template",
           "theme",
-          "created_at"
+          "created_at",
+          "updated_at"
         ],
         "title": "LetterOut",
+        "type": "object"
+      },
+      "ListingChoiceOut": {
+        "description": "A listing, briefly: enough to choose one to file something into, and no more (#270).\n\nWhat a token holding only `listings:bind` reads. No description, no salary, no\napplications: a mail client choosing where a message goes needs to recognise the job,\nnot to read the person's search.",
+        "properties": {
+          "company_name": {
+            "title": "Company Name",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "location": {
+            "default": "",
+            "title": "Location",
+            "type": "string"
+          },
+          "noted_at": {
+            "format": "date-time",
+            "title": "Noted At",
+            "type": "string"
+          },
+          "state": {
+            "title": "State",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "company_name",
+          "state",
+          "noted_at",
+          "updated_at"
+        ],
+        "title": "ListingChoiceOut",
         "type": "object"
       },
       "ListingDetailOut": {
@@ -2222,9 +2926,21 @@
             "title": "Employment Type",
             "type": "string"
           },
+          "events": {
+            "items": {
+              "$ref": "#/components/schemas/ListingEventOut"
+            },
+            "title": "Events",
+            "type": "array"
+          },
           "id": {
             "title": "Id",
             "type": "integer"
+          },
+          "isco_code": {
+            "default": "",
+            "title": "Isco Code",
+            "type": "string"
           },
           "location": {
             "default": "",
@@ -2300,6 +3016,11 @@
             "title": "Title",
             "type": "string"
           },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
           "url": {
             "default": "",
             "title": "Url",
@@ -2317,9 +3038,175 @@
           "state",
           "noted_at",
           "application_ids",
-          "web_url"
+          "web_url",
+          "updated_at"
         ],
         "title": "ListingDetailOut",
+        "type": "object"
+      },
+      "ListingEventIn": {
+        "description": "An entry for a listing's history: what arrived, or what was said (#270).\n\nThe text is foreign text and is held to a length (#218): a longer summary or body is\nrefused rather than cut, so a client learns to send less instead of losing the end.",
+        "properties": {
+          "body": {
+            "default": "",
+            "description": "The message, the email's text, or what was said. At most 40,000 characters.",
+            "maxLength": 40000,
+            "title": "Body",
+            "type": "string"
+          },
+          "contact_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Who it came from: one of your contacts",
+            "title": "Contact Id"
+          },
+          "document_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "A file of yours it is about. Needed for a document entry.",
+            "title": "Document Id"
+          },
+          "external_id": {
+            "default": "",
+            "description": "What the source calls the thing -- a message id, say. Sent again with the same one for the same listing, the first entry is the answer (200) and nothing is added.",
+            "maxLength": 250,
+            "title": "External Id",
+            "type": "string"
+          },
+          "kind": {
+            "default": "note",
+            "description": "note (the default), email_received, call, message, document or other",
+            "title": "Kind",
+            "type": "string"
+          },
+          "occurred_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Now, if unset",
+            "title": "Occurred At"
+          },
+          "summary": {
+            "default": "",
+            "description": "The line the history shows",
+            "maxLength": 250,
+            "title": "Summary",
+            "type": "string"
+          }
+        },
+        "title": "ListingEventIn",
+        "type": "object"
+      },
+      "ListingEventOut": {
+        "description": "One entry in a listing's history (#270). Every word in it may be a stranger's.",
+        "properties": {
+          "actor": {
+            "default": "",
+            "title": "Actor",
+            "type": "string"
+          },
+          "body": {
+            "default": "",
+            "title": "Body",
+            "type": "string"
+          },
+          "capture_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The capture it points at, for a capture entry",
+            "title": "Capture Id"
+          },
+          "contact_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Who it came from, if recorded",
+            "title": "Contact Id"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "document_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The uploaded file it points at, while that file exists",
+            "title": "Document Id"
+          },
+          "external_id": {
+            "default": "",
+            "description": "What the source called the thing",
+            "title": "External Id",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "kind": {
+            "description": "note, email_received, call, message, document, capture or other",
+            "title": "Kind",
+            "type": "string"
+          },
+          "listing_id": {
+            "title": "Listing Id",
+            "type": "integer"
+          },
+          "occurred_at": {
+            "format": "date-time",
+            "title": "Occurred At",
+            "type": "string"
+          },
+          "summary": {
+            "default": "",
+            "title": "Summary",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "listing_id",
+          "kind",
+          "occurred_at",
+          "created_at"
+        ],
+        "title": "ListingEventOut",
         "type": "object"
       },
       "ListingIn": {
@@ -2440,6 +3327,7 @@
         "type": "object"
       },
       "ListingOut": {
+        "description": "A job posting with its company and state. `isco_code` is the ISCO-08 unit group the\ntitle matches in the ESCO classification, empty where it matches nothing (#266).",
         "properties": {
           "application_ids": {
             "items": {
@@ -2500,6 +3388,11 @@
           "id": {
             "title": "Id",
             "type": "integer"
+          },
+          "isco_code": {
+            "default": "",
+            "title": "Isco Code",
+            "type": "string"
           },
           "location": {
             "default": "",
@@ -2575,6 +3468,11 @@
             "title": "Title",
             "type": "string"
           },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
           "url": {
             "default": "",
             "title": "Url",
@@ -2592,7 +3490,8 @@
           "state",
           "noted_at",
           "application_ids",
-          "web_url"
+          "web_url",
+          "updated_at"
         ],
         "title": "ListingOut",
         "type": "object"
@@ -2617,6 +3516,147 @@
           "company"
         ],
         "title": "ListingRef",
+        "type": "object"
+      },
+      "OfferOut": {
+        "properties": {
+          "answer_by": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Answer By"
+          },
+          "application_id": {
+            "title": "Application Id",
+            "type": "integer"
+          },
+          "base_amount": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Base Amount"
+          },
+          "benefits": {
+            "default": "",
+            "title": "Benefits",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "currency": {
+            "default": "",
+            "title": "Currency",
+            "type": "string"
+          },
+          "equity": {
+            "default": "",
+            "title": "Equity",
+            "type": "string"
+          },
+          "holidays": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Holidays"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "location": {
+            "default": "",
+            "title": "Location",
+            "type": "string"
+          },
+          "notes": {
+            "default": "",
+            "title": "Notes",
+            "type": "string"
+          },
+          "period": {
+            "title": "Period",
+            "type": "string"
+          },
+          "reminder_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reminder Id"
+          },
+          "starts_on": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Starts On"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "variable_pay": {
+            "default": "",
+            "title": "Variable Pay",
+            "type": "string"
+          },
+          "web_url": {
+            "title": "Web Url",
+            "type": "string"
+          },
+          "yearly_amount": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The base pay as a year's worth, within its currency",
+            "title": "Yearly Amount"
+          }
+        },
+        "required": [
+          "id",
+          "application_id",
+          "period",
+          "web_url",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "OfferOut",
         "type": "object"
       },
       "PageIn": {
@@ -2686,6 +3726,27 @@
           "count"
         ],
         "title": "PagedCVOut",
+        "type": "object"
+      },
+      "PagedCaptureOut": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/CaptureOut"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items",
+          "count"
+        ],
+        "title": "PagedCaptureOut",
         "type": "object"
       },
       "PagedCompanyOut": {
@@ -2772,6 +3833,27 @@
         "title": "PagedLetterOut",
         "type": "object"
       },
+      "PagedListingChoiceOut": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ListingChoiceOut"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items",
+          "count"
+        ],
+        "title": "PagedListingChoiceOut",
+        "type": "object"
+      },
       "PagedListingOut": {
         "properties": {
           "count": {
@@ -2791,6 +3873,27 @@
           "count"
         ],
         "title": "PagedListingOut",
+        "type": "object"
+      },
+      "PagedOfferOut": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/OfferOut"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items",
+          "count"
+        ],
+        "title": "PagedOfferOut",
         "type": "object"
       },
       "PagedReminderOut": {
@@ -2847,6 +3950,14 @@
           "data": {
             "$ref": "#/components/schemas/JobPostingData"
           },
+          "hinted": {
+            "description": "The fields of `data` that were read where the owner's own corrections showed them to be on this site before, rather than from what the page states about itself. Worth showing as such: a remembered place is a better guess, not a fact.",
+            "items": {
+              "type": "string"
+            },
+            "title": "Hinted",
+            "type": "array"
+          },
           "source": {
             "title": "Source",
             "type": "string"
@@ -2862,6 +3973,183 @@
           "data"
         ],
         "title": "PreviewOut",
+        "type": "object"
+      },
+      "Problem": {
+        "additionalProperties": true,
+        "description": "One refusal, as RFC 9457 describes it. Here so the OpenAPI description carries it.\n\nDeclared rather than inferred because this is the one response shape a client must\nunderstand before it has made a single successful call, and a schema it can generate a\ntype from is the difference between that and reading prose.",
+        "properties": {
+          "detail": {
+            "default": "",
+            "title": "Detail",
+            "type": "string"
+          },
+          "instance": {
+            "default": "",
+            "title": "Instance",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "integer"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "type": {
+            "default": "about:blank",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "status"
+        ],
+        "title": "Problem",
+        "type": "object"
+      },
+      "ProfileOut": {
+        "description": "Your details: the name and the contact block a CV prints (#309).",
+        "properties": {
+          "first_name": {
+            "title": "First Name",
+            "type": "string"
+          },
+          "form_of_address": {
+            "default": "",
+            "description": "Written before the name (Mr, Mme, Eng.\u00aa), as the text itself; blank when not given. Printed only on a CV whose `prints.form_of_address` is true.",
+            "title": "Form Of Address",
+            "type": "string"
+          },
+          "headline": {
+            "default": "",
+            "title": "Headline",
+            "type": "string"
+          },
+          "last_name": {
+            "title": "Last Name",
+            "type": "string"
+          },
+          "location": {
+            "default": "",
+            "description": "As typed, and stored. Blank means the town and country of the primary postal address; `printed_location` is what that comes to.",
+            "title": "Location",
+            "type": "string"
+          },
+          "printed_location": {
+            "default": "",
+            "description": "Read-only: what a CV prints as where you are. `location` when it says anything, otherwise the town and country of the primary postal address, otherwise nothing. Never the street.",
+            "title": "Printed Location",
+            "type": "string"
+          },
+          "pronouns": {
+            "default": "",
+            "description": "How to refer to the person (she/her, iel), as the text itself; blank when not given. Printed only on a CV whose `prints.pronouns` is true.",
+            "title": "Pronouns",
+            "type": "string"
+          },
+          "record_language": {
+            "default": "",
+            "description": "The language the career record is written in, as a BCP 47 tag in its canonical form (`pt-BR`); blank is the interface's",
+            "title": "Record Language",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "first_name",
+          "last_name",
+          "updated_at"
+        ],
+        "title": "ProfileOut",
+        "type": "object"
+      },
+      "ProfilePatch": {
+        "description": "What may be changed. A field left out is left alone; `printed_location` is read-only\nand ignored if sent. Each is stripped of the space around it before it is measured.",
+        "properties": {
+          "first_name": {
+            "anyOf": [
+              {
+                "maxLength": 150,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "First Name"
+          },
+          "form_of_address": {
+            "anyOf": [
+              {
+                "maxLength": 40,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Any text, including one no list offers; empty clears it",
+            "title": "Form Of Address"
+          },
+          "headline": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Headline"
+          },
+          "last_name": {
+            "anyOf": [
+              {
+                "maxLength": 150,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Name"
+          },
+          "location": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Empty goes back to the primary postal address's town and country",
+            "title": "Location"
+          },
+          "pronouns": {
+            "anyOf": [
+              {
+                "maxLength": 40,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Any text, including one no list offers; empty clears it",
+            "title": "Pronouns"
+          }
+        },
+        "title": "ProfilePatch",
         "type": "object"
       },
       "ReminderIn": {
@@ -2944,14 +4232,62 @@
           "summary": {
             "title": "Summary",
             "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
           }
         },
         "required": [
           "id",
           "summary",
-          "due_at"
+          "due_at",
+          "updated_at"
         ],
         "title": "ReminderOut",
+        "type": "object"
+      },
+      "ReminderPatch": {
+        "description": "What may be changed about a reminder, and nothing more (#238).\n\nEvery field optional and read with ``exclude_unset``, so a client that sends only\n``due_at`` moves the reminder and leaves the rest alone -- the difference between \"no\napplication\" and \"do not touch the application\" is the difference between a `PATCH` and\na replacement, and `application_id: None` means the first.\n\n``done_at`` is not here. Marking one done goes through ``/complete``, which is a verb\nrather than a column, and a client that could write the stamp directly could write one\nin the future or in the wrong order.",
+        "properties": {
+          "application_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Application Id"
+          },
+          "due_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Due At"
+          },
+          "summary": {
+            "anyOf": [
+              {
+                "maxLength": 250,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Summary"
+          }
+        },
+        "title": "ReminderPatch",
         "type": "object"
       },
       "SearchGroupOut": {
@@ -3020,6 +4356,12 @@
       },
       "StatusIn": {
         "properties": {
+          "end_reason": {
+            "default": "",
+            "description": "Why it ended, with rejected, withdrawn or ghosted: pay, location, not_a_match, filled_internally, my_choice or other. Sent with the status the application already has, it is a reason learnt afterwards and is added to the timeline.",
+            "title": "End Reason",
+            "type": "string"
+          },
           "note": {
             "default": "",
             "title": "Note",
@@ -3127,7 +4469,7 @@
     }
   },
   "info": {
-    "description": "Scoped bearer tokens, made under Settings → API tokens. `captures` hands over a posting; `read` reads everything the owner has; `write` records and changes through the same services as the forms; `documents:read` downloads files.",
+    "description": "Scoped bearer tokens, made under Settings \u2192 API tokens. `captures` hands over a posting; `listings:bind` adds to a listing's history and lists the listings to choose one from, and nothing else; `read` reads everything the owner has; `write` records and changes through the same services as the forms, the owner's own details (`/profile`) among them, and which of them a CV prints (`/cvs/{id}`); `documents:read` downloads files. A `PATCH` answers with the record as it stands after the change, so a token holding `write` sees what it changes, without holding `read`. What it did not change it is not shown: the rows of the owner's details a CV may be told to print (`offered`) are in the answer to `PATCH /cvs/{id}` only for a token that holds `read` as well.",
     "title": "Postulo API",
     "version": "1"
   },
@@ -3217,6 +4559,43 @@
             }
           },
           {
+            "description": "Changed at or after this moment, oldest change first \u2014 the cursor for catching up rather than re-reading. Every row carries the `updated_at` to ask from next time.",
+            "in": "query",
+            "name": "updated_since",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Changed at or after this moment, oldest change first \u2014 the cursor for catching up rather than re-reading. Every row carries the `updated_at` to ask from next time.",
+              "title": "Updated Since"
+            }
+          },
+          {
+            "description": "The id of the last row already read, sent with `updated_since` from that same row. Without it a run of rows saved in the same moment cannot be walked past.",
+            "in": "query",
+            "name": "after_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The id of the last row already read, sent with `updated_since` from that same row. Without it a run of rows saved in the same moment cannot be walked past.",
+              "title": "After Id"
+            }
+          },
+          {
             "in": "query",
             "name": "limit",
             "required": false,
@@ -3249,6 +4628,46 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -3285,6 +4704,46 @@
               }
             },
             "description": "Created"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -3322,6 +4781,56 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -3369,6 +4878,56 @@
               }
             },
             "description": "Created"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -3384,6 +4943,7 @@
     },
     "/api/v1/applications/{pk}/status": {
       "post": {
+        "description": "Move it, and say why it ended where it did (#239).\n\nA reason sent with a status that is not an ending is refused rather than dropped: a\nform shows the box whatever the status and forgives a slip, but a client that sends\none chose to, and an answer of 200 would tell it the reason had been kept.",
         "operationId": "postulo_api_routers_applications_set_status",
         "parameters": [
           {
@@ -3416,6 +4976,56 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -3431,22 +5041,101 @@
     },
     "/api/v1/captures": {
       "get": {
+        "description": "What is still waiting to be reviewed, newest first.\n\nIt used to be the first fifty rows in whatever order the database felt like handing\nthem over, while the wiki promised every list took ``limit`` and ``offset`` and came\nback as ``{\"items\", \"count\"}``. A queue nobody has kept up with runs past fifty, and\nnothing said so (#230).",
         "operationId": "postulo_api_api_list_captures",
-        "parameters": [],
+        "parameters": [
+          {
+            "description": "Changed at or after this moment, oldest change first \u2014 the cursor for catching up rather than re-reading. Every row carries the `updated_at` to ask from next time.",
+            "in": "query",
+            "name": "updated_since",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Changed at or after this moment, oldest change first \u2014 the cursor for catching up rather than re-reading. Every row carries the `updated_at` to ask from next time.",
+              "title": "Updated Since"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "content": {
               "application/json": {
                 "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/CaptureOut"
-                  },
-                  "title": "Response",
-                  "type": "array"
+                  "$ref": "#/components/schemas/PagedCaptureOut"
                 }
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -3462,7 +5151,26 @@
       "post": {
         "description": "Read a posting and store it for review.\n\nNothing is created beyond the capture itself. The owner still has to look at it and\nsave it before a listing exists, because a parser reading somebody else's markup is\nnot a good enough reason to write to their records. Corrections sent with it change\nwhat the review screen opens with, not that it has to be reviewed.",
         "operationId": "postulo_api_api_create_capture",
-        "parameters": [],
+        "parameters": [
+          {
+            "description": "Any string of your own, one per posting. Send the same request again under the same key \u2014 after a lost reply, say \u2014 and you get the first answer back rather than a second capture. Honoured for 24 hours.",
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Any string of your own, one per posting. Send the same request again under the same key \u2014 after a lost reply, say \u2014 and you get the first answer back rather than a second capture. Honoured for 24 hours.",
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -3483,6 +5191,46 @@
               }
             },
             "description": "Created"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -3525,6 +5273,46 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -3563,6 +5351,46 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -3571,6 +5399,174 @@
           }
         ],
         "summary": "Read a posting without capturing it",
+        "tags": [
+          "captures"
+        ]
+      }
+    },
+    "/api/v1/captures/{pk}/rendering": {
+      "put": {
+        "description": "Keep a picture of the whole page beside a capture that is waiting for review.\n\nFor the browser that was looking at the page, which is the only thing that can draw\nit as it looked: a posting behind a sign-in, or behind bot protection, is a page this\nserver cannot see at all. The body is the file -- a PNG, JPEG or WebP image, or a PDF\n-- and nothing else.\n\n**It is measured before it is read.** `Content-Length` is compared with\n`rendering_max_bytes` before a byte is taken, and the bytes are counted again as they\narrive. A rendering is taken once: the same bytes sent again get the same answer, and\ndifferent ones are refused, because what a capture kept is not replaced from outside.\nNothing here reads a rendering back; a token that can send one cannot fetch one.",
+        "operationId": "postulo_api_api_attach_rendering",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/pdf": {
+              "schema": {
+                "format": "binary",
+                "type": "string"
+              }
+            },
+            "image/jpeg": {
+              "schema": {
+                "format": "binary",
+                "type": "string"
+              }
+            },
+            "image/png": {
+              "schema": {
+                "format": "binary",
+                "type": "string"
+              }
+            },
+            "image/webp": {
+              "schema": {
+                "format": "binary",
+                "type": "string"
+              }
+            }
+          },
+          "description": "The rendering itself, as the body of the request: not JSON, not a form. `Content-Type` says which of the four kinds it is and `Content-Length` how large, and both are checked before the body is read.",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaptureOut"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaptureOut"
+                }
+              }
+            },
+            "description": "Created"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "411": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Length Required"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Content Too Large"
+          },
+          "415": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unsupported Media Type"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Send a rendering of the page a capture was read from",
         "tags": [
           "captures"
         ]
@@ -3596,6 +5592,43 @@
               ],
               "description": "Name, location or industry",
               "title": "Q"
+            }
+          },
+          {
+            "description": "Changed at or after this moment, oldest change first \u2014 the cursor for catching up rather than re-reading. Every row carries the `updated_at` to ask from next time.",
+            "in": "query",
+            "name": "updated_since",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Changed at or after this moment, oldest change first \u2014 the cursor for catching up rather than re-reading. Every row carries the `updated_at` to ask from next time.",
+              "title": "Updated Since"
+            }
+          },
+          {
+            "description": "The id of the last row already read, sent with `updated_since` from that same row. Without it a run of rows saved in the same moment cannot be walked past.",
+            "in": "query",
+            "name": "after_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The id of the last row already read, sent with `updated_since` from that same row. Without it a run of rows saved in the same moment cannot be walked past.",
+              "title": "After Id"
             }
           },
           {
@@ -3631,6 +5664,46 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -3667,6 +5740,46 @@
               }
             },
             "description": "Created"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -3704,6 +5817,56 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -3749,6 +5912,56 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -3796,6 +6009,56 @@
               }
             },
             "description": "Created"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -3813,6 +6076,43 @@
       "get": {
         "operationId": "postulo_api_routers_documents_list_cvs",
         "parameters": [
+          {
+            "description": "Changed at or after this moment, oldest change first \u2014 the cursor for catching up rather than re-reading. Every row carries the `updated_at` to ask from next time.",
+            "in": "query",
+            "name": "updated_since",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Changed at or after this moment, oldest change first \u2014 the cursor for catching up rather than re-reading. Every row carries the `updated_at` to ask from next time.",
+              "title": "Updated Since"
+            }
+          },
+          {
+            "description": "The id of the last row already read, sent with `updated_since` from that same row. Without it a run of rows saved in the same moment cannot be walked past.",
+            "in": "query",
+            "name": "after_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The id of the last row already read, sent with `updated_since` from that same row. Without it a run of rows saved in the same moment cannot be walked past.",
+              "title": "After Id"
+            }
+          },
           {
             "in": "query",
             "name": "limit",
@@ -3846,6 +6146,46 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -3883,6 +6223,56 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -3894,10 +6284,107 @@
         "tags": [
           "documents"
         ]
+      },
+      "patch": {
+        "description": "Choose which of your details one CV prints (#308).\n\n`show_contact_details` is the master switch; `prints` holds an answer per kind of\ndetail, and a kind left out is left alone. An answer is `default` (follow your details:\nthe primary number, the account's address, the primary link of the kind, every\nidentifier), `none`, or `chosen` with the `id` of a row -- `ids` for the identifiers.\n\n**A row has to be one of yours**: one of the ids the CV's `prints.<kind>.offered`\nlists. Any other id is a 422, in the same words whether the row is somebody else's or\ndoes not exist, and nothing is stored. So is an id sent beside `default` or `none`.\n\nNothing already sent changes: a version is a file, and the choice is read when the\nnext one is drawn. Answers with the CV as it now stands, as every `PATCH` here does.\n\n**`offered` is in the answer only for a token that also holds `read`.** It lists every\nnumber, confirmed address, link and identifier in your details, which is reading them\nand not seeing what was changed; a token holding `write` alone gets each kind's\n`choice`, `id` (or `ids`) and `printed`, and no `offered`. It may still pin a row whose\nid it was given.",
+        "operationId": "postulo_api_routers_documents_patch_cv",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CVPatch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CVDetailOut"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Change what a CV prints about you",
+        "tags": [
+          "documents"
+        ]
       }
     },
     "/api/v1/documents": {
       "get": {
+        "description": "Uploads and snapshots in one list.\n\nThe one list here that cannot be a queryset: an upload and a render are separate\ntables with separate columns, so they are read and then ordered together in Python.\nOnly the rows on the page are shaped, though, which is where the cost was \u2014 an\nabsolute download address built for every file somebody has ever had (#230).\n\nIt is also the one list that takes no `after_id` (#245). The ids come from two tables,\nso upload 5 and render 5 are different files, and one id used against both would drop\nwhichever rows happened to number below it in the table the caller was not walking \u2014\nlosing files silently, which is worse than the tie it would fix. A cursor here has to\nname the table as well as the id, and that is a shape of its own.",
         "operationId": "postulo_api_routers_documents_list_documents",
         "parameters": [
           {
@@ -3916,6 +6403,25 @@
               ],
               "description": "upload or rendered; both by default",
               "title": "Source"
+            }
+          },
+          {
+            "description": "Changed at or after this moment, oldest change first \u2014 the cursor for catching up rather than re-reading. Every row carries the `updated_at` to ask from next time.",
+            "in": "query",
+            "name": "updated_since",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Changed at or after this moment, oldest change first \u2014 the cursor for catching up rather than re-reading. Every row carries the `updated_at` to ask from next time.",
+              "title": "Updated Since"
             }
           },
           {
@@ -3951,6 +6457,46 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -3990,6 +6536,56 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -4019,6 +6615,36 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -4086,6 +6712,43 @@
             }
           },
           {
+            "description": "Changed at or after this moment, oldest change first \u2014 the cursor for catching up rather than re-reading. Every row carries the `updated_at` to ask from next time.",
+            "in": "query",
+            "name": "updated_since",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Changed at or after this moment, oldest change first \u2014 the cursor for catching up rather than re-reading. Every row carries the `updated_at` to ask from next time.",
+              "title": "Updated Since"
+            }
+          },
+          {
+            "description": "The id of the last row already read, sent with `updated_since` from that same row. Without it a run of rows saved in the same moment cannot be walked past.",
+            "in": "query",
+            "name": "after_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The id of the last row already read, sent with `updated_since` from that same row. Without it a run of rows saved in the same moment cannot be walked past.",
+              "title": "After Id"
+            }
+          },
+          {
             "in": "query",
             "name": "limit",
             "required": false,
@@ -4118,6 +6781,46 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -4153,6 +6856,46 @@
               }
             },
             "description": "Created"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -4173,6 +6916,36 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -4210,6 +6983,56 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -4255,6 +7078,56 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -4285,6 +7158,56 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -4332,6 +7255,56 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -4349,6 +7322,43 @@
       "get": {
         "operationId": "postulo_api_routers_documents_list_letters",
         "parameters": [
+          {
+            "description": "Changed at or after this moment, oldest change first \u2014 the cursor for catching up rather than re-reading. Every row carries the `updated_at` to ask from next time.",
+            "in": "query",
+            "name": "updated_since",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Changed at or after this moment, oldest change first \u2014 the cursor for catching up rather than re-reading. Every row carries the `updated_at` to ask from next time.",
+              "title": "Updated Since"
+            }
+          },
+          {
+            "description": "The id of the last row already read, sent with `updated_since` from that same row. Without it a run of rows saved in the same moment cannot be walked past.",
+            "in": "query",
+            "name": "after_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The id of the last row already read, sent with `updated_since` from that same row. Without it a run of rows saved in the same moment cannot be walked past.",
+              "title": "After Id"
+            }
+          },
           {
             "in": "query",
             "name": "limit",
@@ -4382,6 +7392,46 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -4417,6 +7467,46 @@
               }
             },
             "description": "Created"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -4454,6 +7544,56 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -4500,6 +7640,43 @@
             }
           },
           {
+            "description": "Changed at or after this moment, oldest change first \u2014 the cursor for catching up rather than re-reading. Every row carries the `updated_at` to ask from next time.",
+            "in": "query",
+            "name": "updated_since",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Changed at or after this moment, oldest change first \u2014 the cursor for catching up rather than re-reading. Every row carries the `updated_at` to ask from next time.",
+              "title": "Updated Since"
+            }
+          },
+          {
+            "description": "The id of the last row already read, sent with `updated_since` from that same row. Without it a run of rows saved in the same moment cannot be walked past.",
+            "in": "query",
+            "name": "after_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The id of the last row already read, sent with `updated_since` from that same row. Without it a run of rows saved in the same moment cannot be walked past.",
+              "title": "After Id"
+            }
+          },
+          {
             "in": "query",
             "name": "limit",
             "required": false,
@@ -4532,6 +7709,46 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -4567,6 +7784,46 @@
               }
             },
             "description": "Created"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -4575,6 +7832,159 @@
           }
         ],
         "summary": "Add a listing",
+        "tags": [
+          "listings"
+        ]
+      }
+    },
+    "/api/v1/listings/choices": {
+      "get": {
+        "description": "The person's listings, as little of each as recognising it takes (#270).\n\nFor a client filing something into a listing's history, which has to offer a choice of\nlisting and must not read the search to do it: a title, a company, a place and a state.\nNewest noted first, and ``q`` narrows to the ones whose title or company says it.",
+        "operationId": "postulo_api_routers_listings_list_listing_choices",
+        "parameters": [
+          {
+            "description": "Words in the title or the company's name",
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "default": "",
+              "description": "Words in the title or the company's name",
+              "maxLength": 200,
+              "title": "Q",
+              "type": "string"
+            }
+          },
+          {
+            "description": "all (default), undecided, new, shortlisted, discarded, applied or closed",
+            "in": "query",
+            "name": "state",
+            "required": false,
+            "schema": {
+              "default": "all",
+              "description": "all (default), undecided, new, shortlisted, discarded, applied or closed",
+              "title": "State",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Changed at or after this moment, oldest change first \u2014 the cursor for catching up rather than re-reading. Every row carries the `updated_at` to ask from next time.",
+            "in": "query",
+            "name": "updated_since",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Changed at or after this moment, oldest change first \u2014 the cursor for catching up rather than re-reading. Every row carries the `updated_at` to ask from next time.",
+              "title": "Updated Since"
+            }
+          },
+          {
+            "description": "The id of the last row already read, sent with `updated_since` from that same row. Without it a run of rows saved in the same moment cannot be walked past.",
+            "in": "query",
+            "name": "after_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The id of the last row already read, sent with `updated_since` from that same row. Without it a run of rows saved in the same moment cannot be walked past.",
+              "title": "After Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedListingChoiceOut"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "List listings briefly, to choose one",
         "tags": [
           "listings"
         ]
@@ -4604,6 +8014,56 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -4651,6 +8111,56 @@
               }
             },
             "description": "Created"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -4698,6 +8208,56 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -4706,6 +8266,114 @@
           }
         ],
         "summary": "Discard",
+        "tags": [
+          "listings"
+        ]
+      }
+    },
+    "/api/v1/listings/{pk}/events": {
+      "post": {
+        "description": "Record what arrived about a listing: a message, an email, a call, a note, a file (#270).\n\nWritten through the same function as the listing's own page, signed with the token's\nname. The contact and the file are ids of the caller's own, looked up before anything is\nwritten, and one that is somebody else's gets the same answer as one that does not\nexist. A capture entry is not offered: the review screen writes those, pointing at the\ncapture. Sent again with the same ``external_id``, the first entry comes back with 200.",
+        "operationId": "postulo_api_routers_listings_add_listing_event",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ListingEventIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListingEventOut"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListingEventOut"
+                }
+              }
+            },
+            "description": "Created"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Add an entry to a listing's history",
         "tags": [
           "listings"
         ]
@@ -4735,6 +8403,56 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -4772,6 +8490,56 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -4800,6 +8568,26 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -4808,6 +8596,371 @@
           }
         ],
         "summary": "Check a token"
+      }
+    },
+    "/api/v1/offers": {
+      "get": {
+        "operationId": "postulo_api_routers_offers_list_offers",
+        "parameters": [
+          {
+            "description": "Only this application's",
+            "in": "query",
+            "name": "application",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Only this application's",
+              "title": "Application"
+            }
+          },
+          {
+            "description": "Changed at or after this moment, oldest change first \u2014 the cursor for catching up rather than re-reading. Every row carries the `updated_at` to ask from next time.",
+            "in": "query",
+            "name": "updated_since",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Changed at or after this moment, oldest change first \u2014 the cursor for catching up rather than re-reading. Every row carries the `updated_at` to ask from next time.",
+              "title": "Updated Since"
+            }
+          },
+          {
+            "description": "The id of the last row already read, sent with `updated_since` from that same row. Without it a run of rows saved in the same moment cannot be walked past.",
+            "in": "query",
+            "name": "after_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The id of the last row already read, sent with `updated_since` from that same row. Without it a run of rows saved in the same moment cannot be walked past.",
+              "title": "After Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedOfferOut"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "List offers",
+        "tags": [
+          "offers"
+        ]
+      }
+    },
+    "/api/v1/offers/{pk}": {
+      "get": {
+        "operationId": "postulo_api_routers_offers_get_offer",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OfferOut"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "One offer",
+        "tags": [
+          "offers"
+        ]
+      }
+    },
+    "/api/v1/profile": {
+      "get": {
+        "operationId": "postulo_api_routers_profile_get_profile",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileOut"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Your details: the name and the contact block",
+        "tags": [
+          "profile"
+        ]
+      },
+      "patch": {
+        "description": "Change the name, the form of address, the pronouns, the headline or the location.\n\nA field left out is left alone. The form of address and the pronouns take any text:\nthe lists *Your details* offers are a convenience of the page, and what is stored is the\ntext either way. A first or last name may not be emptied, as on the page, because a job\nsearch is conducted under one's own name.\n\nAnswers with the record as it now stands, as every `PATCH` here does, including one\nthat changed nothing.",
+        "operationId": "postulo_api_routers_profile_patch_profile",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProfilePatch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileOut"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Change your details",
+        "tags": [
+          "profile"
+        ]
       }
     },
     "/api/v1/reminders": {
@@ -4836,6 +8989,43 @@
               "description": "Only reminders not yet done",
               "title": "Outstanding",
               "type": "boolean"
+            }
+          },
+          {
+            "description": "Changed at or after this moment, oldest change first \u2014 the cursor for catching up rather than re-reading. Every row carries the `updated_at` to ask from next time.",
+            "in": "query",
+            "name": "updated_since",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Changed at or after this moment, oldest change first \u2014 the cursor for catching up rather than re-reading. Every row carries the `updated_at` to ask from next time.",
+              "title": "Updated Since"
+            }
+          },
+          {
+            "description": "The id of the last row already read, sent with `updated_since` from that same row. Without it a run of rows saved in the same moment cannot be walked past.",
+            "in": "query",
+            "name": "after_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The id of the last row already read, sent with `updated_since` from that same row. Without it a run of rows saved in the same moment cannot be walked past.",
+              "title": "After Id"
             }
           },
           {
@@ -4871,6 +9061,46 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -4906,6 +9136,46 @@
               }
             },
             "description": "Created"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -4914,6 +9184,183 @@
           }
         ],
         "summary": "Add a reminder",
+        "tags": [
+          "reminders"
+        ]
+      }
+    },
+    "/api/v1/reminders/{pk}": {
+      "delete": {
+        "description": "Remove a reminder. The first thing the API deletes, and deliberately the smallest.\n\nA reminder is a note somebody wrote to themselves, holds no history and is referred to\nby nothing; deleting one loses a line they typed and nothing else. That is not true of\nan application, a company or a timeline entry, each of which is a record of something\nthat happened, so *nothing is deleted through the API* remains the rule everywhere\nelse (#238).",
+        "operationId": "postulo_api_routers_reminders_delete_reminder",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Delete a reminder",
+        "tags": [
+          "reminders"
+        ]
+      },
+      "patch": {
+        "description": "Change what a reminder says, when it falls due, or which application it is about.\n\nA reminder could be made and it could be ticked off, and that was all -- through the\ninterface and through here alike (#238). A due time typed wrongly could only be ticked\noff and written again, which loses the fact that it was ever set.\n\nMoving the time clears the *announced* stamp, through the same service the interface\nuses: a reminder somebody has deliberately moved into the future has not been announced\nat its new time, and leaving the stamp would move it and silence it.",
+        "operationId": "postulo_api_routers_reminders_change_reminder",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReminderPatch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReminderOut"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Change a reminder",
         "tags": [
           "reminders"
         ]
@@ -4943,6 +9390,56 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [
@@ -5000,6 +9497,46 @@
               }
             },
             "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
           }
         },
         "security": [

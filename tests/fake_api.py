@@ -22,7 +22,7 @@ To refresh the snapshot, from a checkout of the core:
     print(json.dumps(api.get_openapi_schema(), indent=2, sort_keys=True, default=str))
     " > ../postulo-mcp/tests/openapi.json
 
-The snapshot in the tree was taken at postulo 5ee31c66a, during 0.3.0's development.
+The snapshot in the tree was taken at postulo a6363a397, on 2026-10-01.
 """
 
 from __future__ import annotations
