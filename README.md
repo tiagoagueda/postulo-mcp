@@ -162,6 +162,15 @@ a snapshot of the instance's own OpenAPI description: an address, a method or a 
 parameter the real API does not have fails the test rather than being quietly ignored.
 `tests/fake_api.py` says how to refresh the snapshot from a checkout of the core.
 
+## Languages
+
+English only, by decision (#5). What this server says -- tool names and their descriptions --
+is read by a language model, not by a person, and what a person reads comes from Postulo's
+API, which answers in the person's own language by itself. So there is no catalogue here and
+no Weblate component. If the command line's own messages are ever to follow the reader's
+language, they get catalogues written by Postulo's tool and a component in Weblate, where all
+of Postulo's translations are made (postulo/postulo#706).
+
 ## Licence
 
 AGPL-3.0-or-later, like Postulo.
