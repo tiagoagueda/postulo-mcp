@@ -16,7 +16,7 @@ import argparse
 import sys
 
 from . import __version__, serving
-from .client import Postulo, PostuloError, Settings
+from .client import Postulo, PostuloError, Settings, plain_http_warning
 from .server import WRITE_KINDS, build
 
 
@@ -63,8 +63,9 @@ def parse(argv: list[str] | None = None) -> argparse.Namespace:
         default=[],
         metavar="HOST",
         help=(
-            "An extra Host header to accept, for a reverse proxy in front of this. The "
-            "address being listened on is accepted already."
+            "An extra Host header to accept, for a reverse proxy in front of this, or for "
+            "the name clients use when --host is 0.0.0.0. A name without a port allows the "
+            "name with and without one; the address being listened on is accepted already."
         ),
     )
     parser.add_argument("--version", action="version", version=f"postulo-mcp {__version__}")
@@ -112,6 +113,9 @@ def main(argv: list[str] | None = None) -> int:
             "answers. Use it only against a certificate of your own.",
             file=sys.stderr,
         )
+    warning = plain_http_warning(settings.url)
+    if warning:
+        print(warning, file=sys.stderr)
     if listening is not None and not listening.loopback:
         print(
             f"Listening on {listening.address}, which is not only this machine. Every "
@@ -127,7 +131,10 @@ def main(argv: list[str] | None = None) -> int:
             auth=listening.auth if listening else None,
             token_verifier=listening.verifier if listening else None,
         )
-        server.run(transport=options.transport, **(listening.run_arguments() if listening else {}))
+        if listening is None:
+            server.run(transport="stdio")
+        else:
+            serving.serve(server, listening)
     finally:
         postulo.close()
     return 0

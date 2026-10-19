@@ -22,7 +22,7 @@ To refresh the snapshot, from a checkout of the core:
     print(json.dumps(api.get_openapi_schema(), indent=2, sort_keys=True, default=str))
     " > ../postulo-mcp/tests/openapi.json
 
-The snapshot in the tree was taken at postulo a6363a397, on 2026-10-01.
+The snapshot in the tree was taken at postulo 42be52048, on 2026-10-19.
 """
 
 from __future__ import annotations
@@ -102,11 +102,36 @@ class Operation:
         return {}
 
     def answer(self, body: Any) -> Any:
-        """What the instance would put on the wire for this body."""
+        """What the instance would put on the wire for this body.
+
+        The fixture is held to the operation's success schema: a field the API does not
+        send, or one it always sends and the fixture left out, fails the test here instead
+        of letting a fence or a tool pass on a shape no instance produces (#10).
+        """
         if self.paginated:
             rows = body if isinstance(body, list) else [body]
-            return {"items": rows, "count": len(rows)}
+            body = {"items": rows, "count": len(rows)}
+        problems = validate(self.document, self._success, body, "response")
+        assert not problems, (
+            f"The fixture for {self.method} {self.template} is not what the API sends: "
+            + "; ".join(problems)
+        )
         return body
+
+    def check_body(self, payload: Any) -> None:
+        """Refuse a request body the operation's request schema would not recognise."""
+        content = self.definition.get("requestBody", {}).get("content", {})
+        schema = content.get("application/json", {}).get("schema")
+        if schema is None:
+            assert not payload, (
+                f"{self.method} {self.template} takes no body; got {sorted(payload)}."
+            )
+            return
+        problems = validate(self.document, schema, payload, "request")
+        assert not problems, (
+            f"The body sent to {self.method} {self.template} is not what the API takes: "
+            + "; ".join(problems)
+        )
 
 
 def _any_of(schema: dict) -> str | None:
@@ -152,3 +177,105 @@ def _match(paths: dict, path: str) -> str | None:
         if re.fullmatch(pattern, path):
             return template
     return None
+
+
+def validate(document: dict, schema: dict, value: Any, where: str = "value") -> list[str]:
+    """What is wrong with ``value`` against ``schema``: a small check, not a full validator.
+
+    It follows ``$ref``, ``anyOf``, ``properties``, ``required`` and ``items``, checks the
+    basic types and the length and size limits, and — unlike a validator for incoming
+    data — refuses a property the schema does not declare, because the point is to catch a
+    fixture or a payload that has drifted from the API's description.
+    """
+    schema = _resolve(document, schema)
+    options = schema.get("anyOf") or schema.get("oneOf")
+    if options:
+        attempts = [validate(document, option, value, where) for option in options]
+        return [] if any(not attempt for attempt in attempts) else attempts[0]
+    kind = schema.get("type")
+    if kind == "null":
+        return [] if value is None else [f"{where}: expected null"]
+    if kind == "object" or "properties" in schema:
+        if not isinstance(value, dict):
+            return [f"{where}: expected an object, got {type(value).__name__}"]
+        properties = schema.get("properties", {})
+        if not properties and schema.get("additionalProperties", True):
+            return []
+        problems = [
+            f"{where}.{name}: not in the schema" for name in value if name not in properties
+        ]
+        problems += [
+            f"{where}.{name}: required and missing"
+            for name in schema.get("required", [])
+            if name not in value
+        ]
+        for name, item in value.items():
+            if name in properties:
+                problems += validate(document, properties[name], item, f"{where}.{name}")
+        return problems
+    if kind == "array":
+        if not isinstance(value, list):
+            return [f"{where}: expected a list, got {type(value).__name__}"]
+        problems = []
+        for index, item in enumerate(value):
+            problems += validate(document, schema.get("items", {}), item, f"{where}[{index}]")
+        return problems
+    checks = {
+        "string": lambda v: isinstance(v, str),
+        "integer": lambda v: isinstance(v, int) and not isinstance(v, bool),
+        "number": lambda v: isinstance(v, int | float) and not isinstance(v, bool),
+        "boolean": lambda v: isinstance(v, bool),
+    }
+    if kind in checks and not checks[kind](value):
+        return [f"{where}: expected {kind}, got {type(value).__name__}"]
+    problems = []
+    if kind == "string":
+        if "maxLength" in schema and len(value) > schema["maxLength"]:
+            problems.append(f"{where}: longer than {schema['maxLength']}")
+        if "minLength" in schema and len(value) < schema["minLength"]:
+            problems.append(f"{where}: shorter than {schema['minLength']}")
+    if kind in ("integer", "number"):
+        if "minimum" in schema and value < schema["minimum"]:
+            problems.append(f"{where}: below {schema['minimum']}")
+        if "maximum" in schema and value > schema["maximum"]:
+            problems.append(f"{where}: above {schema['maximum']}")
+    return problems
+
+
+def sample(component: str, /, **fields: Any) -> dict:
+    """A record in the shape of the component ``component``: what it must carry, then ``fields``.
+
+    Required members get a placeholder of the right type, so a test spells out only the
+    members it is about and the rest is as the API would send it.
+    """
+    document = description()
+    return _fill(document, document["components"]["schemas"][component]) | fields
+
+
+def _fill(document: dict, schema: dict) -> Any:
+    schema = _resolve(document, schema)
+    options = schema.get("anyOf") or schema.get("oneOf")
+    if options:
+        return _fill(document, options[0])
+    kind = schema.get("type")
+    if kind == "object" or "properties" in schema:
+        properties = schema.get("properties", {})
+        return {name: _fill(document, properties[name]) for name in schema.get("required", [])}
+    return (
+        {
+            "string": "x",
+            "integer": 1,
+            "number": 1,
+            "boolean": False,
+            "array": [],
+            "null": None,
+        }.get(kind, None)
+        if kind != "string"
+        else _string(schema)
+    )
+
+
+def _string(schema: dict) -> str:
+    return {"date-time": "2026-01-01T00:00:00Z", "date": "2026-01-01"}.get(
+        schema.get("format", ""), "x"
+    )
