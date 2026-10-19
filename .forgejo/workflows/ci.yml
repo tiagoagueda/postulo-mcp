@@ -7,27 +7,79 @@ on:
     branches: [main]
   pull_request:
 
+env:
+  # The one version of uv this workflow installs, and the sha256 of that version's
+  # install.sh, checked before the script is run: the script is the trust root for the uv
+  # binary it then fetches, and `curl | sh` ran whatever the address answered. The same pair
+  # as the core's workflow (postulo/postulo#790); bump both together, with the core.
+  UV_VERSION: "0.12.17"
+  UV_INSTALLER_SHA256: "37b82230b28617c6c24fa52364fa28aa37f2aa40c114809a623f6b064a9730e5"
+
 jobs:
   test:
+    name: Lint and test (Python ${{ matrix.python-version }})
     runs-on: ubuntu-latest
+    # Node, because Forgejo runs actions/checkout as JavaScript inside the job container and a
+    # Python image has no node: the run used to stop at the first step. node:22-bookworm
+    # carries curl and git as well. The Pythons come from uv.
     container:
-      image: python:3.14-slim-bookworm
+      image: node:22-bookworm
+    strategy:
+      fail-fast: false
+      matrix:
+        # What pyproject.toml claims. The server is installed on its own, under whatever
+        # Python the person has, so the versions it says it supports are the ones that run.
+        python-version: ["3.12", "3.13", "3.14"]
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Install uv
         run: |
-          apt-get update && apt-get install -y --no-install-recommends curl
-          curl -LsSf https://astral.sh/uv/install.sh | sh
+          curl -LsSf "https://astral.sh/uv/${UV_VERSION}/install.sh" -o /tmp/uv-install.sh
+          echo "${UV_INSTALLER_SHA256}  /tmp/uv-install.sh" | sha256sum -c -
+          sh /tmp/uv-install.sh
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
-          rm -rf /var/lib/apt/lists/*
 
       - name: Install
-        run: uv sync
+        # --locked: a pyproject.toml and a uv.lock that disagree fail here instead of being
+        # re-resolved into a set of versions nobody reviewed. The server tracks the MCP SDK
+        # closely, so what is tested has to be what is locked.
+        run: uv sync --locked --python ${{ matrix.python-version }}
 
       - name: Lint
-        run: uv run ruff check .
+        run: uv run --no-sync ruff check .
 
       - name: Test
-        run: uv run pytest
+        run: uv run --no-sync pytest
+
+  audit:
+    name: Audit the dependencies
+    runs-on: ubuntu-latest
+    container:
+      image: node:22-bookworm
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Install uv
+        run: |
+          curl -LsSf "https://astral.sh/uv/${UV_VERSION}/install.sh" -o /tmp/uv-install.sh
+          echo "${UV_INSTALLER_SHA256}  /tmp/uv-install.sh" | sha256sum -c -
+          sh /tmp/uv-install.sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Audit the Python dependencies
+        # This server is its own process, so its lock is what runs: nothing else audits the
+        # MCP SDK in it. The lock rather than the installed environment, without the project
+        # (which is not on PyPI), and --strict, so a dependency that becomes unauditable
+        # fails the build too.
+        run: |
+          uv export --no-emit-project --all-groups --format requirements-txt --no-hashes \
+            > /tmp/locked-requirements.txt
+          uv run --with pip-audit==2.10.1 pip-audit --strict --progress-spinner off \
+            -r /tmp/locked-requirements.txt
