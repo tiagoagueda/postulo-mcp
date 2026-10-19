@@ -238,6 +238,8 @@
           "referred_by_id": {
             "anyOf": [
               {
+                "maximum": 2147483647,
+                "minimum": 1,
                 "type": "integer"
               },
               {
@@ -263,6 +265,8 @@
           "through_agency_id": {
             "anyOf": [
               {
+                "maximum": 2147483647,
+                "minimum": 1,
                 "type": "integer"
               },
               {
@@ -311,6 +315,7 @@
           },
           "company_name": {
             "maxLength": 200,
+            "minLength": 1,
             "title": "Company Name",
             "type": "string"
           },
@@ -335,11 +340,24 @@
           },
           "description": {
             "default": "",
+            "description": "At most 40,000 characters.",
+            "maxLength": 40000,
             "title": "Description",
+            "type": "string"
+          },
+          "description_format": {
+            "default": "plain",
+            "description": "How `description` is read: plain (the default) or markdown. Stored as sent.",
+            "enum": [
+              "plain",
+              "markdown"
+            ],
+            "title": "Description Format",
             "type": "string"
           },
           "employment_type": {
             "default": "",
+            "description": "full_time, part_time, contract, freelance, internship or apprenticeship; empty if not said.",
             "maxLength": 20,
             "title": "Employment Type",
             "type": "string"
@@ -358,6 +376,8 @@
           "referred_by_id": {
             "anyOf": [
               {
+                "maximum": 2147483647,
+                "minimum": 1,
                 "type": "integer"
               },
               {
@@ -369,6 +389,7 @@
           },
           "remote_type": {
             "default": "",
+            "description": "onsite, hybrid or remote; empty if not said.",
             "maxLength": 20,
             "title": "Remote Type",
             "type": "string"
@@ -382,10 +403,11 @@
           "salary_max": {
             "anyOf": [
               {
+                "minimum": 0.0,
                 "type": "number"
               },
               {
-                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,10}|(?=[\\d.]{1,13}0*$)\\d{0,10}\\.\\d{0,2}0*$)",
                 "type": "string"
               },
               {
@@ -397,10 +419,11 @@
           "salary_min": {
             "anyOf": [
               {
+                "minimum": 0.0,
                 "type": "number"
               },
               {
-                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,10}|(?=[\\d.]{1,13}0*$)\\d{0,10}\\.\\d{0,2}0*$)",
                 "type": "string"
               },
               {
@@ -411,6 +434,7 @@
           },
           "salary_period": {
             "default": "year",
+            "description": "year, month, day or hour.",
             "maxLength": 10,
             "title": "Salary Period",
             "type": "string"
@@ -437,6 +461,8 @@
           "through_agency_id": {
             "anyOf": [
               {
+                "maximum": 2147483647,
+                "minimum": 1,
                 "type": "integer"
               },
               {
@@ -448,6 +474,7 @@
           },
           "title": {
             "maxLength": 250,
+            "minLength": 1,
             "title": "Title",
             "type": "string"
           },
@@ -668,7 +695,6 @@
             "type": "array"
           },
           "language": {
-            "default": "",
             "description": "The language it is written in, as a BCP 47 tag in its canonical form (`pt-BR`); blank follows the profile",
             "title": "Language",
             "type": "string"
@@ -704,6 +730,7 @@
           "id",
           "name",
           "theme",
+          "language",
           "item_count",
           "updated_at",
           "items",
@@ -752,7 +779,6 @@
             "type": "integer"
           },
           "language": {
-            "default": "",
             "description": "The language it is written in, as a BCP 47 tag in its canonical form (`pt-BR`); blank follows the profile",
             "title": "Language",
             "type": "string"
@@ -780,6 +806,7 @@
           "id",
           "name",
           "theme",
+          "language",
           "item_count",
           "updated_at"
         ],
@@ -824,6 +851,8 @@
           "ids": {
             "description": "With `chosen`: ids `offered` lists. Left out otherwise",
             "items": {
+              "maximum": 2147483647,
+              "minimum": 1,
               "type": "integer"
             },
             "maxItems": 200,
@@ -876,6 +905,28 @@
       "CVPrintsIn": {
         "description": "A kind left out is left alone.",
         "properties": {
+          "birth_date": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Birth Date"
+          },
+          "birth_place": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Birth Place"
+          },
           "email": {
             "anyOf": [
               {
@@ -885,6 +936,17 @@
                 "type": "null"
               }
             ]
+          },
+          "eqf_level": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Eqf Level"
           },
           "form_of_address": {
             "anyOf": [
@@ -896,6 +958,17 @@
               }
             ],
             "title": "Form Of Address"
+          },
+          "gender": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gender"
           },
           "identifiers": {
             "anyOf": [
@@ -918,6 +991,27 @@
             ],
             "title": "Location"
           },
+          "messaging": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CVPrintsOneIn"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "nationality": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nationality"
+          },
           "phone": {
             "anyOf": [
               {
@@ -927,6 +1021,17 @@
                 "type": "null"
               }
             ]
+          },
+          "photo": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Photo"
           },
           "pronouns": {
             "anyOf": [
@@ -938,6 +1043,17 @@
               }
             ],
             "title": "Pronouns"
+          },
+          "references_on_request": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "References On Request"
           },
           "repository": {
             "anyOf": [
@@ -1043,12 +1159,32 @@
       "CVPrintsOut": {
         "description": "Which of the owner's details a CV prints (#308). Read when the document is drawn, so\na version already sent is not changed by changing any of it.",
         "properties": {
+          "birth_date": {
+            "description": "Whether the date of birth is printed (#679)",
+            "title": "Birth Date",
+            "type": "boolean"
+          },
+          "birth_place": {
+            "description": "Whether the place of birth is printed (#679)",
+            "title": "Birth Place",
+            "type": "boolean"
+          },
           "email": {
             "$ref": "#/components/schemas/CVPrintsOneOut"
+          },
+          "eqf_level": {
+            "description": "Whether the EQF level of each qualification that states one is printed (#684)",
+            "title": "Eqf Level",
+            "type": "boolean"
           },
           "form_of_address": {
             "description": "Whether it is printed before the name",
             "title": "Form Of Address",
+            "type": "boolean"
+          },
+          "gender": {
+            "description": "Whether the gender is printed (#681)",
+            "title": "Gender",
             "type": "boolean"
           },
           "identifiers": {
@@ -1059,12 +1195,30 @@
             "title": "Location",
             "type": "boolean"
           },
+          "messaging": {
+            "$ref": "#/components/schemas/CVPrintsOneOut"
+          },
+          "nationality": {
+            "description": "Whether the countries listed, or the scope's wording, are printed (#680)",
+            "title": "Nationality",
+            "type": "boolean"
+          },
           "phone": {
             "$ref": "#/components/schemas/CVPrintsOneOut"
+          },
+          "photo": {
+            "description": "Whether the CV photo from the profile is printed (#668)",
+            "title": "Photo",
+            "type": "boolean"
           },
           "pronouns": {
             "description": "Whether they are printed after the name",
             "title": "Pronouns",
+            "type": "boolean"
+          },
+          "references_on_request": {
+            "description": "Whether the sentence \u201cReferences are available on request.\u201d is printed (#696)",
+            "title": "References On Request",
             "type": "boolean"
           },
           "repository": {
@@ -1083,10 +1237,18 @@
           "social",
           "repository",
           "website",
+          "messaging",
           "identifiers",
           "location",
           "form_of_address",
-          "pronouns"
+          "pronouns",
+          "nationality",
+          "gender",
+          "photo",
+          "birth_date",
+          "birth_place",
+          "eqf_level",
+          "references_on_request"
         ],
         "title": "CVPrintsOut",
         "type": "object"
@@ -1260,6 +1422,17 @@
             "title": "Created At",
             "type": "string"
           },
+          "email": {
+            "default": "",
+            "title": "Email",
+            "type": "string"
+          },
+          "from_career": {
+            "default": false,
+            "description": "Added from an entry in the person's career, and not yet used for a posting, a contact or an application. Read-only: the career form sets it and the first use clears it",
+            "title": "From Career",
+            "type": "boolean"
+          },
           "id": {
             "title": "Id",
             "type": "integer"
@@ -1299,15 +1472,52 @@
             "title": "Name",
             "type": "string"
           },
+          "names": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Names",
+            "type": "array"
+          },
           "notes": {
             "default": "",
             "title": "Notes",
             "type": "string"
           },
+          "phone_numbers": {
+            "items": {
+              "$ref": "#/components/schemas/PhoneNumberOut"
+            },
+            "title": "Phone Numbers",
+            "type": "array"
+          },
+          "postal_addresses": {
+            "items": {
+              "$ref": "#/components/schemas/PostalAddressOut"
+            },
+            "title": "Postal Addresses",
+            "type": "array"
+          },
+          "sectors": {
+            "description": "The NACE Rev. 2.1 sections of its industries, as letters; read-only",
+            "items": {
+              "type": "string"
+            },
+            "title": "Sectors",
+            "type": "array"
+          },
           "updated_at": {
             "format": "date-time",
             "title": "Updated At",
             "type": "string"
+          },
+          "web_links": {
+            "items": {
+              "$ref": "#/components/schemas/WebLinkOut"
+            },
+            "title": "Web Links",
+            "type": "array"
           },
           "website": {
             "default": "",
@@ -1332,6 +1542,13 @@
             "default": "",
             "maxLength": 200,
             "title": "Careers Url",
+            "type": "string"
+          },
+          "email": {
+            "default": "",
+            "description": "Its general mailbox",
+            "maxLength": 254,
+            "title": "Email",
             "type": "string"
           },
           "identifiers": {
@@ -1364,13 +1581,41 @@
           },
           "name": {
             "maxLength": 200,
+            "minLength": 1,
             "title": "Name",
             "type": "string"
           },
           "notes": {
             "default": "",
+            "description": "At most 40,000 characters.",
+            "maxLength": 40000,
             "title": "Notes",
             "type": "string"
+          },
+          "phone_numbers": {
+            "description": "Added beside any it already has",
+            "items": {
+              "$ref": "#/components/schemas/PhoneNumberIn"
+            },
+            "title": "Phone Numbers",
+            "type": "array"
+          },
+          "postal_addresses": {
+            "description": "Added beside any it already has",
+            "items": {
+              "$ref": "#/components/schemas/PostalAddressIn"
+            },
+            "title": "Postal Addresses",
+            "type": "array"
+          },
+          "web_links": {
+            "description": "Social profiles, each with its service. Twenty at most.",
+            "items": {
+              "$ref": "#/components/schemas/WebLinkIn"
+            },
+            "maxItems": 20,
+            "title": "Web Links",
+            "type": "array"
           },
           "website": {
             "default": "",
@@ -1396,6 +1641,17 @@
             "format": "date-time",
             "title": "Created At",
             "type": "string"
+          },
+          "email": {
+            "default": "",
+            "title": "Email",
+            "type": "string"
+          },
+          "from_career": {
+            "default": false,
+            "description": "Added from an entry in the person's career, and not yet used for a posting, a contact or an application. Read-only: the career form sets it and the first use clears it",
+            "title": "From Career",
+            "type": "boolean"
           },
           "id": {
             "title": "Id",
@@ -1429,15 +1685,52 @@
             "title": "Name",
             "type": "string"
           },
+          "names": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Names",
+            "type": "array"
+          },
           "notes": {
             "default": "",
             "title": "Notes",
             "type": "string"
           },
+          "phone_numbers": {
+            "items": {
+              "$ref": "#/components/schemas/PhoneNumberOut"
+            },
+            "title": "Phone Numbers",
+            "type": "array"
+          },
+          "postal_addresses": {
+            "items": {
+              "$ref": "#/components/schemas/PostalAddressOut"
+            },
+            "title": "Postal Addresses",
+            "type": "array"
+          },
+          "sectors": {
+            "description": "The NACE Rev. 2.1 sections of its industries, as letters; read-only",
+            "items": {
+              "type": "string"
+            },
+            "title": "Sectors",
+            "type": "array"
+          },
           "updated_at": {
             "format": "date-time",
             "title": "Updated At",
             "type": "string"
+          },
+          "web_links": {
+            "items": {
+              "$ref": "#/components/schemas/WebLinkOut"
+            },
+            "title": "Web Links",
+            "type": "array"
           },
           "website": {
             "default": "",
@@ -1467,6 +1760,18 @@
               }
             ],
             "title": "Careers Url"
+          },
+          "email": {
+            "anyOf": [
+              {
+                "maxLength": 254,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email"
           },
           "identifiers": {
             "anyOf": [
@@ -1514,6 +1819,7 @@
             "anyOf": [
               {
                 "maxLength": 200,
+                "minLength": 1,
                 "type": "string"
               },
               {
@@ -1525,13 +1831,61 @@
           "notes": {
             "anyOf": [
               {
+                "maxLength": 40000,
                 "type": "string"
               },
               {
                 "type": "null"
               }
             ],
+            "description": "At most 40,000 characters.",
             "title": "Notes"
+          },
+          "phone_numbers": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/PhoneNumberIn"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Replaces the whole list",
+            "title": "Phone Numbers"
+          },
+          "postal_addresses": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/PostalAddressIn"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Replaces the whole list",
+            "title": "Postal Addresses"
+          },
+          "web_links": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/WebLinkIn"
+                },
+                "maxItems": 20,
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Replaces the whole list of social profiles (#906)",
+            "title": "Web Links"
           },
           "website": {
             "anyOf": [
@@ -1581,20 +1935,40 @@
             "title": "Linkedin Url",
             "type": "string"
           },
+          "messaging_handles": {
+            "description": "How the contact is reached on Matrix, XMPP, Signal, Telegram, Threema or another service, each with its service. Fifty at most.",
+            "items": {
+              "$ref": "#/components/schemas/MessagingHandleIn"
+            },
+            "maxItems": 50,
+            "title": "Messaging Handles",
+            "type": "array"
+          },
           "name": {
             "maxLength": 200,
+            "minLength": 1,
             "title": "Name",
             "type": "string"
           },
           "notes": {
             "default": "",
+            "description": "At most 40,000 characters.",
+            "maxLength": 40000,
             "title": "Notes",
             "type": "string"
           },
           "phone": {
             "default": "",
+            "description": "The contact's telephone number: in the international form, starting with `+`, or the way it is written in its own country with that country in `phone_country`. It is checked against the country's numbering plan. A number that cannot exist there is a 422 saying why, and so is a national number sent with neither a `+` nor `phone_country`. An accepted number is stored, and returned, in the international form (`+33612345678`), not as it was sent; one of a country's short numbers has no such form and is kept as it was sent.",
             "maxLength": 40,
             "title": "Phone",
+            "type": "string"
+          },
+          "phone_country": {
+            "default": "",
+            "description": "The country `phone` is in, as an ISO 3166-1 alpha-2 code (`FR`), for a number written the national way. Ignored when `phone` starts with `+` or `00`, which say their own country. A code that is not a country is a 422.",
+            "maxLength": 2,
+            "title": "Phone Country",
             "type": "string"
           },
           "role": {
@@ -1602,6 +1976,15 @@
             "maxLength": 200,
             "title": "Role",
             "type": "string"
+          },
+          "web_links": {
+            "description": "Social profiles, code repositories and websites, each with its service. Twenty at most.",
+            "items": {
+              "$ref": "#/components/schemas/WebLinkIn"
+            },
+            "maxItems": 20,
+            "title": "Web Links",
+            "type": "array"
           }
         },
         "required": [
@@ -1629,6 +2012,13 @@
             "default": "",
             "title": "Linkedin Url",
             "type": "string"
+          },
+          "messaging_handles": {
+            "items": {
+              "$ref": "#/components/schemas/MessagingHandleOut"
+            },
+            "title": "Messaging Handles",
+            "type": "array"
           },
           "name": {
             "title": "Name",
@@ -1769,10 +2159,11 @@
           "salary_max": {
             "anyOf": [
               {
+                "minimum": 0.0,
                 "type": "number"
               },
               {
-                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,10}|(?=[\\d.]{1,13}0*$)\\d{0,10}\\.\\d{0,2}0*$)",
                 "type": "string"
               },
               {
@@ -1784,10 +2175,11 @@
           "salary_min": {
             "anyOf": [
               {
+                "minimum": 0.0,
                 "type": "number"
               },
               {
-                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,10}|(?=[\\d.]{1,13}0*$)\\d{0,10}\\.\\d{0,2}0*$)",
                 "type": "string"
               },
               {
@@ -1869,9 +2261,21 @@
             ],
             "title": "Application Id"
           },
+          "checksum": {
+            "default": "",
+            "description": "The SHA-256 of the file as it was kept, in hexadecimal",
+            "title": "Checksum",
+            "type": "string"
+          },
           "created_at": {
             "format": "date-time",
             "title": "Created At",
+            "type": "string"
+          },
+          "damage": {
+            "default": "",
+            "description": "For an upload: `missing` or `changed` where the last check found the file gone or no longer what was recorded; blank where it is as recorded or not yet checked",
+            "title": "Damage",
             "type": "string"
           },
           "download_url": {
@@ -1892,6 +2296,41 @@
             "title": "Language",
             "type": "string"
           },
+          "proves": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "For an upload: the entry of the career it is the proof of, as `education:12` or `certification:3`. Null where it proves none",
+            "title": "Proves"
+          },
+          "reference_letter": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ReferenceLetterOut"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "For an upload of kind `reference`: who wrote it, when, until when it is good to send and who sends it. Null otherwise"
+          },
+          "size": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The file's length in bytes as it was kept, for an upload",
+            "title": "Size"
+          },
           "source": {
             "description": "'upload' for a file you had; 'rendered' for a snapshot",
             "title": "Source",
@@ -1905,6 +2344,31 @@
             "format": "date-time",
             "title": "Updated At",
             "type": "string"
+          },
+          "verified_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "When an upload's file was last read against its record",
+            "title": "Verified At"
+          },
+          "with_properties": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "For a snapshot: whether the file was written with its properties (author, subject, keywords) or without them. Null for an upload, which Postulo did not write",
+            "title": "With Properties"
           }
         },
         "required": [
@@ -1923,6 +2387,8 @@
         "properties": {
           "body": {
             "default": "",
+            "description": "At most 40,000 characters.",
+            "maxLength": 40000,
             "title": "Body",
             "type": "string"
           },
@@ -2017,12 +2483,13 @@
             "type": "string"
           },
           "scheme": {
+            "description": "wikidata, isni, linkedin, lei, register, crunchbase, opencorporates, other; or the key of a scheme this instance defines for itself, which an administrator adds under Server settings and which is taken and checked as one of these is",
             "maxLength": 20,
             "title": "Scheme",
             "type": "string"
           },
           "value": {
-            "description": "A pasted address is accepted; the id is kept",
+            "description": "For one of Postulo's own schemes a pasted address is accepted, and the id is kept. A scheme the instance defines for itself takes the value alone: it has a pattern and no address to lift a value out of. An identifier sent back exactly as it was listed is kept as it is, whatever its scheme says now",
             "maxLength": 200,
             "title": "Value",
             "type": "string"
@@ -2044,7 +2511,7 @@
             "type": "string"
           },
           "scheme": {
-            "description": "wikidata, lei, register, linkedin, crunchbase, opencorporates, other",
+            "description": "wikidata, isni, linkedin, lei, register, crunchbase, opencorporates, other; or the key of a scheme this instance defines for itself, which an administrator adds under Server settings and which is taken and checked as one of these is. A scheme the instance has since deleted keeps its key here, with no url",
             "title": "Scheme",
             "type": "string"
           },
@@ -2070,12 +2537,14 @@
         "properties": {
           "limit": {
             "default": 100,
+            "maximum": 200,
             "minimum": 1,
             "title": "Limit",
             "type": "integer"
           },
           "offset": {
             "default": 0,
+            "maximum": 2147483647,
             "minimum": 0,
             "title": "Offset",
             "type": "integer"
@@ -2087,11 +2556,15 @@
       "InterviewIn": {
         "properties": {
           "application_id": {
+            "maximum": 2147483647,
+            "minimum": 1,
             "title": "Application Id",
             "type": "integer"
           },
           "contact_ids": {
             "items": {
+              "maximum": 2147483647,
+              "minimum": 1,
               "type": "integer"
             },
             "title": "Contact Ids",
@@ -2123,6 +2596,8 @@
           },
           "notes": {
             "default": "",
+            "description": "At most 40,000 characters.",
+            "maxLength": 40000,
             "title": "Notes",
             "type": "string"
           },
@@ -2240,6 +2715,8 @@
         "properties": {
           "note": {
             "default": "",
+            "description": "At most 40,000 characters.",
+            "maxLength": 40000,
             "title": "Note",
             "type": "string"
           },
@@ -2256,11 +2733,14 @@
         "type": "object"
       },
       "InterviewPatch": {
+        "description": "Only the fields sent change; a `null` means \"leave it\", as on every other patch.",
         "properties": {
           "contact_ids": {
             "anyOf": [
               {
                 "items": {
+                  "maximum": 2147483647,
+                  "minimum": 1,
                   "type": "integer"
                 },
                 "type": "array"
@@ -2309,12 +2789,14 @@
           "notes": {
             "anyOf": [
               {
+                "maxLength": 40000,
                 "type": "string"
               },
               {
                 "type": "null"
               }
             ],
+            "description": "At most 40,000 characters.",
             "title": "Notes"
           },
           "starts_at": {
@@ -2572,11 +3054,8 @@
         "type": "object"
       },
       "KnownListingOut": {
+        "description": "What a client needs to say \"captured before\": no company, address or state (#536).\n\nThe `captures` scope answers whether a posting the caller names is already held, with\nits title and date and a link; where the person stands with it is not for a token that\ncan fill a review queue and nothing else.",
         "properties": {
-          "company_name": {
-            "title": "Company Name",
-            "type": "string"
-          },
           "created_at": {
             "format": "date-time",
             "title": "Created At",
@@ -2590,25 +3069,14 @@
             "title": "Listing Url",
             "type": "string"
           },
-          "state": {
-            "title": "State",
-            "type": "string"
-          },
           "title": {
             "title": "Title",
-            "type": "string"
-          },
-          "url": {
-            "title": "Url",
             "type": "string"
           }
         },
         "required": [
           "id",
           "title",
-          "company_name",
-          "url",
-          "state",
           "created_at",
           "listing_url"
         ],
@@ -2700,7 +3168,6 @@
             "type": "boolean"
           },
           "language": {
-            "default": "",
             "description": "The language it is written in, as a BCP 47 tag in its canonical form (`pt-BR`); blank follows the profile",
             "title": "Language",
             "type": "string"
@@ -2729,6 +3196,7 @@
           "name",
           "is_template",
           "theme",
+          "language",
           "created_at",
           "updated_at",
           "body"
@@ -2739,6 +3207,7 @@
       "LetterIn": {
         "properties": {
           "body": {
+            "maxLength": 40000,
             "title": "Body",
             "type": "string"
           },
@@ -2749,6 +3218,7 @@
           },
           "name": {
             "maxLength": 120,
+            "minLength": 1,
             "title": "Name",
             "type": "string"
           },
@@ -2782,7 +3252,6 @@
             "type": "boolean"
           },
           "language": {
-            "default": "",
             "description": "The language it is written in, as a BCP 47 tag in its canonical form (`pt-BR`); blank follows the profile",
             "title": "Language",
             "type": "string"
@@ -2811,6 +3280,7 @@
           "name",
           "is_template",
           "theme",
+          "language",
           "created_at",
           "updated_at"
         ],
@@ -2914,6 +3384,11 @@
           "description": {
             "default": "",
             "title": "Description",
+            "type": "string"
+          },
+          "description_format": {
+            "default": "plain",
+            "title": "Description Format",
             "type": "string"
           },
           "discard_reason": {
@@ -3057,6 +3532,8 @@
           "contact_id": {
             "anyOf": [
               {
+                "maximum": 2147483647,
+                "minimum": 1,
                 "type": "integer"
               },
               {
@@ -3069,6 +3546,8 @@
           "document_id": {
             "anyOf": [
               {
+                "maximum": 2147483647,
+                "minimum": 1,
                 "type": "integer"
               },
               {
@@ -3226,6 +3705,7 @@
           },
           "company_name": {
             "maxLength": 200,
+            "minLength": 1,
             "title": "Company Name",
             "type": "string"
           },
@@ -3238,11 +3718,24 @@
           },
           "description": {
             "default": "",
+            "description": "At most 40,000 characters.",
+            "maxLength": 40000,
             "title": "Description",
+            "type": "string"
+          },
+          "description_format": {
+            "default": "plain",
+            "description": "How `description` is read: plain (the default) or markdown. Stored as sent.",
+            "enum": [
+              "plain",
+              "markdown"
+            ],
+            "title": "Description Format",
             "type": "string"
           },
           "employment_type": {
             "default": "",
+            "description": "full_time, part_time, contract, freelance, internship or apprenticeship; empty if not said.",
             "maxLength": 20,
             "title": "Employment Type",
             "type": "string"
@@ -3255,6 +3748,7 @@
           },
           "remote_type": {
             "default": "",
+            "description": "onsite, hybrid or remote; empty if not said.",
             "maxLength": 20,
             "title": "Remote Type",
             "type": "string"
@@ -3268,10 +3762,11 @@
           "salary_max": {
             "anyOf": [
               {
+                "minimum": 0.0,
                 "type": "number"
               },
               {
-                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,10}|(?=[\\d.]{1,13}0*$)\\d{0,10}\\.\\d{0,2}0*$)",
                 "type": "string"
               },
               {
@@ -3283,10 +3778,11 @@
           "salary_min": {
             "anyOf": [
               {
+                "minimum": 0.0,
                 "type": "number"
               },
               {
-                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,10}|(?=[\\d.]{1,13}0*$)\\d{0,10}\\.\\d{0,2}0*$)",
                 "type": "string"
               },
               {
@@ -3297,6 +3793,7 @@
           },
           "salary_period": {
             "default": "year",
+            "description": "year, month, day or hour.",
             "maxLength": 10,
             "title": "Salary Period",
             "type": "string"
@@ -3309,6 +3806,7 @@
           },
           "title": {
             "maxLength": 250,
+            "minLength": 1,
             "title": "Title",
             "type": "string"
           },
@@ -3516,6 +4014,73 @@
           "company"
         ],
         "title": "ListingRef",
+        "type": "object"
+      },
+      "MessagingHandleIn": {
+        "properties": {
+          "handle": {
+            "description": "The handle, as the service writes it",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Handle",
+            "type": "string"
+          },
+          "is_primary": {
+            "default": false,
+            "description": "The one to use. The first otherwise.",
+            "title": "Is Primary",
+            "type": "boolean"
+          },
+          "label": {
+            "default": "",
+            "description": "What the service is called, for 'other'",
+            "maxLength": 60,
+            "minLength": 0,
+            "title": "Label",
+            "type": "string"
+          },
+          "service": {
+            "default": "",
+            "description": "A service's key, and the handle then has to be one of that service's; 'other' or blank for any handle, which then needs a label.",
+            "maxLength": 40,
+            "title": "Service",
+            "type": "string"
+          }
+        },
+        "required": [
+          "handle"
+        ],
+        "title": "MessagingHandleIn",
+        "type": "object"
+      },
+      "MessagingHandleOut": {
+        "properties": {
+          "handle": {
+            "title": "Handle",
+            "type": "string"
+          },
+          "is_primary": {
+            "default": false,
+            "title": "Is Primary",
+            "type": "boolean"
+          },
+          "label": {
+            "default": "",
+            "description": "What the service is called, for Other",
+            "title": "Label",
+            "type": "string"
+          },
+          "service": {
+            "default": "",
+            "description": "The service the handle is on, by its key: matrix, xmpp, signal, telegram, threema and the others this instance knows. Blank is Other (#682).",
+            "title": "Service",
+            "type": "string"
+          }
+        },
+        "required": [
+          "handle"
+        ],
+        "title": "MessagingHandleOut",
         "type": "object"
       },
       "OfferOut": {
@@ -3917,8 +4482,52 @@
         "title": "PagedReminderOut",
         "type": "object"
       },
+      "PhoneNumberIn": {
+        "description": "A number to write on a company (#329), checked against its country's numbering plan.",
+        "properties": {
+          "country": {
+            "default": "",
+            "title": "Country",
+            "type": "string"
+          },
+          "is_primary": {
+            "default": false,
+            "title": "Is Primary",
+            "type": "boolean"
+          },
+          "kind": {
+            "default": "",
+            "description": "mobile, work, home, switchboard, fax or other",
+            "title": "Kind",
+            "type": "string"
+          },
+          "label": {
+            "default": "",
+            "description": "Its name, with kind other",
+            "maxLength": 60,
+            "title": "Label",
+            "type": "string"
+          },
+          "number": {
+            "maxLength": 40,
+            "minLength": 1,
+            "title": "Number",
+            "type": "string"
+          }
+        },
+        "required": [
+          "number"
+        ],
+        "title": "PhoneNumberIn",
+        "type": "object"
+      },
       "PhoneNumberOut": {
         "properties": {
+          "formatted": {
+            "default": "",
+            "title": "Formatted",
+            "type": "string"
+          },
           "is_primary": {
             "default": false,
             "title": "Is Primary",
@@ -3943,6 +4552,134 @@
           "number"
         ],
         "title": "PhoneNumberOut",
+        "type": "object"
+      },
+      "PostalAddressIn": {
+        "description": "An address to write on a company (#329): the parts, as the page takes them.",
+        "properties": {
+          "country": {
+            "default": "",
+            "maxLength": 2,
+            "title": "Country",
+            "type": "string"
+          },
+          "is_primary": {
+            "default": false,
+            "title": "Is Primary",
+            "type": "boolean"
+          },
+          "kind": {
+            "default": "",
+            "description": "home, work, postal or other",
+            "title": "Kind",
+            "type": "string"
+          },
+          "label": {
+            "default": "",
+            "description": "Its name, with kind other",
+            "maxLength": 60,
+            "title": "Label",
+            "type": "string"
+          },
+          "municipality": {
+            "default": "",
+            "maxLength": 120,
+            "title": "Municipality",
+            "type": "string"
+          },
+          "postcode": {
+            "default": "",
+            "maxLength": 20,
+            "title": "Postcode",
+            "type": "string"
+          },
+          "region": {
+            "default": "",
+            "maxLength": 120,
+            "title": "Region",
+            "type": "string"
+          },
+          "street": {
+            "default": "",
+            "maxLength": 500,
+            "title": "Street",
+            "type": "string"
+          }
+        },
+        "title": "PostalAddressIn",
+        "type": "object"
+      },
+      "PostalAddressOut": {
+        "properties": {
+          "country": {
+            "default": "",
+            "title": "Country",
+            "type": "string"
+          },
+          "is_primary": {
+            "default": false,
+            "title": "Is Primary",
+            "type": "boolean"
+          },
+          "kind": {
+            "default": "",
+            "title": "Kind",
+            "type": "string"
+          },
+          "label": {
+            "default": "",
+            "title": "Label",
+            "type": "string"
+          },
+          "latitude": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latitude"
+          },
+          "longitude": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Longitude"
+          },
+          "municipality": {
+            "default": "",
+            "title": "Municipality",
+            "type": "string"
+          },
+          "placed_by": {
+            "default": "",
+            "title": "Placed By",
+            "type": "string"
+          },
+          "postcode": {
+            "default": "",
+            "title": "Postcode",
+            "type": "string"
+          },
+          "region": {
+            "default": "",
+            "title": "Region",
+            "type": "string"
+          },
+          "street": {
+            "default": "",
+            "title": "Street",
+            "type": "string"
+          }
+        },
+        "title": "PostalAddressOut",
         "type": "object"
       },
       "PreviewOut": {
@@ -3989,6 +4726,11 @@
             "title": "Instance",
             "type": "string"
           },
+          "request_id": {
+            "default": "",
+            "title": "Request Id",
+            "type": "string"
+          },
           "status": {
             "title": "Status",
             "type": "integer"
@@ -4013,6 +4755,24 @@
       "ProfileOut": {
         "description": "Your details: the name and the contact block a CV prints (#309).",
         "properties": {
+          "birth_country": {
+            "default": "",
+            "description": "The country of birth, as a two-letter code from the address form's list",
+            "title": "Birth Country",
+            "type": "string"
+          },
+          "birth_date": {
+            "default": "",
+            "description": "When the person was born, as an ISO 8601 reduced date -- `1990`, `1990-03` or `1990-03-12` -- or blank when not given. Never worked out, never an age. Printed only on a CV whose `prints.birth_date` is true.",
+            "title": "Birth Date",
+            "type": "string"
+          },
+          "birth_place": {
+            "default": "",
+            "description": "The town or city of birth, as typed; blank when not given. Printed only on a CV whose `prints.birth_place` is true.",
+            "title": "Birth Place",
+            "type": "string"
+          },
           "first_name": {
             "title": "First Name",
             "type": "string"
@@ -4021,6 +4781,12 @@
             "default": "",
             "description": "Written before the name (Mr, Mme, Eng.\u00aa), as the text itself; blank when not given. Printed only on a CV whose `prints.form_of_address` is true.",
             "title": "Form Of Address",
+            "type": "string"
+          },
+          "gender": {
+            "default": "",
+            "description": "In the person's own words, as the text itself; blank when not given. Never worked out from anything. Printed only on a CV whose `prints.gender` is true.",
+            "title": "Gender",
             "type": "string"
           },
           "headline": {
@@ -4036,6 +4802,20 @@
             "default": "",
             "description": "As typed, and stored. Blank means the town and country of the primary postal address; `printed_location` is what that comes to.",
             "title": "Location",
+            "type": "string"
+          },
+          "nationalities": {
+            "description": "The countries the person is a citizen of, as two-letter codes in the order given, each once, at most ten. Printed only on a CV whose `prints.nationality` is true.",
+            "items": {
+              "type": "string"
+            },
+            "title": "Nationalities",
+            "type": "array"
+          },
+          "nationality_scope": {
+            "default": "",
+            "description": "`eu` (a citizen of an EU or EEA country, or of Switzerland), `other`, or blank when nothing is said. Worked out from `nationalities` while any are listed; the answer given is stored only while there are none",
+            "title": "Nationality Scope",
             "type": "string"
           },
           "printed_location": {
@@ -4073,10 +4853,52 @@
       "ProfilePatch": {
         "description": "What may be changed. A field left out is left alone; `printed_location` is read-only\nand ignored if sent. Each is stripped of the space around it before it is measured.",
         "properties": {
+          "birth_country": {
+            "anyOf": [
+              {
+                "maxLength": 2,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "A country's two-letter code from the list; empty clears it",
+            "title": "Birth Country"
+          },
+          "birth_date": {
+            "anyOf": [
+              {
+                "maxLength": 10,
+                "minLength": 0,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "`1990`, `1990-03` or `1990-03-12`: a real date, not in the future and not before 1900; empty clears it",
+            "title": "Birth Date"
+          },
+          "birth_place": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "minLength": 0,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "A town or city as typed; empty clears it",
+            "title": "Birth Place"
+          },
           "first_name": {
             "anyOf": [
               {
                 "maxLength": 150,
+                "minLength": 0,
                 "type": "string"
               },
               {
@@ -4089,6 +4911,7 @@
             "anyOf": [
               {
                 "maxLength": 40,
+                "minLength": 0,
                 "type": "string"
               },
               {
@@ -4098,10 +4921,25 @@
             "description": "Any text, including one no list offers; empty clears it",
             "title": "Form Of Address"
           },
+          "gender": {
+            "anyOf": [
+              {
+                "maxLength": 40,
+                "minLength": 0,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Any text, including one no list offers; empty clears it",
+            "title": "Gender"
+          },
           "headline": {
             "anyOf": [
               {
                 "maxLength": 200,
+                "minLength": 0,
                 "type": "string"
               },
               {
@@ -4114,6 +4952,7 @@
             "anyOf": [
               {
                 "maxLength": 150,
+                "minLength": 0,
                 "type": "string"
               },
               {
@@ -4126,6 +4965,7 @@
             "anyOf": [
               {
                 "maxLength": 120,
+                "minLength": 0,
                 "type": "string"
               },
               {
@@ -4135,10 +4975,40 @@
             "description": "Empty goes back to the primary postal address's town and country",
             "title": "Location"
           },
+          "nationalities": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "maxItems": 10,
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Country codes from the address form's list, in the order given: case is folded, a repeat is dropped, an unknown code or more than ten is refused; empty clears them",
+            "title": "Nationalities"
+          },
+          "nationality_scope": {
+            "anyOf": [
+              {
+                "maxLength": 5,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "`eu`, `other` or empty. Stored only while `nationalities` is empty, and cleared when countries are listed, since it is worked out from them then",
+            "title": "Nationality Scope"
+          },
           "pronouns": {
             "anyOf": [
               {
                 "maxLength": 40,
+                "minLength": 0,
                 "type": "string"
               },
               {
@@ -4152,11 +5022,64 @@
         "title": "ProfilePatch",
         "type": "object"
       },
+      "ReferenceLetterOut": {
+        "properties": {
+          "delivery": {
+            "description": "'you' if you send it with an application; 'referee' if they send it",
+            "title": "Delivery",
+            "type": "string"
+          },
+          "referee_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The contact who wrote it; null once that contact is deleted",
+            "title": "Referee Id"
+          },
+          "valid_until": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Do not send after this date. Never enforced: a client should warn, not block",
+            "title": "Valid Until"
+          },
+          "written_on": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Written On"
+          }
+        },
+        "required": [
+          "delivery"
+        ],
+        "title": "ReferenceLetterOut",
+        "type": "object"
+      },
       "ReminderIn": {
         "properties": {
           "application_id": {
             "anyOf": [
               {
+                "maximum": 2147483647,
+                "minimum": 1,
                 "type": "integer"
               },
               {
@@ -4172,6 +5095,7 @@
           },
           "summary": {
             "maxLength": 250,
+            "minLength": 1,
             "title": "Summary",
             "type": "string"
           }
@@ -4233,6 +5157,11 @@
             "title": "Summary",
             "type": "string"
           },
+          "uid": {
+            "description": "Stable across edits; what a calendar keys the task by",
+            "title": "Uid",
+            "type": "string"
+          },
           "updated_at": {
             "format": "date-time",
             "title": "Updated At",
@@ -4241,6 +5170,7 @@
         },
         "required": [
           "id",
+          "uid",
           "summary",
           "due_at",
           "updated_at"
@@ -4254,6 +5184,8 @@
           "application_id": {
             "anyOf": [
               {
+                "maximum": 2147483647,
+                "minimum": 1,
                 "type": "integer"
               },
               {
@@ -4278,6 +5210,7 @@
             "anyOf": [
               {
                 "maxLength": 250,
+                "minLength": 1,
                 "type": "string"
               },
               {
@@ -4364,6 +5297,8 @@
           },
           "note": {
             "default": "",
+            "description": "At most 40,000 characters.",
+            "maxLength": 40000,
             "title": "Note",
             "type": "string"
           },
@@ -4418,14 +5353,62 @@
             },
             "title": "Scopes",
             "type": "array"
+          },
+          "time_zone": {
+            "description": "The owner's zone, so a client can build the offset a time must carry",
+            "title": "Time Zone",
+            "type": "string"
           }
         },
         "required": [
           "name",
           "owner",
-          "scopes"
+          "scopes",
+          "time_zone"
         ],
         "title": "TokenOut",
+        "type": "object"
+      },
+      "WebLinkIn": {
+        "properties": {
+          "is_primary": {
+            "default": false,
+            "description": "The one of its kind to show. The first of a kind otherwise.",
+            "title": "Is Primary",
+            "type": "boolean"
+          },
+          "kind": {
+            "description": "social, repository or website",
+            "title": "Kind",
+            "type": "string"
+          },
+          "label": {
+            "default": "",
+            "description": "What to call it, for 'other'",
+            "maxLength": 60,
+            "minLength": 0,
+            "title": "Label",
+            "type": "string"
+          },
+          "service": {
+            "default": "",
+            "description": "A service's key, and the address then has to be one of that service's; 'other' for any address; blank to have it worked out from the address's host.",
+            "maxLength": 40,
+            "title": "Service",
+            "type": "string"
+          },
+          "url": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "url"
+        ],
+        "title": "WebLinkIn",
         "type": "object"
       },
       "WebLinkOut": {
@@ -4436,12 +5419,20 @@
             "type": "boolean"
           },
           "kind": {
+            "description": "social, repository or website",
             "title": "Kind",
             "type": "string"
           },
           "label": {
             "default": "",
+            "description": "What the link is called, for Other",
             "title": "Label",
+            "type": "string"
+          },
+          "service": {
+            "default": "",
+            "description": "The service the address is on, by its key: linkedin, mastodon, github and the others this instance knows. Blank is Other (#305).",
+            "title": "Service",
             "type": "string"
           },
           "url": {
@@ -4469,7 +5460,7 @@
     }
   },
   "info": {
-    "description": "Scoped bearer tokens, made under Settings \u2192 API tokens. `captures` hands over a posting; `listings:bind` adds to a listing's history and lists the listings to choose one from, and nothing else; `read` reads everything the owner has; `write` records and changes through the same services as the forms, the owner's own details (`/profile`) among them, and which of them a CV prints (`/cvs/{id}`); `documents:read` downloads files. A `PATCH` answers with the record as it stands after the change, so a token holding `write` sees what it changes, without holding `read`. What it did not change it is not shown: the rows of the owner's details a CV may be told to print (`offered`) are in the answer to `PATCH /cvs/{id}` only for a token that holds `read` as well.",
+    "description": "Scoped bearer tokens, made under Settings \u2192 API tokens. `captures` hands over a posting; `listings:bind` adds to a listing's history and lists the listings to choose one from, and nothing else; `read` reads everything the owner has; `write` records and changes through the same services as the forms, the owner's own details (`/profile`) among them, and which of them a CV prints (`/cvs/{id}`); `documents:read` downloads files. A `PATCH` answers with the record as it stands after the change, so a token holding `write` sees what it changes, without holding `read` -- and that is the whole record, an application's timeline, reminders, interviews and offers, a company's contacts, a listing's description and history, whether or not the call changed anything: `write` can read every record it can touch, one at a time, by number (#765). Give it only to a tool trusted with that. The one place the answer is narrower is the rows of the owner's details a CV may be told to print (`offered`), which `PATCH /cvs/{id}` answers with only for a token that holds `read` as well.",
     "title": "Postulo API",
     "version": "1"
   },
@@ -4505,6 +5496,8 @@
             "schema": {
               "anyOf": [
                 {
+                  "maximum": 2147483647,
+                  "minimum": 1,
                   "type": "integer"
                 },
                 {
@@ -4585,6 +5578,8 @@
             "schema": {
               "anyOf": [
                 {
+                  "maximum": 2147483647,
+                  "minimum": 1,
                   "type": "integer"
                 },
                 {
@@ -4601,6 +5596,7 @@
             "required": false,
             "schema": {
               "default": 100,
+              "maximum": 200,
               "minimum": 1,
               "title": "Limit",
               "type": "integer"
@@ -4612,6 +5608,7 @@
             "required": false,
             "schema": {
               "default": 0,
+              "maximum": 2147483647,
               "minimum": 0,
               "title": "Offset",
               "type": "integer"
@@ -4724,6 +5721,16 @@
               }
             },
             "description": "Forbidden"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Content Too Large"
           },
           "422": {
             "content": {
@@ -4909,6 +5916,16 @@
             },
             "description": "Not Found"
           },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Content Too Large"
+          },
           "422": {
             "content": {
               "application/problem+json": {
@@ -5007,6 +6024,16 @@
             },
             "description": "Not Found"
           },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Content Too Large"
+          },
           "422": {
             "content": {
               "application/problem+json": {
@@ -5041,7 +6068,7 @@
     },
     "/api/v1/captures": {
       "get": {
-        "description": "What is still waiting to be reviewed, newest first.\n\nIt used to be the first fifty rows in whatever order the database felt like handing\nthem over, while the wiki promised every list took ``limit`` and ``offset`` and came\nback as ``{\"items\", \"count\"}``. A queue nobody has kept up with runs past fifty, and\nnothing said so (#230).",
+        "description": "What is still waiting to be reviewed, newest first.\n\nIt used to be the first fifty rows in whatever order the database felt like handing\nthem over, while the wiki promised every list took ``limit`` and ``offset`` and came\nback as ``{\"items\", \"count\"}``. A queue nobody has kept up with runs past fifty, and\nnothing said so (#230).\n\nA token holding only ``captures`` sees the title, the dates and the review link of what is\nwaiting; the address, company, location and source are empty unless it also holds ``read``\n(#761).",
         "operationId": "postulo_api_api_list_captures",
         "parameters": [
           {
@@ -5064,11 +6091,32 @@
             }
           },
           {
+            "description": "The id of the last row already read, sent with `updated_since` from that same row. Without it a run of rows saved in the same moment cannot be walked past.",
+            "in": "query",
+            "name": "after_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maximum": 2147483647,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The id of the last row already read, sent with `updated_since` from that same row. Without it a run of rows saved in the same moment cannot be walked past.",
+              "title": "After Id"
+            }
+          },
+          {
             "in": "query",
             "name": "limit",
             "required": false,
             "schema": {
               "default": 100,
+              "maximum": 200,
               "minimum": 1,
               "title": "Limit",
               "type": "integer"
@@ -5080,6 +6128,7 @@
             "required": false,
             "schema": {
               "default": 0,
+              "maximum": 2147483647,
               "minimum": 0,
               "title": "Offset",
               "type": "integer"
@@ -5153,20 +6202,21 @@
         "operationId": "postulo_api_api_create_capture",
         "parameters": [
           {
-            "description": "Any string of your own, one per posting. Send the same request again under the same key \u2014 after a lost reply, say \u2014 and you get the first answer back rather than a second capture. Honoured for 24 hours.",
+            "description": "Any string of your own, up to 200 characters, one per posting. Send the same request again under the same key \u2014 after a lost reply, say \u2014 and you get the first answer back rather than a second capture. Honoured for 24 hours.",
             "in": "header",
             "name": "Idempotency-Key",
             "required": false,
             "schema": {
               "anyOf": [
                 {
+                  "maxLength": 200,
                   "type": "string"
                 },
                 {
                   "type": "null"
                 }
               ],
-              "description": "Any string of your own, one per posting. Send the same request again under the same key \u2014 after a lost reply, say \u2014 and you get the first answer back rather than a second capture. Honoured for 24 hours.",
+              "description": "Any string of your own, up to 200 characters, one per posting. Send the same request again under the same key \u2014 after a lost reply, say \u2014 and you get the first answer back rather than a second capture. Honoured for 24 hours.",
               "title": "Idempotency-Key"
             }
           }
@@ -5211,6 +6261,26 @@
               }
             },
             "description": "Forbidden"
+          },
+          "409": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Content Too Large"
           },
           "422": {
             "content": {
@@ -5294,6 +6364,16 @@
             },
             "description": "Forbidden"
           },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Content Too Large"
+          },
           "422": {
             "content": {
               "application/problem+json": {
@@ -5371,6 +6451,16 @@
               }
             },
             "description": "Forbidden"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Content Too Large"
           },
           "422": {
             "content": {
@@ -5621,6 +6711,8 @@
             "schema": {
               "anyOf": [
                 {
+                  "maximum": 2147483647,
+                  "minimum": 1,
                   "type": "integer"
                 },
                 {
@@ -5637,6 +6729,7 @@
             "required": false,
             "schema": {
               "default": 100,
+              "maximum": 200,
               "minimum": 1,
               "title": "Limit",
               "type": "integer"
@@ -5648,6 +6741,7 @@
             "required": false,
             "schema": {
               "default": 0,
+              "maximum": 2147483647,
               "minimum": 0,
               "title": "Offset",
               "type": "integer"
@@ -5760,6 +6854,16 @@
               }
             },
             "description": "Forbidden"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Content Too Large"
           },
           "422": {
             "content": {
@@ -5943,6 +7047,16 @@
             },
             "description": "Not Found"
           },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Content Too Large"
+          },
           "422": {
             "content": {
               "application/problem+json": {
@@ -6040,6 +7154,16 @@
             },
             "description": "Not Found"
           },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Content Too Large"
+          },
           "422": {
             "content": {
               "application/problem+json": {
@@ -6103,6 +7227,8 @@
             "schema": {
               "anyOf": [
                 {
+                  "maximum": 2147483647,
+                  "minimum": 1,
                   "type": "integer"
                 },
                 {
@@ -6119,6 +7245,7 @@
             "required": false,
             "schema": {
               "default": 100,
+              "maximum": 200,
               "minimum": 1,
               "title": "Limit",
               "type": "integer"
@@ -6130,6 +7257,7 @@
             "required": false,
             "schema": {
               "default": 0,
+              "maximum": 2147483647,
               "minimum": 0,
               "title": "Offset",
               "type": "integer"
@@ -6350,6 +7478,16 @@
             },
             "description": "Not Found"
           },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Content Too Large"
+          },
           "422": {
             "content": {
               "application/problem+json": {
@@ -6384,7 +7522,7 @@
     },
     "/api/v1/documents": {
       "get": {
-        "description": "Uploads and snapshots in one list.\n\nThe one list here that cannot be a queryset: an upload and a render are separate\ntables with separate columns, so they are read and then ordered together in Python.\nOnly the rows on the page are shaped, though, which is where the cost was \u2014 an\nabsolute download address built for every file somebody has ever had (#230).\n\nIt is also the one list that takes no `after_id` (#245). The ids come from two tables,\nso upload 5 and render 5 are different files, and one id used against both would drop\nwhichever rows happened to number below it in the table the caller was not walking \u2014\nlosing files silently, which is worse than the tie it would fix. A cursor here has to\nname the table as well as the id, and that is a shape of its own.",
+        "description": "Uploads and snapshots in one list.\n\nThe one list that is not a single queryset: an upload and a render are separate\ntables with separate columns, so the two are ordered together in SQL as a union of\ntheir keys, the page is cut there, and only that page's rows are read and shaped (#551,\n#230). A render's text is never read at all, and the cost of a page follows the page.\n\nIt is also the one list that takes no `after_id` (#245). The ids come from two tables,\nso upload 5 and render 5 are different files, and one id used against both would drop\nwhichever rows happened to number below it in the table the caller was not walking \u2014\nlosing files silently, which is worse than the tie it would fix. A cursor here has to\nname the table as well as the id, and that is a shape of its own.",
         "operationId": "postulo_api_routers_documents_list_documents",
         "parameters": [
           {
@@ -6430,6 +7568,7 @@
             "required": false,
             "schema": {
               "default": 100,
+              "maximum": 200,
               "minimum": 1,
               "title": "Limit",
               "type": "integer"
@@ -6441,6 +7580,7 @@
             "required": false,
             "schema": {
               "default": 0,
+              "maximum": 2147483647,
               "minimum": 0,
               "title": "Offset",
               "type": "integer"
@@ -6682,6 +7822,8 @@
             "schema": {
               "anyOf": [
                 {
+                  "maximum": 2147483647,
+                  "minimum": 1,
                   "type": "integer"
                 },
                 {
@@ -6738,6 +7880,8 @@
             "schema": {
               "anyOf": [
                 {
+                  "maximum": 2147483647,
+                  "minimum": 1,
                   "type": "integer"
                 },
                 {
@@ -6754,6 +7898,7 @@
             "required": false,
             "schema": {
               "default": 100,
+              "maximum": 200,
               "minimum": 1,
               "title": "Limit",
               "type": "integer"
@@ -6765,6 +7910,7 @@
             "required": false,
             "schema": {
               "default": 0,
+              "maximum": 2147483647,
               "minimum": 0,
               "title": "Offset",
               "type": "integer"
@@ -6876,6 +8022,26 @@
               }
             },
             "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Content Too Large"
           },
           "422": {
             "content": {
@@ -7109,6 +8275,16 @@
             },
             "description": "Not Found"
           },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Content Too Large"
+          },
           "422": {
             "content": {
               "application/problem+json": {
@@ -7286,6 +8462,16 @@
             },
             "description": "Not Found"
           },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Content Too Large"
+          },
           "422": {
             "content": {
               "application/problem+json": {
@@ -7349,6 +8535,8 @@
             "schema": {
               "anyOf": [
                 {
+                  "maximum": 2147483647,
+                  "minimum": 1,
                   "type": "integer"
                 },
                 {
@@ -7365,6 +8553,7 @@
             "required": false,
             "schema": {
               "default": 100,
+              "maximum": 200,
               "minimum": 1,
               "title": "Limit",
               "type": "integer"
@@ -7376,6 +8565,7 @@
             "required": false,
             "schema": {
               "default": 0,
+              "maximum": 2147483647,
               "minimum": 0,
               "title": "Offset",
               "type": "integer"
@@ -7487,6 +8677,16 @@
               }
             },
             "description": "Forbidden"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Content Too Large"
           },
           "422": {
             "content": {
@@ -7630,6 +8830,8 @@
             "schema": {
               "anyOf": [
                 {
+                  "maximum": 2147483647,
+                  "minimum": 1,
                   "type": "integer"
                 },
                 {
@@ -7666,6 +8868,8 @@
             "schema": {
               "anyOf": [
                 {
+                  "maximum": 2147483647,
+                  "minimum": 1,
                   "type": "integer"
                 },
                 {
@@ -7682,6 +8886,7 @@
             "required": false,
             "schema": {
               "default": 100,
+              "maximum": 200,
               "minimum": 1,
               "title": "Limit",
               "type": "integer"
@@ -7693,6 +8898,7 @@
             "required": false,
             "schema": {
               "default": 0,
+              "maximum": 2147483647,
               "minimum": 0,
               "title": "Offset",
               "type": "integer"
@@ -7805,6 +9011,16 @@
             },
             "description": "Forbidden"
           },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Content Too Large"
+          },
           "422": {
             "content": {
               "application/problem+json": {
@@ -7894,6 +9110,8 @@
             "schema": {
               "anyOf": [
                 {
+                  "maximum": 2147483647,
+                  "minimum": 1,
                   "type": "integer"
                 },
                 {
@@ -7910,6 +9128,7 @@
             "required": false,
             "schema": {
               "default": 100,
+              "maximum": 200,
               "minimum": 1,
               "title": "Limit",
               "type": "integer"
@@ -7921,6 +9140,7 @@
             "required": false,
             "schema": {
               "default": 0,
+              "maximum": 2147483647,
               "minimum": 0,
               "title": "Offset",
               "type": "integer"
@@ -8142,6 +9362,16 @@
             },
             "description": "Not Found"
           },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Content Too Large"
+          },
           "422": {
             "content": {
               "application/problem+json": {
@@ -8239,6 +9469,16 @@
             },
             "description": "Not Found"
           },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Content Too Large"
+          },
           "422": {
             "content": {
               "application/problem+json": {
@@ -8273,7 +9513,7 @@
     },
     "/api/v1/listings/{pk}/events": {
       "post": {
-        "description": "Record what arrived about a listing: a message, an email, a call, a note, a file (#270).\n\nWritten through the same function as the listing's own page, signed with the token's\nname. The contact and the file are ids of the caller's own, looked up before anything is\nwritten, and one that is somebody else's gets the same answer as one that does not\nexist. A capture entry is not offered: the review screen writes those, pointing at the\ncapture. Sent again with the same ``external_id``, the first entry comes back with 200.",
+        "description": "Record what arrived about a listing: a message, an email, a call, a note, a file (#270).\n\nWritten through the same function as the listing's own page, signed with the token's\nname. The contact and the file are ids of the caller's own, looked up before anything is\nwritten, and one that is somebody else's gets the same answer as one that does not\nexist. A capture entry is not offered: the review screen writes those, pointing at the\ncapture. Sent again with the same ``external_id``, the first entry comes back with 200 --\nto the token that wrote it, or to one that may read; to another that may only bind it is the\nidentifying fields without the text (#763).",
         "operationId": "postulo_api_routers_listings_add_listing_event",
         "parameters": [
           {
@@ -8346,6 +9586,16 @@
               }
             },
             "description": "Not Found"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Content Too Large"
           },
           "422": {
             "content": {
@@ -8555,7 +9805,7 @@
     },
     "/api/v1/me": {
       "get": {
-        "description": "Confirm a token works, and say who it belongs to and what it may do.\n\nA client needs some way to tell a mistyped token from a network problem without\ncreating anything.",
+        "description": "Confirm a token works, and say who it belongs to and what it may do.\n\nA client needs some way to tell a mistyped token from a network problem without\ncreating anything.\n\nThe address of the account is told only to a token that may read (#762): a token that\nonly sends pages to review needs the scopes and the time zone, not whose they are, and a\nstolen one should not hand over an identity to aim a sign-in attempt at.",
         "operationId": "postulo_api_api_whoami",
         "parameters": [],
         "responses": {
@@ -8610,6 +9860,8 @@
             "schema": {
               "anyOf": [
                 {
+                  "maximum": 2147483647,
+                  "minimum": 1,
                   "type": "integer"
                 },
                 {
@@ -8647,6 +9899,8 @@
             "schema": {
               "anyOf": [
                 {
+                  "maximum": 2147483647,
+                  "minimum": 1,
                   "type": "integer"
                 },
                 {
@@ -8663,6 +9917,7 @@
             "required": false,
             "schema": {
               "default": 100,
+              "maximum": 200,
               "minimum": 1,
               "title": "Limit",
               "type": "integer"
@@ -8674,6 +9929,7 @@
             "required": false,
             "schema": {
               "default": 0,
+              "maximum": 2147483647,
               "minimum": 0,
               "title": "Offset",
               "type": "integer"
@@ -8887,7 +10143,7 @@
         ]
       },
       "patch": {
-        "description": "Change the name, the form of address, the pronouns, the headline or the location.\n\nA field left out is left alone. The form of address and the pronouns take any text:\nthe lists *Your details* offers are a convenience of the page, and what is stored is the\ntext either way. A first or last name may not be emptied, as on the page, because a job\nsearch is conducted under one's own name.\n\nAnswers with the record as it now stands, as every `PATCH` here does, including one\nthat changed nothing.",
+        "description": "Change the name, the form of address, the pronouns, the date and place of birth, the\nnationalities, the gender, the headline or the location.\n\nA field left out is left alone. A date of birth is `1990`, `1990-03` or `1990-03-12`, a\nreal date that is not in the future, and a country is a two-letter code from the list;\neither refused is a 422 naming the field. The form of address, the pronouns and the\ngender take any text: the lists *Your details* offers are a convenience of the page, and\nwhat is stored is the text either way. A first or last name may not be emptied, as on the\npage, because a job search is conducted under one's own name.\n\nAnswers with the record as it now stands, as every `PATCH` here does, including one\nthat changed nothing.",
         "operationId": "postulo_api_routers_profile_patch_profile",
         "parameters": [],
         "requestBody": {
@@ -8930,6 +10186,16 @@
               }
             },
             "description": "Forbidden"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Content Too Large"
           },
           "422": {
             "content": {
@@ -9018,6 +10284,8 @@
             "schema": {
               "anyOf": [
                 {
+                  "maximum": 2147483647,
+                  "minimum": 1,
                   "type": "integer"
                 },
                 {
@@ -9034,6 +10302,7 @@
             "required": false,
             "schema": {
               "default": 100,
+              "maximum": 200,
               "minimum": 1,
               "title": "Limit",
               "type": "integer"
@@ -9045,6 +10314,7 @@
             "required": false,
             "schema": {
               "default": 0,
+              "maximum": 2147483647,
               "minimum": 0,
               "title": "Offset",
               "type": "integer"
@@ -9157,6 +10427,26 @@
             },
             "description": "Forbidden"
           },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Content Too Large"
+          },
           "422": {
             "content": {
               "application/problem+json": {
@@ -9184,6 +10474,57 @@
           }
         ],
         "summary": "Add a reminder",
+        "tags": [
+          "reminders"
+        ]
+      }
+    },
+    "/api/v1/reminders/calendar.ics": {
+      "get": {
+        "description": "The reminders as ``VTODO``, in an address of their own: the interviews feed is what\nexisting subscribers read, and what it means is not changed under them (#661).",
+        "operationId": "postulo_api_routers_reminders_calendar_feed",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Every reminder still to do, as iCalendar tasks",
         "tags": [
           "reminders"
         ]
@@ -9333,6 +10674,16 @@
               }
             },
             "description": "Not Found"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Content Too Large"
           },
           "422": {
             "content": {

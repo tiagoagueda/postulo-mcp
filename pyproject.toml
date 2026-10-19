@@ -15,7 +15,7 @@ classifiers = [
 ]
 # This runs beside the agent, not inside Postulo: the official MCP SDK, and httpx to
 # reach the instance's API. Postulo itself is not a dependency at all.
-dependencies = ["mcp>=2.0", "httpx>=0.28"]
+dependencies = ["mcp>=2.2.0", "httpx>=0.28"]
 
 [project.scripts]
 postulo-mcp = "postulo_mcp.__main__:main"
