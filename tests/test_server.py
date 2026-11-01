@@ -443,6 +443,10 @@ async def test_with_write_on_the_tools_appear_and_go_through_the_api(api):
     await call(server, "change_status", application_id=7, status="interviewing", note="Invited")
     assert api.calls[-1][3] == {"status": "interviewing", "note": "Invited"}
 
+    # An ending says why, as the core has taken since postulo/postulo#239 (#16).
+    await call(server, "change_status", application_id=7, status="rejected", end_reason="pay")
+    assert api.calls[-1][3] == {"status": "rejected", "note": "", "end_reason": "pay"}
+
     await call(server, "add_reminder", summary="Chase", due_at="2026-09-20T09:00:00Z")
     assert api.calls[-1][3]["application_id"] is None
 

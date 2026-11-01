@@ -1,6 +1,27 @@
 {
   "components": {
     "schemas": {
+      "Addressed": {
+        "description": "A form of address, pronouns or gender, as a concept and the word for it (#921).\n\n`key` is what is stored and is the same in every language: a concept such as `he`,\n`doctor_f` or `non_binary`, or `other` for free text the person typed in their own words,\nor blank when nothing is given. `label` is the word to show, in the language of the\ncareer record (the language of the request when the record names none); for `other` it\nis the text exactly as typed, in every language.",
+        "properties": {
+          "key": {
+            "description": "A concept, `other` for free text, or blank for nothing given",
+            "title": "Key",
+            "type": "string"
+          },
+          "label": {
+            "description": "The word for it in the record's language; free text as typed",
+            "title": "Label",
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "label"
+        ],
+        "title": "Addressed",
+        "type": "object"
+      },
       "ApplicationDetailOut": {
         "properties": {
           "applied_at": {
@@ -1361,6 +1382,11 @@
           "page": {
             "$ref": "#/components/schemas/KeptOut"
           },
+          "posting_key": {
+            "description": "An opaque name for the posting at this address, for a client to group captures by: two captures of one posting -- its address however it was spelled, with or without `www.`, http or https, a trailing slash, in either case -- have the same key, and two postings different keys. It is a keyed hash, stable for as long as the instance's key is, and there is no way back from it to the address. It is not comparable across accounts. Empty for an address that names no host, which matches nothing else.",
+            "title": "Posting Key",
+            "type": "string"
+          },
           "review_url": {
             "title": "Review Url",
             "type": "string"
@@ -1390,6 +1416,7 @@
         "required": [
           "id",
           "url",
+          "posting_key",
           "title",
           "company_name",
           "location",
@@ -1405,6 +1432,18 @@
       },
       "CompanyDetailOut": {
         "properties": {
+          "acquired_by": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The id of the company it became part of, while it is acquired",
+            "title": "Acquired By"
+          },
           "careers_url": {
             "default": "",
             "title": "Careers Url",
@@ -1433,6 +1472,14 @@
             "title": "From Career",
             "type": "boolean"
           },
+          "hiring_signals": {
+            "description": "Its dated hiring entries, newest first. The latest is the signal; one older than 90 days is as of its date. Whether it has open listings is not stored: count the listings that are not closed",
+            "items": {
+              "$ref": "#/components/schemas/HiringSignalOut"
+            },
+            "title": "Hiring Signals",
+            "type": "array"
+          },
           "id": {
             "title": "Id",
             "type": "integer"
@@ -1454,6 +1501,31 @@
           "kind": {
             "default": "employer",
             "title": "Kind",
+            "type": "string"
+          },
+          "legal_state": {
+            "default": "active",
+            "description": "active, administration, acquired or dissolved",
+            "title": "Legal State",
+            "type": "string"
+          },
+          "legal_state_since": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The date the legal state became true, if known",
+            "title": "Legal State Since"
+          },
+          "legal_state_source": {
+            "default": "",
+            "description": "Where it was learnt: an address",
+            "title": "Legal State Source",
             "type": "string"
           },
           "listing_ids": {
@@ -1538,6 +1610,18 @@
       },
       "CompanyIn": {
         "properties": {
+          "acquired_by": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The id of a company you can see; only for acquired",
+            "title": "Acquired By"
+          },
           "careers_url": {
             "default": "",
             "maxLength": 200,
@@ -1571,6 +1655,30 @@
             "default": "",
             "description": "employer (the default) or employment_service; anything else is ignored.",
             "title": "Kind",
+            "type": "string"
+          },
+          "legal_state": {
+            "default": "",
+            "description": "active, administration, acquired or dissolved; empty leaves it",
+            "title": "Legal State",
+            "type": "string"
+          },
+          "legal_state_since": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Legal State Since"
+          },
+          "legal_state_source": {
+            "default": "",
+            "maxLength": 500,
+            "title": "Legal State Source",
             "type": "string"
           },
           "location": {
@@ -1632,6 +1740,18 @@
       },
       "CompanyOut": {
         "properties": {
+          "acquired_by": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The id of the company it became part of, while it is acquired",
+            "title": "Acquired By"
+          },
           "careers_url": {
             "default": "",
             "title": "Careers Url",
@@ -1652,6 +1772,14 @@
             "description": "Added from an entry in the person's career, and not yet used for a posting, a contact or an application. Read-only: the career form sets it and the first use clears it",
             "title": "From Career",
             "type": "boolean"
+          },
+          "hiring_signals": {
+            "description": "Its dated hiring entries, newest first. The latest is the signal; one older than 90 days is as of its date. Whether it has open listings is not stored: count the listings that are not closed",
+            "items": {
+              "$ref": "#/components/schemas/HiringSignalOut"
+            },
+            "title": "Hiring Signals",
+            "type": "array"
           },
           "id": {
             "title": "Id",
@@ -1674,6 +1802,31 @@
           "kind": {
             "default": "employer",
             "title": "Kind",
+            "type": "string"
+          },
+          "legal_state": {
+            "default": "active",
+            "description": "active, administration, acquired or dissolved",
+            "title": "Legal State",
+            "type": "string"
+          },
+          "legal_state_since": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The date the legal state became true, if known",
+            "title": "Legal State Since"
+          },
+          "legal_state_source": {
+            "default": "",
+            "description": "Where it was learnt: an address",
+            "title": "Legal State Source",
             "type": "string"
           },
           "location": {
@@ -1749,6 +1902,18 @@
       },
       "CompanyPatch": {
         "properties": {
+          "acquired_by": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The id of a company you can see, or null; only for acquired",
+            "title": "Acquired By"
+          },
           "careers_url": {
             "anyOf": [
               {
@@ -1802,6 +1967,42 @@
             ],
             "description": "Replaces the whole list",
             "title": "Industries"
+          },
+          "legal_state": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "active, administration, acquired or dissolved",
+            "title": "Legal State"
+          },
+          "legal_state_since": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Legal State Since"
+          },
+          "legal_state_source": {
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Legal State Source"
           },
           "location": {
             "anyOf": [
@@ -1931,6 +2132,8 @@
           },
           "linkedin_url": {
             "default": "",
+            "deprecated": true,
+            "description": "Deprecated: send it in `web_links` with kind `social`. Still taken, as the primary social profile when none of them is.",
             "maxLength": 500,
             "title": "Linkedin Url",
             "type": "string"
@@ -1959,17 +2162,35 @@
           },
           "phone": {
             "default": "",
-            "description": "The contact's telephone number: in the international form, starting with `+`, or the way it is written in its own country with that country in `phone_country`. It is checked against the country's numbering plan. A number that cannot exist there is a 422 saying why, and so is a national number sent with neither a `+` nor `phone_country`. An accepted number is stored, and returned, in the international form (`+33612345678`), not as it was sent; one of a country's short numbers has no such form and is kept as it was sent.",
+            "deprecated": true,
+            "description": "Deprecated: send `phone_numbers`, which takes as many as there are. It joins them as the primary when none of them is. The contact's telephone number: in the international form, starting with `+`, or the way it is written in its own country with that country in `phone_country`. It is checked against the country's numbering plan. A number that cannot exist there is a 422 saying why, and so is a national number sent with neither a `+` nor `phone_country`. An accepted number is stored, and returned, in the international form (`+33612345678`), not as it was sent; one of a country's short numbers has no such form and is kept as it was sent.",
             "maxLength": 40,
             "title": "Phone",
             "type": "string"
           },
           "phone_country": {
             "default": "",
-            "description": "The country `phone` is in, as an ISO 3166-1 alpha-2 code (`FR`), for a number written the national way. Ignored when `phone` starts with `+` or `00`, which say their own country. A code that is not a country is a 422.",
+            "deprecated": true,
+            "description": "Deprecated with `phone`: `phone_numbers` rows carry their own `country`. The country `phone` is in, as an ISO 3166-1 alpha-2 code (`FR`), for a number written the national way. Ignored when `phone` starts with `+` or `00`, which say their own country. A code that is not a country is a 422.",
             "maxLength": 2,
             "title": "Phone Country",
             "type": "string"
+          },
+          "phone_numbers": {
+            "description": "The contact's numbers, one of them the primary.",
+            "items": {
+              "$ref": "#/components/schemas/PhoneNumberIn"
+            },
+            "title": "Phone Numbers",
+            "type": "array"
+          },
+          "postal_addresses": {
+            "description": "The contact's addresses, one of them the primary.",
+            "items": {
+              "$ref": "#/components/schemas/PostalAddressIn"
+            },
+            "title": "Postal Addresses",
+            "type": "array"
           },
           "role": {
             "default": "",
@@ -2010,6 +2231,8 @@
           },
           "linkedin_url": {
             "default": "",
+            "deprecated": true,
+            "description": "Deprecated: the primary social profile. Read `web_links`, which holds every link.",
             "title": "Linkedin Url",
             "type": "string"
           },
@@ -2031,6 +2254,8 @@
           },
           "phone": {
             "default": "",
+            "deprecated": true,
+            "description": "Deprecated: the primary number. Read `phone_numbers`, which holds them all.",
             "title": "Phone",
             "type": "string"
           },
@@ -2039,6 +2264,13 @@
               "$ref": "#/components/schemas/PhoneNumberOut"
             },
             "title": "Phone Numbers",
+            "type": "array"
+          },
+          "postal_addresses": {
+            "items": {
+              "$ref": "#/components/schemas/PostalAddressOut"
+            },
+            "title": "Postal Addresses",
             "type": "array"
           },
           "role": {
@@ -2319,6 +2551,18 @@
             ],
             "description": "For an upload of kind `reference`: who wrote it, when, until when it is good to send and who sends it. Null otherwise"
           },
+          "seal": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "For an upload that is a European Digital Credential: `unchecked`, because Postulo keeps the file as it is and does not check its seal. Null for any other file",
+            "title": "Seal"
+          },
           "size": {
             "anyOf": [
               {
@@ -2472,6 +2716,83 @@
           "occurred_at"
         ],
         "title": "EventOut",
+        "type": "object"
+      },
+      "HiringSignalIn": {
+        "properties": {
+          "kind": {
+            "description": "hiring, freeze or laying_off",
+            "title": "Kind",
+            "type": "string"
+          },
+          "noted_on": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The day it is as of; today if left out",
+            "title": "Noted On"
+          },
+          "source": {
+            "default": "",
+            "maxLength": 500,
+            "title": "Source",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind"
+        ],
+        "title": "HiringSignalIn",
+        "type": "object"
+      },
+      "HiringSignalOut": {
+        "description": "One dated entry about a company's hiring (#941). Shared with the company: anyone who\ncan see it sees the entry and who noted it.",
+        "properties": {
+          "author": {
+            "default": "",
+            "description": "The username of whoever noted it, if known",
+            "title": "Author",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "kind": {
+            "description": "hiring, freeze or laying_off",
+            "title": "Kind",
+            "type": "string"
+          },
+          "noted_on": {
+            "description": "The day it is as of",
+            "format": "date",
+            "title": "Noted On",
+            "type": "string"
+          },
+          "source": {
+            "default": "",
+            "title": "Source",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "noted_on",
+          "created_at"
+        ],
+        "title": "HiringSignalOut",
         "type": "object"
       },
       "IdentifierIn": {
@@ -3100,6 +3421,11 @@
             "title": "Listings",
             "type": "array"
           },
+          "posting_key": {
+            "description": "An opaque name for the posting at this address, for a client to group captures by: two captures of one posting -- its address however it was spelled, with or without `www.`, http or https, a trailing slash, in either case -- have the same key, and two postings different keys. It is a keyed hash, stable for as long as the instance's key is, and there is no way back from it to the address. It is not comparable across accounts. Empty for an address that names no host, which matches nothing else. The key a capture of this address has, or would have, on the list of captures.",
+            "title": "Posting Key",
+            "type": "string"
+          },
           "similar": {
             "items": {
               "$ref": "#/components/schemas/KnownListingOut"
@@ -3114,6 +3440,7 @@
         },
         "required": [
           "url",
+          "posting_key",
           "listings",
           "captures",
           "similar"
@@ -4778,16 +5105,12 @@
             "type": "string"
           },
           "form_of_address": {
-            "default": "",
-            "description": "Written before the name (Mr, Mme, Eng.\u00aa), as the text itself; blank when not given. Printed only on a CV whose `prints.form_of_address` is true.",
-            "title": "Form Of Address",
-            "type": "string"
+            "$ref": "#/components/schemas/Addressed",
+            "description": "Written before the name (Mr, Mme, Eng.\u00aa): the concept stored (`mr`, `mrs`, `miss`, `ms`, `mx`, `doctor`, `doctor_f`, `professor`, `professor_f`, `engineer`, `engineer_f`, `maitre`) and its word in the record's language, or `other` and the text as typed; blank key when not given. Printed, in the language of the CV, only on a CV whose `prints.form_of_address` is true."
           },
           "gender": {
-            "default": "",
-            "description": "In the person's own words, as the text itself; blank when not given. Never worked out from anything. Printed only on a CV whose `prints.gender` is true.",
-            "title": "Gender",
-            "type": "string"
+            "$ref": "#/components/schemas/Addressed",
+            "description": "`female`, `male` or `non_binary` with the word for it, or `other` and the person's own words as typed; blank key when not given. Never worked out from anything. Printed only on a CV whose `prints.gender` is true."
           },
           "headline": {
             "default": "",
@@ -4825,10 +5148,8 @@
             "type": "string"
           },
           "pronouns": {
-            "default": "",
-            "description": "How to refer to the person (she/her, iel), as the text itself; blank when not given. Printed only on a CV whose `prints.pronouns` is true.",
-            "title": "Pronouns",
-            "type": "string"
+            "$ref": "#/components/schemas/Addressed",
+            "description": "How to refer to the person: `she`, `he` or `they` with the word for it (she/her, iel), or `other` and the text as typed; blank key when not given. Printed only on a CV whose `prints.pronouns` is true."
           },
           "record_language": {
             "default": "",
@@ -4845,6 +5166,9 @@
         "required": [
           "first_name",
           "last_name",
+          "form_of_address",
+          "pronouns",
+          "gender",
           "updated_at"
         ],
         "title": "ProfileOut",
@@ -4918,7 +5242,7 @@
                 "type": "null"
               }
             ],
-            "description": "Any text, including one no list offers; empty clears it",
+            "description": "A concept's key (`he`), or any text; empty clears it. Text that is a word of some language's list for a concept (`Mme`, `iel`) is stored as that concept, and any other text is stored as typed and read back as `other`",
             "title": "Form Of Address"
           },
           "gender": {
@@ -4932,7 +5256,7 @@
                 "type": "null"
               }
             ],
-            "description": "Any text, including one no list offers; empty clears it",
+            "description": "A concept's key (`he`), or any text; empty clears it. Text that is a word of some language's list for a concept (`Mme`, `iel`) is stored as that concept, and any other text is stored as typed and read back as `other`",
             "title": "Gender"
           },
           "headline": {
@@ -5015,7 +5339,7 @@
                 "type": "null"
               }
             ],
-            "description": "Any text, including one no list offers; empty clears it",
+            "description": "A concept's key (`he`), or any text; empty clears it. Text that is a word of some language's list for a concept (`Mme`, `iel`) is stored as that concept, and any other text is stored as typed and read back as `other`",
             "title": "Pronouns"
           }
         },
@@ -5109,6 +5433,12 @@
       },
       "ReminderOut": {
         "properties": {
+          "actor": {
+            "default": "",
+            "description": "Who last made, changed, moved, ticked or unticked it, when it was not the person: `API token phone`, a plugin. Blank for the person's own hand",
+            "title": "Actor",
+            "type": "string"
+          },
           "application_id": {
             "anyOf": [
               {
@@ -5179,7 +5509,7 @@
         "type": "object"
       },
       "ReminderPatch": {
-        "description": "What may be changed about a reminder, and nothing more (#238).\n\nEvery field optional and read with ``exclude_unset``, so a client that sends only\n``due_at`` moves the reminder and leaves the rest alone -- the difference between \"no\napplication\" and \"do not touch the application\" is the difference between a `PATCH` and\na replacement, and `application_id: None` means the first.\n\n``done_at`` is not here. Marking one done goes through ``/complete``, which is a verb\nrather than a column, and a client that could write the stamp directly could write one\nin the future or in the wrong order.",
+        "description": "What may be changed about a reminder, and nothing more (#238).\n\nEvery field optional and read with ``exclude_unset``, so a client that sends only\n``due_at`` moves the reminder and leaves the rest alone -- the difference between \"no\napplication\" and \"do not touch the application\" is the difference between a `PATCH` and\na replacement, and `application_id: None` means the first.\n\n``done_at`` is not here. Marking one done goes through ``/complete``, and undoing that\nthrough ``/reopen`` (#331), which are verbs rather than a column, and a client that could\nwrite the stamp directly could write one in the future or in the wrong order.",
         "properties": {
           "application_id": {
             "anyOf": [
@@ -7191,6 +7521,203 @@
           }
         ],
         "summary": "Add a contact at a company",
+        "tags": [
+          "companies"
+        ]
+      }
+    },
+    "/api/v1/companies/{pk}/signals": {
+      "post": {
+        "description": "A dated entry about what the company is doing about hiring. Shared with the company,\nand recorded with the caller as its author.",
+        "operationId": "postulo_api_routers_companies_add_signal",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HiringSignalIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HiringSignalOut"
+                }
+              }
+            },
+            "description": "Created"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Content Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Add a hiring signal to a company",
+        "tags": [
+          "companies"
+        ]
+      }
+    },
+    "/api/v1/companies/{pk}/signals/{signal_id}": {
+      "delete": {
+        "operationId": "postulo_api_routers_companies_remove_signal",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "path",
+            "name": "signal_id",
+            "required": true,
+            "schema": {
+              "title": "Signal Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Remove a hiring signal",
         "tags": [
           "companies"
         ]
@@ -10143,7 +10670,7 @@
         ]
       },
       "patch": {
-        "description": "Change the name, the form of address, the pronouns, the date and place of birth, the\nnationalities, the gender, the headline or the location.\n\nA field left out is left alone. A date of birth is `1990`, `1990-03` or `1990-03-12`, a\nreal date that is not in the future, and a country is a two-letter code from the list;\neither refused is a 422 naming the field. The form of address, the pronouns and the\ngender take any text: the lists *Your details* offers are a convenience of the page, and\nwhat is stored is the text either way. A first or last name may not be emptied, as on the\npage, because a job search is conducted under one's own name.\n\nAnswers with the record as it now stands, as every `PATCH` here does, including one\nthat changed nothing.",
+        "description": "Change the name, the form of address, the pronouns, the date and place of birth, the\nnationalities, the gender, the headline or the location.\n\nA field left out is left alone. A date of birth is `1990`, `1990-03` or `1990-03-12`, a\nreal date that is not in the future, and a country is a two-letter code from the list;\neither refused is a 422 naming the field. The form of address, the pronouns and the\ngender take a concept's key (`he`, `doctor_f`, `non_binary`) or any text: text that is a\nword of some language's list for a concept (`Mme`, `iel`) is stored as that concept, and\nany other text is stored as typed and read back with the key `other` (#921). A first or\nlast name may not be emptied, as on the page, because a job search is conducted under\none's own name.\n\nAnswers with the record as it now stands, as every `PATCH` here does, including one\nthat changed nothing.",
         "operationId": "postulo_api_routers_profile_patch_profile",
         "parameters": [],
         "requestBody": {
@@ -10799,6 +11326,94 @@
           }
         ],
         "summary": "Mark a reminder done",
+        "tags": [
+          "reminders"
+        ]
+      }
+    },
+    "/api/v1/reminders/{pk}/reopen": {
+      "post": {
+        "description": "Undo ``/complete``: the reminder is outstanding again (#331).\n\nWhat a phone's task list can do, so the API and the page can do it too. It is **not**\nannounced again: the announced stamp stays as it was, and a reminder is announced again\nonly when it is moved (``PATCH`` with a ``due_at``). One not done is answered as it is.",
+        "operationId": "postulo_api_routers_reminders_reopen_reminder",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pk",
+            "required": true,
+            "schema": {
+              "title": "Pk",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReminderOut"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          }
+        },
+        "security": [
+          {
+            "ScopedAuth": []
+          }
+        ],
+        "summary": "Mark a reminder not done",
         "tags": [
           "reminders"
         ]

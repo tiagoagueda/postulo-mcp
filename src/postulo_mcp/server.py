@@ -299,8 +299,16 @@ def build(
             ),
             annotations=DECIDES,
         )
-        def change_status(application_id: int, status: str, note: str = "") -> Any:
-            return write(f"/applications/{application_id}/status", {"status": status, "note": note})
+        def change_status(
+            application_id: int, status: str, note: str = "", end_reason: str = ""
+        ) -> Any:
+            """`end_reason` says why it ended, with rejected, withdrawn or ghosted: pay,
+            location, not_a_match, filled_internally, my_choice or other. Sent with the
+            status the application already has, it records a reason learnt afterwards."""
+            payload = {"status": status, "note": note}
+            if end_reason:
+                payload["end_reason"] = end_reason
+            return write(f"/applications/{application_id}/status", payload)
 
     if "reminders" in allowed:
 
