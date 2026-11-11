@@ -1,0 +1,85 @@
+name: Bug report
+about: A tool of this MCP server does not work, or answers wrongly.
+title: "[Bug] "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time. Write in whatever language you can; English is easiest for the maintainer to act on, but a report in another language is better than none.
+
+        **Is it a security problem?** Do not post it here, this page is public. Follow [SECURITY.md](https://source.tiagoagueda.com/postulo/postulo/src/branch/main/SECURITY.md).
+
+        **Remove personal details before you paste anything.** Postulo holds CVs, home addresses and the names of the people somebody is applying to. A log or a screenshot is where those leak: blank out names, addresses, e-mail addresses, company and listing details, tokens and cookies first. A tool's answer is your job search, so it holds them too.
+
+        **An API token is a credential.** Before you paste a configuration or a command line, replace `POSTULO_TOKEN`, `POSTULO_MCP_HTTP_TOKEN` and your instance's address with `…`. A token that was posted anyway is revoked under *Settings → API tokens* in Postulo.
+
+        What a model made of a tool's answer is usually not this server's bug. Give the tool call and what it answered, not the conversation.
+  - type: input
+    id: mcp-version
+    attributes:
+      label: postulo-mcp version
+      description: "`postulo-mcp --version` prints it."
+      placeholder: "0.5.0"
+    validations:
+      required: true
+  - type: input
+    id: postulo-version
+    attributes:
+      label: Postulo version it talks to
+      description: The foot of every page shows the version. On the `:dev` image, give the pinned tag (`<version>-dev.<short sha>`), because `:dev` moves.
+      placeholder: "0.5.0"
+    validations:
+      required: true
+  - type: input
+    id: client
+    attributes:
+      label: The client
+      description: Which assistant or tool runs it, and its version.
+      placeholder: Claude Desktop 1.2
+    validations:
+      required: true
+  - type: dropdown
+    id: transport
+    attributes:
+      label: Transport
+      options:
+        - stdio
+        - Streamable HTTP (--transport streamable-http)
+        - SSE (--transport sse)
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: What you did, step by step
+      placeholder: |
+        1. Start ...
+        2. Ask for ...
+    validations:
+      required: true
+  - type: textarea
+    id: tool-call
+    attributes:
+      label: The tool call and its answer
+      description: Which tool, with which arguments, and what it answered, with personal details removed. Not the conversation.
+      render: text
+  - type: textarea
+    id: happened
+    attributes:
+      label: What happened
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: What postulo-mcp printed on stderr, with personal details removed first. **No token**, and no configuration with one in it.
+      render: text
