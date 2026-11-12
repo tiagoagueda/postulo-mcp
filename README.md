@@ -23,8 +23,8 @@ uv tool install git+https://source.tiagoagueda.com/postulo/postulo-mcp.git
 In Postulo, **Settings → API tokens → New token**. Tick **Read everything**, and nothing
 else if you only want the agent to look. The token is shown once.
 
-Make one token per agent, named after it. Then the timeline says which agent wrote what,
-and revoking one does not lock the others out.
+Make one token per agent, named after it. Then the timeline says which agent added a note
+or changed a status, and revoking one does not lock the others out.
 
 ## Point an agent at it
 
@@ -114,10 +114,21 @@ went quiet and what is ahead.
 
 ## What to know before you turn writing on
 
-Every write lands on the application's timeline with the token's name against it, so you
-can always see what the agent did and undo it by hand. That record is what makes letting
-an agent write acceptable; it is not a licence for it to write without telling you, and
-the server's instructions say so to the model in as many words.
+Not every write leaves the same trace, and only some leave one you can find later:
+
+| Tool | Kind | What Postulo records |
+| --- | --- | --- |
+| `add_note` | `notes` | An entry on the application's timeline, with the token's name against it. |
+| `change_status` | `statuses` | An entry on the application's timeline, with the token's name against it. |
+| `add_reminder` | `reminders` | No timeline entry. The reminder carries the token's name (*via API token …* beside it in the agenda, `actor` in the API) until somebody next changes it. |
+| `complete_reminder` | `reminders` | No timeline entry. The reminder leaves the due list and carries the token's name as the one who last changed it. |
+| `create_cover_letter_draft` | `letters` | Nothing: the draft is among your letters with no record of who wrote it. |
+
+So notes and status changes you can always see and undo by hand; reminders and letter
+drafts you cannot tell from your own once the agent has made them. Turn on only the kinds
+you want (`--write=notes,statuses`). The record is not a licence for the agent to write
+without telling you either, and the server's instructions say so to the model in as many
+words.
 
 A `read` token exposes to the model you chose: your applications and their timelines, the
 companies and people you recorded, your CVs and letters as text, your reminders,

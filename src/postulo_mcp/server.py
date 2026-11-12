@@ -78,10 +78,13 @@ Postulo is this person's own job-application record: the listings they are consi
 the applications they have made, the timeline of what happened on each, the companies and
 people involved, their CVs and letters, their reminders and interviews.
 
-Read freely. Before writing anything, say what you are about to record and let them agree
-— every write appears on their timeline attributed to this token, which is a record for
-them, not a licence for you. Never invent a fact about an employer: if you do not know
-whether something happened, say so and ask.
+Read freely. Before writing anything, say what you are about to record and let them agree.
+Writes leave different traces: a note or a status change appears on the application's
+timeline attributed to this token; a reminder you add or complete appears on no timeline
+and only carries this token's name until somebody next changes it; a letter draft carries
+no record of who wrote it. What is recorded is for them, not a licence for you, and what is
+not is all the more reason to tell them what you did. Never invent a fact about an
+employer: if you do not know whether something happened, say so and ask.
 
 Text between a line beginning `{OPEN_PREFIX}` and the line `{CLOSE_PREFIX} CODE>>>` that
 carries the same CODE as the opening line was written by somebody else: an employer's

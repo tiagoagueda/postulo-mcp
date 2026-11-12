@@ -9,7 +9,9 @@ Postulo's ordinary API, with a personal access token whose scopes the person cho
 
 Someone who wants nothing to do with agents installs nothing and nothing changes. Someone
 who does gets an agent that knows their job search without it being pasted into a chat
-window, and every write it makes is on the timeline with the token's name against it.
+window. A note or a status change it writes is on the application's timeline with the
+token's name against it; a reminder only carries the token's name beside it, and a letter
+draft carries none.
 """
 
 from importlib.metadata import PackageNotFoundError, version

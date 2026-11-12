@@ -255,6 +255,27 @@ async def test_lists_carry_the_count_so_a_first_page_is_known_to_be_one(api):
     assert "offset" in server_module.INSTRUCTIONS
 
 
+def test_the_instructions_do_not_promise_a_timeline_entry_for_every_write():
+    """#11: only notes and status changes are timeline entries in the core; a reminder
+    carries the token's name beside it, a letter draft carries nothing."""
+    text = " ".join(server_module.INSTRUCTIONS.lower().split())
+    assert "every write" not in text
+    assert "a note or a status change appears on the application's timeline" in text
+    assert "a reminder you add or complete appears on no timeline" in text
+    assert "a letter draft carries no record of who wrote it" in text
+    readme = (Path(__file__).parent.parent / "README.md").read_text(encoding="utf-8")
+    assert "every write lands" not in readme.lower()
+
+
+def test_the_readme_says_what_each_write_tool_leaves_behind(api):
+    """#11: one row per write tool the server offers, so a new one cannot go unaccounted."""
+    readme = (Path(__file__).parent.parent / "README.md").read_text(encoding="utf-8")
+    rows = set(re.findall(r"^\| `(\w+)` \| `\w+` \|", readme, re.M))
+    writes = set(tools_of(server_module.build(a_postulo(api, read_only=False))))
+    writes -= set(tools_of(server_module.build(a_postulo(api))))
+    assert writes and rows == writes
+
+
 async def test_every_reading_tool_is_offered_and_nothing_destructive_is(api):
     tools = tools_of(server_module.build(a_postulo(api)))
     for name in (
