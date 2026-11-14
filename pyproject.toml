@@ -5,7 +5,7 @@ description = "Let an AI agent read and, if you allow it, record your job search
 readme = "README.md"
 requires-python = ">=3.12"
 license = "AGPL-3.0-or-later"
-authors = [{ name = "Tiago Agueda" }]
+authors = [{ name = "Postulo contributors" }]
 keywords = ["postulo", "mcp", "model context protocol", "agent"]
 classifiers = [
     "Development Status :: 4 - Beta",
