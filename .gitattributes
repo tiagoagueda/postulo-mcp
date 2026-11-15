@@ -1,0 +1,3 @@
+# The logo is checked against a checksum, so no checkout may rewrite its line endings.
+assets/postulo-logo.svg -text
+*.png binary

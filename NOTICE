@@ -1,0 +1,33 @@
+postulo-mcp
+Copyright (C) 2026 Postulo contributors. The code is AGPL-3.0-or-later (see LICENSE).
+
+The Postulo name and logo
+-------------------------
+postulo-mcp is a companion tool of Postulo, made by the same project and installed beside
+the agent rather than into an instance. It carries Postulo's own logo as its own: it is
+the same mark, not a lookalike.
+
+  assets/postulo-logo.svg
+      Postulo's vector mark, byte for byte the file at assets/brand/postulo.svg in
+      https://source.tiagoagueda.com/postulo/postulo (sha256
+      94ff1200270fa49927feeda473b7e61f42bf1ad37b4baf89ffb63bcbd333bfb7).
+
+  src/postulo_mcp/assets/postulo-logo-256.png
+      Postulo's own 256 px raster of it, byte for byte the file at
+      src/postulo/static/brand/logo-256.png in the same repository (sha256
+      695d2c4c60ab2492423c85af688c5706950d9f2bfba2069523f6ba2413ee9366). It lives inside the
+      package, as a plugin's logo does, so an installed copy carries it too.
+
+The name Postulo and this logo are NOT covered by the AGPL. They belong to the Postulo
+project, and TRADEMARKS.md in the Postulo repository says what that means and what you may
+do without asking, which is nearly everything: run this, fork it, redistribute it unmodified
+under its own name, and say truthfully that something works with Postulo. If you distribute
+a materially modified postulo-mcp, give it another name and another logo, or say plainly and
+near the name that it is modified and not endorsed by Postulo. The files above are not
+modified here, and a test holds them to the checksums in this notice.
+
+Other people's marks
+--------------------
+"Model Context Protocol" and its logo are marks of their owner (LF Projects, LLC). This
+project does not use the logo, anywhere, and does not claim to be published or endorsed by
+that project. The protocol is named in the text only, to say what this server speaks.

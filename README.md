@@ -1,3 +1,5 @@
+<img src="assets/postulo-logo.svg" alt="" width="96" align="left" hspace="16">
+
 # postulo-mcp
 
 **Let an AI agent read — and, if you allow it, record — your job search, through
