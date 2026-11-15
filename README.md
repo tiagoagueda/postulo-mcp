@@ -14,11 +14,41 @@ Install nothing; nothing changes.
 ## Install
 
 Anywhere your agent can run a command — the same machine as the agent, not necessarily
-the same machine as Postulo:
+the same machine as Postulo. Install a **released version**, by its tag, so that you know
+which one you run and can name it in a bug report:
 
 ```sh
-uv tool install git+https://source.tiagoagueda.com/postulo/postulo-mcp.git
+uv tool install git+https://source.tiagoagueda.com/postulo/postulo-mcp.git@v0.5.0
 ```
+
+The releases, with their notes and the wheel and sdist, are on the
+[releases page](https://source.tiagoagueda.com/postulo/postulo-mcp/releases), and
+[CHANGELOG.md](CHANGELOG.md) says what changed. Without `@v0.5.0` the same command installs
+whatever `main` is that day, which is for trying a fix and not for relying on. To move to a
+newer release, install again with its tag (`uv tool install --force …@v0.5.1`).
+
+### Which Postulo it works with
+
+A version's first two numbers are the Postulo it is released beside: postulo-mcp 0.5.x is
+tested against the API of **Postulo 0.5**, and the patch number is this repository's own
+(0.5.3 is the fourth fix to the 0.5 server, and implies no Postulo release). Nothing
+checks the pairing for you, because the server is not installed into Postulo: run the 0.5
+series against a 0.5 instance, and when you update Postulo to the next minor version, update
+this with it.
+
+### A companion tool, not a plugin
+
+postulo-mcp is **official**: made, versioned, released and documented by the Postulo
+project. It is not a **Postulo plugin**, and the difference is the boundary that keeps
+Postulo free of any AI:
+
+- It is installed **beside the agent**, not into an instance. Postulo never imports it, it
+  has no entry point and no row on the plugins page, and it is not in the plugin catalogue.
+- Postulo has no model in it and asks for no API key. This server only speaks Postulo's
+  ordinary API, over HTTP, with a personal access token you made and can revoke.
+- Postulo is not a dependency (`pyproject.toml`), so it needs no particular Postulo
+  installed on the machine it runs on, only an instance it can reach.
+- If you do not run an agent, install nothing and nothing changes.
 
 ## Make a token
 
@@ -114,6 +144,10 @@ Two prompts come with it: *prepare for interview*, which gathers the application
 the people and the timeline in one go, and *weekly review*, which asks what is due, what
 went quiet and what is ahead.
 
+## Security and privacy
+
+A vulnerability is reported privately; [SECURITY.md](SECURITY.md) says how, and which promises of this server are tested. What the model sees leaves your machine for wherever that model runs, and this server cannot take it back: that is the next section.
+
 ## What to know before you turn writing on
 
 Not every write leaves the same trace, and only some leave one you can find later:
@@ -185,6 +219,10 @@ uv sync --locked
 uv run pytest
 uv run ruff check .
 ```
+
+A release is a `vX.Y.Z` tag a person pushes after bumping `pyproject.toml` and writing the
+changelog section; the Release workflow refuses a tag that disagrees with either, tests the
+tagged commit again and publishes the release (`scripts/release_tools.py`).
 
 The tests run every tool against a Postulo API that lives in memory. No request leaves the
 machine, and no Postulo installation is needed. That fake is held to `tests/openapi.json`,

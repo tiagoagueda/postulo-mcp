@@ -1,0 +1,45 @@
+# The dependency audit, weekly, so a vulnerability disclosed in a library is noticed even in
+# a week when nothing was pushed. The audit alone: the lock did not change, so the tests
+# would only prove again what the last push proved. A workflow of its own rather than a
+# schedule in ci.yml, because this Forgejo fails a job whose `if` is false instead of
+# skipping it.
+name: Weekly
+
+on:
+  schedule:
+    - cron: "23 6 * * 1"
+  workflow_dispatch:
+
+env:
+  UV_VERSION: "0.12.17"
+  UV_INSTALLER_SHA256: "37b82230b28617c6c24fa52364fa28aa37f2aa40c114809a623f6b064a9730e5"
+
+jobs:
+  audit:
+    name: Audit the dependencies
+    runs-on: ubuntu-latest
+    container:
+      image: node:22-bookworm
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Install uv
+        run: |
+          curl -LsSf "https://astral.sh/uv/${UV_VERSION}/install.sh" -o /tmp/uv-install.sh
+          echo "${UV_INSTALLER_SHA256}  /tmp/uv-install.sh" | sha256sum -c -
+          sh /tmp/uv-install.sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Audit the Python dependencies
+        # This server is its own process, so its lock is what runs: nothing else audits the
+        # MCP SDK in it. The lock rather than the installed environment, without the project
+        # (which is not on PyPI), and --strict, so a dependency that becomes unauditable
+        # fails the build too.
+        run: |
+          uv export --no-emit-project --all-groups --format requirements-txt --no-hashes \
+            > /tmp/locked-requirements.txt
+          uv run --with pip-audit==2.10.1 pip-audit --strict --progress-spinner off \
+            -r /tmp/locked-requirements.txt

@@ -1,0 +1,64 @@
+# Runs when a release tag (vX.Y.Z) is pushed. Nothing here creates a tag: a person does
+# that, deliberately, after writing the changelog section and bumping the version.
+#
+# One job. It refuses a tag that disagrees with pyproject.toml or CHANGELOG.md, runs the
+# lint and the tests on the tagged commit again (this is a server people point an agent at,
+# so a tag is not published on trust), builds the sdist and the wheel, and creates the
+# Forgejo release with that changelog section as its notes and the two files attached.
+# Where the wheel is published beyond the release is an open decision (#1).
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+# No `permissions:` block on purpose: this Forgejo ignores the field and warns about it. The
+# release job creates the release with the automatic token, as the core's release does.
+
+env:
+  # The same pair as ci.yml; bump both together, with the core.
+  UV_VERSION: "0.12.17"
+  UV_INSTALLER_SHA256: "37b82230b28617c6c24fa52364fa28aa37f2aa40c114809a623f6b064a9730e5"
+
+jobs:
+  release:
+    name: Publish the release
+    runs-on: ubuntu-latest
+    container:
+      image: node:22-bookworm
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Install uv
+        run: |
+          curl -LsSf --retry 3 --retry-all-errors --connect-timeout 10 --max-time 120 \
+            "https://astral.sh/uv/${UV_VERSION}/install.sh" -o /tmp/uv-install.sh
+          echo "${UV_INSTALLER_SHA256}  /tmp/uv-install.sh" | sha256sum -c -
+          sh /tmp/uv-install.sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+        timeout-minutes: 5
+
+      - name: Refuse a tag that disagrees with the code or the changelog
+        run: uv run --no-project python scripts/release_tools.py check "${GITHUB_REF_NAME}"
+
+      - name: Lint and test the tagged commit
+        run: |
+          uv sync --locked --python 3.14
+          uv run --no-sync ruff check .
+          uv run --no-sync pytest
+        timeout-minutes: 20
+
+      - name: Build the sdist and the wheel
+        run: uv build
+
+      - name: Write the release notes from the changelog
+        run: uv run --no-project python scripts/release_tools.py notes "${GITHUB_REF_NAME#v}" -o release-notes.md
+
+      - name: Create the Forgejo release and attach the files
+        env:
+          FORGEJO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FORGEJO_URL: ${{ github.server_url }}
+          FORGEJO_REPOSITORY: ${{ github.repository }}
+        run: uv run --no-project python scripts/release_tools.py publish "${GITHUB_REF_NAME}" dist/* --notes release-notes.md
