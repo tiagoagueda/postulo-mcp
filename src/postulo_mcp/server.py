@@ -36,7 +36,7 @@ from .fence import CLOSE_PREFIX, OPEN_PREFIX, fence, short
 
 #: What ``--write`` may be narrowed to, so an agent can be allowed to write notes without
 #: being allowed to decide an application is over.
-WRITE_KINDS = ("notes", "statuses", "reminders", "letters")
+WRITE_KINDS = ("notes", "statuses", "reminders", "letters", "captures")
 
 #: Fields that carry prose somebody outside this person's records wrote, or that arrived
 #: through a plugin reading their mail. Names and dates are left alone: a fence around
@@ -146,6 +146,29 @@ def build(
         return fenced(postulo.post(path, payload))
 
     # ------------------------------------------------------------- reading
+
+    @server.tool(
+        description=(
+            "Say which token this server uses: its name, its scopes and the owner's time "
+            "zone. Call it first, so a later refusal can be explained by a missing scope."
+        ),
+        annotations=READS,
+    )
+    def whoami() -> Any:
+        return read("/me")
+
+    @server.tool(
+        description=(
+            "Read a job posting's address and say what Postulo would capture it as, "
+            "storing nothing and notifying nobody. Use it to show the person what was "
+            "read before anything is saved. Needs the `captures` scope."
+        ),
+        annotations=ToolAnnotations(
+            read_only_hint=True, destructive_hint=False, open_world_hint=True
+        ),
+    )
+    def preview_posting(url: str) -> Any:
+        return fenced(postulo.ask("/captures/preview", {"url": url}))
 
     @server.tool(
         description="List the person's applications, most recent first.", annotations=READS
@@ -342,6 +365,21 @@ def build(
                 "/letters",
                 {"name": name, "body": body, "subject": subject, "is_template": is_template},
             )
+
+    if "captures" in allowed:
+
+        @server.tool(
+            description=(
+                "Hand a job posting's address to Postulo, which reads it and keeps it for "
+                "the person to review. No listing exists until they save it. Preview it "
+                "first and say what you are about to send."
+            ),
+            annotations=ToolAnnotations(
+                read_only_hint=False, destructive_hint=False, open_world_hint=True
+            ),
+        )
+        def capture_posting(url: str) -> Any:
+            return write("/captures", {"url": url})
 
     # ----------------------------------------------------------- resources
 

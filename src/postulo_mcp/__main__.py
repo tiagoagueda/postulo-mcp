@@ -35,7 +35,8 @@ def parse(argv: list[str] | None = None) -> argparse.Namespace:
         default="",
         metavar="KINDS",
         help=(
-            "Allow the agent to record notes, statuses, reminders and letter drafts. Off "
+            "Allow the agent to record notes, statuses, reminders, letter drafts and captures. "
+            "Off "
             "by default; the token must also carry the write scope. Narrow it with a "
             "comma-separated list — --write=notes,reminders — to leave the rest read-only. "
             f"The kinds are {', '.join(WRITE_KINDS)}."

@@ -125,6 +125,10 @@ class Postulo:
         self._refuse_writes()
         return self._call("POST", path, json=payload or {})
 
+    def ask(self, path: str, payload: dict):
+        """A POST that only asks a question and stores nothing, so read-only may send it."""
+        return self._call("POST", path, json=payload)
+
     def patch(self, path: str, payload: dict):
         self._refuse_writes()
         return self._call("PATCH", path, json=payload)

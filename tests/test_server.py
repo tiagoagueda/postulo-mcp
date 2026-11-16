@@ -112,6 +112,12 @@ class FakeApi:
             return [fake_api.sample("CVOut", id=2, name="Backend EN")]
         if path == "/cvs/2":
             return fake_api.sample("CVDetailOut", id=2, name="Backend EN", headline="Backend")
+        if path == "/me":
+            return fake_api.sample("TokenOut", name="agent", scopes=["read"])
+        if path == "/captures/preview":
+            return fake_api.sample("PreviewOut", url=payload["url"])
+        if path == "/captures":
+            return fake_api.sample("CaptureOut", id=5, url=payload["url"])
         if path == "/insights":
             return {"applications": 12, "response_rate": 0.25}
         if path == "/search":
@@ -291,6 +297,8 @@ async def test_every_reading_tool_is_offered_and_nothing_destructive_is(api):
         "get_cv",
         "get_cover_letter",
         "get_insights",
+        "whoami",
+        "preview_posting",
     ):
         assert name in tools, name
         assert tools[name].annotations.read_only_hint is True, name
@@ -443,6 +451,24 @@ async def test_a_read_only_client_refuses_a_write_in_words(api):
     with pytest.raises(PostuloError, match="read-only"):
         postulo.post("/applications/7/events", {"summary": "x"})
     assert not [call for call in api.calls if call[0] != "GET"]
+
+
+async def test_whoami_and_a_preview_work_read_only_and_store_nothing(api):
+    server = server_module.build(a_postulo(api))
+    assert "capture_posting" not in tools_of(server)
+    await call(server, "whoami")
+    assert api.calls[-1][:2] == ("GET", "/api/v1/me")
+    await call(server, "preview_posting", url="https://jobs.example/7")
+    assert api.calls[-1][1] == "/api/v1/captures/preview"
+    assert api.calls[-1][3] == {"url": "https://jobs.example/7"}
+
+
+async def test_a_capture_needs_write_and_its_own_kind(api):
+    server = server_module.build(a_postulo(api, read_only=False))
+    await call(server, "capture_posting", url="https://jobs.example/7")
+    assert api.calls[-1][:2] == ("POST", "/api/v1/captures")
+    narrowed = server_module.build(a_postulo(api, read_only=False), writes=["notes"])
+    assert "capture_posting" not in tools_of(narrowed)
 
 
 async def test_with_write_on_the_tools_appear_and_go_through_the_api(api):

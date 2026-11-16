@@ -9,6 +9,7 @@ repository's own.
 
 ### Added
 
+- `whoami` and `preview_posting` read tools, and a `captures` write kind with `capture_posting`, so an agent that finds a job advert can show what would be captured and hand it over (#1)
 - Postulo's own logo, with a NOTICE saying where it comes from and that the name and logo
   are not under the AGPL (#2)
 - A changelog, a release workflow that refuses a tag disagreeing with `pyproject.toml` or

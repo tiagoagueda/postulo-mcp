@@ -90,7 +90,7 @@ in a command line or a process list.
 
 **Read** (a `read` token): `list_applications`, `get_application` with its whole timeline,
 `search_postings`, `get_listing` (the saved posting with its advert), `search`, `list_reminders`, `list_companies`, `get_contacts`,
-`list_interviews`, `get_cv`, `get_cover_letter`, `get_insights`. An application, a posting,
+`list_interviews`, `get_cv`, `get_cover_letter`, `get_insights`, `whoami` (the token's name and scopes, so a refusal can be explained) and `preview_posting` (what Postulo would capture an address as; nothing is stored, but the instance fetches the address and the token needs the `captures` scope). An application, a posting,
 a CV or a letter is also addressable as a resource — `postulo://applications/7` — so an agent can
 read one without spending a tool call.
 
@@ -101,14 +101,14 @@ paginated — `{"items": …, "count": …}` — and every list tool takes `limi
 so an agent can tell a first page from the whole answer.
 
 **Write**, only with `--write` *and* a token carrying the `write` scope: `add_note`,
-`change_status`, `add_reminder`, `complete_reminder`, `create_cover_letter_draft`.
+`change_status`, `add_reminder`, `complete_reminder`, `create_cover_letter_draft`, `capture_posting`.
 
 ```sh
 postulo-mcp --write                      # all of them
 postulo-mcp --write=notes,reminders      # and leave statuses and letters alone
 ```
 
-The kinds are `notes`, `statuses`, `reminders` and `letters`. Reads are marked
+The kinds are `notes`, `statuses`, `reminders`, `letters` and `captures`. Reads are marked
 `readOnlyHint` and `change_status` is marked `destructiveHint`, so a client that asks
 before running a tool knows which one to ask about.
 
@@ -159,6 +159,7 @@ Not every write leaves the same trace, and only some leave one you can find late
 | `add_reminder` | `reminders` | No timeline entry. The reminder carries the token's name (*via API token …* beside it in the agenda, `actor` in the API) until somebody next changes it. |
 | `complete_reminder` | `reminders` | No timeline entry. The reminder leaves the due list and carries the token's name as the one who last changed it. |
 | `create_cover_letter_draft` | `letters` | Nothing: the draft is among your letters with no record of who wrote it. |
+| `capture_posting` | `captures` | A capture waiting in your review queue. No listing exists until you save it. |
 
 So notes and status changes you can always see and undo by hand; reminders and letter
 drafts you cannot tell from your own once the agent has made them. Turn on only the kinds
