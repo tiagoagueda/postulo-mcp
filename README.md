@@ -18,14 +18,14 @@ the same machine as Postulo. Install a **released version**, by its tag, so that
 which one you run and can name it in a bug report:
 
 ```sh
-uv tool install git+https://source.tiagoagueda.com/postulo/postulo-mcp.git@v0.5.0
+uv tool install git+https://source.tiagoagueda.com/postulo/postulo-mcp.git@v0.5.1
 ```
 
 The releases, with their notes and the wheel and sdist, are on the
 [releases page](https://source.tiagoagueda.com/postulo/postulo-mcp/releases), and
-[CHANGELOG.md](CHANGELOG.md) says what changed. Without `@v0.5.0` the same command installs
+[CHANGELOG.md](CHANGELOG.md) says what changed. Without `@v0.5.1` the same command installs
 whatever `main` is that day, which is for trying a fix and not for relying on. To move to a
-newer release, install again with its tag (`uv tool install --force …@v0.5.1`).
+newer release, install again with its tag (`uv tool install --force …@v0.5.2`).
 
 ### Which Postulo it works with
 

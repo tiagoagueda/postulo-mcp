@@ -7,6 +7,8 @@ repository's own.
 
 ## [Unreleased]
 
+## [0.5.1] - 2026-11-16
+
 ### Added
 
 - `whoami` and `preview_posting` read tools, and a `captures` write kind with `capture_posting`, so an agent that finds a job advert can show what would be captured and hand it over (#1)
