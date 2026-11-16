@@ -7,6 +7,10 @@ repository's own.
 
 ## [Unreleased]
 
+### Fixed
+
+- The release workflow reaches Forgejo at its public https address, which the publish script insists on (#33)
+
 ## [0.5.1] - 2026-11-16
 
 ### Added

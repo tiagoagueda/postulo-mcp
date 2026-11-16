@@ -59,6 +59,7 @@ jobs:
       - name: Create the Forgejo release and attach the files
         env:
           FORGEJO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          FORGEJO_URL: ${{ github.server_url }}
+          # github.server_url is the runner's internal http://server:3000, which the script refuses
+          FORGEJO_URL: https://source.tiagoagueda.com
           FORGEJO_REPOSITORY: ${{ github.repository }}
         run: uv run --no-project python scripts/release_tools.py publish "${GITHUB_REF_NAME}" dist/* --notes release-notes.md
